@@ -1,0 +1,61 @@
+<body>
+<canvas id="tiltCanvas" width="600" height="600" style="border:1px solid #000000;"></canvas>
+
+<div id="parameters" style="font-size:40px;">
+	<p id="x"></p>
+	<p id="y"></p>
+	
+	<p id="alpha"></p>
+	<p id="beta"></p>
+	<p id="gamma"></p>
+	
+</div>
+</body>
+<script>
+var X = 275, Y = 275;
+var speedX = 0, speedY = 0;
+var RECT_WIDTH = 50, RECT_HEIGHT = 50;
+var CANVAS = document.getElementById("tiltCanvas");
+var ctx = CANVAS.getContext("2d");
+ctx.fillStyle = "#FF0000";
+function deviceMotionHandler(eventData) {
+  if(X >= 550 || X <= 0) {
+	speedX = -speedX;
+	X += X >= 0 ? -1 : 1;
+  }
+  else {
+	speedX += event.rotationRate.alpha;
+	X += speedX;
+	speedX = speedX * 0.95;
+	Y += Y >= 0 ? -1 : 1;
+  }
+  
+  if( Y >= 550 ||Y <= 0) {
+	speedY = -speedY;
+  }
+  else {
+	speedY += event.rotationRate.beta;
+	Y += speedY;
+	speedY = speedY * 0.95;
+  }
+  repaint(ctx);
+  document.getElementById("x").innerHTML = "X: <b>" + X + "</b>";
+  document.getElementById("y").innerHTML = "Y: <b>" + Y + "</b>";
+  
+  document.getElementById("alpha").innerHTML = "Alpha: <b>" + event.rotationRate.alpha + "</b>";
+  document.getElementById("beta").innerHTML = "Beta: <b>" + event.rotationRate.beta + "</b>";
+  document.getElementById("gamma").innerHTML = "Gamma: <b>" + event.rotationRate.gamma + "</b>";
+  
+}
+
+function repaint(context) {
+	context.clearRect(0,0,600,600);
+	context.fillRect(X, Y, RECT_WIDTH, RECT_HEIGHT);
+}
+
+if (window.DeviceMotionEvent) {
+  window.addEventListener('devicemotion', deviceMotionHandler, false);
+} else {
+  document.getElementById("dmEvent").innerHTML = "Not supported."
+}
+</script>
