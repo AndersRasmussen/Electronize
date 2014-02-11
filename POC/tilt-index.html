@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Socket.IO + Express + NodeJS Test!</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <h1>TILT Controller</h1>
+        <div id="status">Connecting...</div>
+
+        <p>Tilt your phone!</p>
+
+        <script>
+			// NOTE: this connection only works on localhost, so it has to be rewritten to the valid LAN ip to connect external devices.
+			var socket = io.connect('http://localhost/ws/controller');
+
+			socket.on('status', function (data) {
+				console.log(data);
+				$('#status').text(data.status);
+			});
+			
+			var acc_x = 0;
+			var acc_y = 0;
+			function deviceMotionHandler(eventData) {
+				acc_x += eventData.rotationRate.alpha;
+				acc_y += eventData.rotationRate.beta;
+				
+				socket.emit('move', {up: acc_y, left: acc_x, right: 0, down: 0});
+				acc_x = acc_x * 0.97;
+				acc_y = acc_y * 0.97;
+				return false;
+			}
+
+			if (window.DeviceMotionEvent) {
+				window.addEventListener('devicemotion', deviceMotionHandler, false);
+			} else {
+				document.getElementById("dmEvent").innerHTML = "Your device must support tilting."
+			}
+		</script>
+
+    </body>
+</html>
