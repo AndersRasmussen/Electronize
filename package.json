@@ -1,0 +1,52 @@
+{
+  "name": "NGJ2014",
+  "version": "0.0.1",
+  "description": "Our HTML5 game.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndersRasmussen/NGJ2014.git"
+  },
+  "keywords": [
+    "game",
+    "html5"
+  ],
+  "author": "Team´HTML5",
+  "contributors": [
+    {
+      "name": "Allan Kimmer Jensen",
+      "email": "all@netcompany.com",
+      "url": "https://github.com/saturate"
+    },
+    {
+      "name": "Anders Rasmussen",
+      "url": "https://github.com/njjohansen"
+    },
+    {
+      "name": "Jonas Johansen",
+      "url": "https://github.com/njjohansen"
+    },
+    {
+      "name": "Andreas R. L. Christiansen",
+      "url": "https://github.com/PolygeneLubricants"
+    },
+    {
+      "name": "Michael Lau Wolfsberg",
+      "url": "https://github.com/milawo"
+    }
+  ],
+  "license": "N/A",
+  "bugs": {
+    "url": "https://github.com/AndersRasmussen/NGJ2014/issues"
+  },
+  "homepage": "https://github.com/AndersRasmussen/NGJ2014",
+  "dependencies": {
+    "socket.io": "~0.9.16"
+  }
+}
