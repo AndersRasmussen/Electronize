@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Game Board</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
+        <style type="text/css">
+            .dot {
+                position: relative;
+                height: 20px;
+                width: 20px;
+                border: 1px solid red;
+            }
+        </style>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <h1>Game Board</h1>
+        <p>There are no real rooms right now, just open this page and then connect the controllers.</p>
+        <div id="users"></div>
+
+        <div id="boxes"></div>
+
+
+        <script>
+
+            function get_random_color() {
+                var letters = '0123456789ABCDEF'.split('');
+                var color = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    color += letters[Math.round(Math.random() * 15)];
+                }
+                return color;
+            }
+
+
+            var socket = io.connect('http://localhost/ws/board');
+
+            socket.on('playerConnected', function (data) {
+                console.log(data);
+                $('#users').append('User with ID' + data.id + ' joined! <br />');
+                var userBox = $('<div class="dot" />').attr('id', data.id).css('background', get_random_color());
+                $('#boxes').append(userBox);
+            });
+
+            socket.on('playerDisconnected', function (data) {
+                console.log(data);
+                $('#users').append('User with ID' + data.id + ' left! <br />');
+                $('#' + data.id).hide();
+            });
+
+            socket.on('users', function (data) {
+                console.log(data);
+                $('#users').html(data);
+            });
+
+            socket.on('move', function (data) {
+                console.log(data);
+                $('#' + data.id).animate({
+                    top: '+='+ (data.movement.down - data.movement.up),
+                    left: '+='+ (data.movement.right - data.movement.left)
+                }, 10);;
+            });
+
+		</script>
+
+    </body>
+</html>
