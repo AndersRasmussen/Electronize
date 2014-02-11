@@ -47,6 +47,7 @@
   },
   "homepage": "https://github.com/AndersRasmussen/NGJ2014",
   "dependencies": {
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "express": "~3.4.8"
   }
 }

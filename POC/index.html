@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Socket.IO + Express + NodeJS Test!</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <h1>Controller</h1>
+        <div id="status">Connecting...</div>
+
+        <p>Use the arrow keys!</p>
+
+        <script>
+			var socket = io.connect('http://localhost/ws/controller');
+
+			socket.on('status', function (data) {
+				console.log(data);
+				$('#status').text(data.status);
+			});
+
+			$(document).keydown(function(e){
+				if (e.keyCode == 37) { 
+					// left
+					socket.emit('move', { up: 0, down: 0,  left: 10, right: 0 });
+					return false;
+				}
+				if (e.keyCode == 39 ) { 
+					// right
+					socket.emit('move', { up: 0, down: 0,  left: 0, right: 10 });
+					return false;
+				}
+				if (e.keyCode == 38) { 
+					// up
+					socket.emit('move', { up: 10, down: 0,  left: 0, right: 0 });
+					return false;
+				}
+				if (e.keyCode == 40 ) { 
+					// down
+					socket.emit('move', {down: 10, up: 0, left: 0, right: 0 });
+					return false;
+				}
+			});
+
+		</script>
+
+    </body>
+</html>
