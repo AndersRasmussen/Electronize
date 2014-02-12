@@ -50,5 +50,9 @@
   "dependencies": {
     "socket.io": "~0.9.16",
     "express": "~3.4.8"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0"
   }
 }

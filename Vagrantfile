@@ -8,8 +8,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, inline: "sudo apt-get update"
   config.vm.provision :shell, inline: "sudo apt-get install -y nodejs --no-install-recommends"
   config.vm.provision :shell, inline: "sudo npm config set registry http://registry.npmjs.org/"
-  config.vm.provision :shell, inline: "sudo npm install supervisor -g"
-  config.vm.provision :shell, inline: "sudo npm install /vagrant"
+  config.vm.provision :shell, inline: "sudo npm install -g supervisor"
+  config.vm.provision :shell, inline: "sudo npm install -g grunt-cli"
+  config.vm.provision :shell, inline: "sudo npm install /vagrant --no-bin-links"
   config.vm.provision :shell, inline: "sudo cp /vagrant/node-server.conf /etc/init/node-server.conf"
   config.vm.provision :shell, inline: "sudo start node-server"  
 
