@@ -1,0 +1,5 @@
+body {margin:0px;}
+div.body {background-color: #666;}
+div.buttons div.buttonSpace {width: 106px; float: left; text-align: center;}
+div.buttons div.button {background-color: #999; height: 100%;}
+div.buttons > div {height: 50px;}

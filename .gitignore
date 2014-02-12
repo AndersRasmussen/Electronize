@@ -1,2 +1,5 @@
 .vagrant
 node_modules
+build
+TODO
+.DS_Store

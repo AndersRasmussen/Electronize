@@ -13,11 +13,15 @@
     "type": "git",
     "url": "https://github.com/AndersRasmussen/NGJ2014.git"
   },
+  "engines": {
+    "node": ">= 0.10.20"
+  },
   "keywords": [
     "game",
-    "html5"
+    "html5",
+    "nordicgamejam"
   ],
-  "author": "Team´HTML5",
+  "author": "Team HTML5",
   "contributors": [
     {
       "name": "Allan Kimmer Jensen",
@@ -31,6 +35,7 @@
     },
     {
       "name": "Jonas Johansen",
+      "email": "jonasjohansen@gmail.com",
       "url": "https://github.com/njjohansen"
     },
     {
@@ -49,6 +54,15 @@
   "homepage": "https://github.com/AndersRasmussen/NGJ2014",
   "dependencies": {
     "socket.io": "~0.9.16",
-    "express": "~3.4.8"
+    "express": "~3.4.8",
+    "node-static": ">= 0.5.9"
+  },
+  "devDependencies": {
+    "mocha": ">= 1.8.1",
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": ">= 0.3.0",
+    "grunt-contrib-copy": ">=0.3.0",
+    "grunt-contrib-watch": "0.5.0",
+    "grunt-mocha-test": "~0.9.0"
   }
 }
