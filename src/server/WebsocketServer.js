@@ -1,5 +1,5 @@
 var socketIO = require('socket.io')
-var config = require('../config')
+var config = require('./config')
 
 var WebsocketServer = function(httpServer){
 	var self = this;
