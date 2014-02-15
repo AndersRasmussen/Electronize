@@ -55,6 +55,10 @@ var WebsocketServer = function(httpServer){
 				// send back data
 				clientSocket.emit('EVENT', event);
 			});
+			
+			clientSocket.on('MOVE', function() {
+				logDebug("Move move move!!!");
+			});
 
 			clientSocket.on('disconnect', function(){
 				if (hasJoined(clientSocket.id)) {
