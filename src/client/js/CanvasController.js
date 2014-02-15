@@ -5,6 +5,8 @@ function CanvasController($rootScope, $scope){
 	var _paper;
 	var _circle;
 
+
+
 	var setMapSize = function(w, h){
 		logInfo("initializing canvas");
 		if( !_paper) {
@@ -23,7 +25,7 @@ function CanvasController($rootScope, $scope){
 
 
 	var animateHeart = function () {
-		var image = _paper.image("http://i.imgur.com/8SQUTpo.png", 60, 60, 124 /3 , 108 /3);
+		var image = _paper.image("img/heart.png", 60, 60, 124 /3 , 108 /3);
 
 		image.animate({
 			opacity: 0.3,

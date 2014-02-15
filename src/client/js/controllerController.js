@@ -11,6 +11,9 @@ var ControllerController = function($$websocketService) {
 		$(document).ready(function() {
 			it.$stick = $('#navigation .stick');
 			it.$bigRedStick = $('#big-red-stick');
+			it.$kill = $('#kill');
+			it.$love = $('#love');
+			
 			it.decorateControls();
 			it.adjustNavigationRatio();
 			it.updateMove();
