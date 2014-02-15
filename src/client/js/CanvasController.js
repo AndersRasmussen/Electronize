@@ -1,7 +1,7 @@
 function CanvasController($rootScope, $scope){
 	var mapWidth = 1400;
 	var mapHeight = 1000;
-	var expectedUpdateRate = 500;
+	var expectedUpdateRate = 200;
 	logDebug("CanvasController initializing");
 	var _playerGfx = {};
 	var _paper;
@@ -20,9 +20,9 @@ function CanvasController($rootScope, $scope){
 		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});			
 
 		// debug
-		_circle = _paper.circle(0, 0, 10);
-		_circle.attr("fill", "#f00");
-		_circle.attr("stroke", "#fff");
+		//_circle = _paper.circle(0, 0, 10);
+		//_circle.attr("fill", "#f00");
+		//_circle.attr("stroke", "#fff");
 	}
 
 
@@ -61,8 +61,8 @@ function CanvasController($rootScope, $scope){
 		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2,midPointX,midPointY)}, expectedUpdateRate, "linear");
 
 		// debug
-		_circle.attr({'cx': x2, 'cy': y2});
-		_circle.toFront();
+		//_circle.attr({'cx': x2, 'cy': y2});
+		//_circle.toFront();
 
 
 		playerGfx.player = playerGfx.newPlayer;

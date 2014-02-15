@@ -1,9 +1,10 @@
 function MiniCanvasController($rootScope, $scope){
 	var mapWidth = 1400;
 	var mapHeight = 1000;
-	var minimapSize = 300;
+	var minimapWidth = 300;
+	var minimapHeight = 197;
 
-	var expectedUpdateRate = 500; // ms
+	var expectedUpdateRate = 200; // ms
 	var animationInterval = 50; // ms
 	logDebug("CanvasController initializing");
 	var _playerGfx = {};
@@ -20,9 +21,9 @@ function MiniCanvasController($rootScope, $scope){
 		var rect = _paper.rect(0, 0, w, h, 40);
 		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});
 		// debug
-		_circle = _paper.circle(0, 0, 10);
-		_circle.attr("fill", "#f00");
-		_circle.attr("stroke", "#fff");
+		//_circle = _paper.circle(0, 0, 10);
+		//_circle.attr("fill", "#f00");
+		//_circle.attr("stroke", "#fff");
 	}
 
 	// update playerGfx
@@ -57,8 +58,8 @@ function MiniCanvasController($rootScope, $scope){
 		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2,midPointX,midPointY)}, expectedUpdateRate, "linear");
 
 		// debug
-		_circle.attr({'cx': x2, 'cy': y2});
-		_circle.toFront();
+		//_circle.attr({'cx': x2, 'cy': y2});
+		//_circle.toFront();
 
 		playerGfx.player = playerGfx.newPlayer;
 		playerGfx.newPlayer = playerDto;
@@ -97,7 +98,7 @@ function MiniCanvasController($rootScope, $scope){
 				var y = _devicePlayerGfx.gfx.matrix.y(0,0);
 				//logDebug("I was detected ({0},{1})!".format(playerDto.x,playerDto.x.y));
 
-				_paper.setViewBox(x - minimapSize/2, y-minimapSize/2, minimapSize, minimapSize);
+				_paper.setViewBox(x - minimapWidth/2, y - minimapHeight/2, minimapWidth, minimapHeight);
 			}
 		}, animationInterval);
 	};

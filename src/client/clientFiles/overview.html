@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="screenModule">
+	<head>
+		<title>Electronize</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="vendor/raphael-min.js"></script>
+		<script type="text/javascript" src="vendor/google.fastbutton.js"></script>
+		<script type="text/javascript" src="vendor/jquery.google.fastbutton.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.min.js"></script>
+		<script type="text/javascript" src="//rawgithub.com/mrdoob/three.js/master/build/three.js"></script>	
+		<script src="vendor/preloadjs-0.4.1.min.js"></script>
+		<script src="vendor/createjs-2013.12.12.min.js"></script>
+		<link rel="icon" type="image/png" href="img/favicon.png">
+
+		<!--<meta name="viewport" content="width=320,user-scalable=0,maximum-scale=1.0" />-->
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+	<body ng-controller="ScreenController">
+		<script type="text/javascript" src="NGJ2014.min.js"></script>
+		<div id="highscore" ng-controller="HighscoreController">
+			<p>PlayerId:<br/>
+			{{playerid}}</p>
+
+			<p>Nickname:<br />
+			{{nickname}}</p>
+		</div>
+		<div id="gameCanvas" ng-controller="CanvasController">
+		</div>
+	</body>
+</html>
