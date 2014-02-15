@@ -14,7 +14,6 @@ function WebsocketService($rootScope){
 				$rootScope.broadcastEvent('JOINED', player);
 			})			
 			.on("EVENT", function(data){
-				//$rootScope.broadcastEvent(eventname, args)
 				logDebug("Recv data from server: {0}".format(data));
 			})
 		logDebug("Connected to: {0}".format(connectionUrl));
