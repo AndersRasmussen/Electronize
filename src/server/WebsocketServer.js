@@ -127,15 +127,14 @@ var WebsocketServer = function(httpServer){
 			
 			clientSocket.on('KILL', function() {
 				var currentPlayer = getPlayer(clientSocket.id);
-				
+
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
-					
-					if (currentPlayer === otherPlayer)
-						return;
+					if (currentPlayer == otherPlayer)
+						continue;
 					
 					if (otherPlayer.killed || otherPlayer.mate)
-						return;
+						continue;
 
 					var deltaX = otherPlayer.x - currentPlayer.x;
 					var deltaY = otherPlayer.y - currentPlayer.y;
@@ -145,10 +144,7 @@ var WebsocketServer = function(httpServer){
 
 					var minDirection = currentPlayer.rotation - config.playerSightWidth/2;
 					var maxDirection = currentPlayer.rotation + config.playerSightWidth/2;
-
-					console.log("Diretion", direction, "Min/Max", minDirection, maxDirection);
-					console.log("Distance", distance, "Sight", config.playerSightLength);
-
+console.log("Kill ?")
 					if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSightLength) {
 						otherPlayer.killed = true;
 						otherPlayer.speed = 0;
