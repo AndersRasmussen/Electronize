@@ -13,9 +13,11 @@ function CanvasController($rootScope, $scope){
 		rect.attr({"fill": "#09F", "stroke": "#000", "stroke-width": "1px"});
 	}
 
-	$scope.$on("BOARDUPDATE", function(event, gameState){
+	$scope.$on("BOARDUPDATE", function(event, boardState){
 		// check for map size change and render map
 	});
+
+
 
 	setMapSize(1400,1000);
 

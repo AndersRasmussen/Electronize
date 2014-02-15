@@ -7,9 +7,12 @@ function WebsocketService($rootScope){
 		logDebug("Connecting to: {0}".format(connectionUrl));
 		self.webSocket = io.connect(connectionUrl);
 		self.webSocket
-			.on("BOARDUPDATE", function(data){
-
+			.on("BOARDUPDATE", function(boardState){
+				$rootScope.broadcastEvent('BOARDUPDATE', boardState);
 			})
+			.on("JOINED", function(player){
+				$rootScope.broadcastEvent('JOINED', player);
+			})			
 			.on("EVENT", function(data){
 				//$rootScope.broadcastEvent(eventname, args)
 				logDebug("Recv data from server: {0}".format(data));

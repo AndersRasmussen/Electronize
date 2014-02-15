@@ -5,7 +5,7 @@ function ScreenApplication($rootScope, $$websocketService){
 	$.getJSON("/config.json", function(config){
 		$$websocketService.connect("{0}:{1}/event".format(config.wsUrl, config.wsPort));
 		// tell the controllers that the communication is up
-		$rootScope.broadcastEvent('APPLICATION_INITIALIZED', null);
+		$rootScope.broadcastEvent('COMMUNICATION_INITIALIZED', null);
 	});
 
 	logInfo("Application finished initializing");

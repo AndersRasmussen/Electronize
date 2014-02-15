@@ -1,5 +1,5 @@
 function ScreenController($rootScope, $scope, $$application, $$websocketService){
-	$scope.$on("APPLICATION_INITIALIZED", function(event){
+	$scope.$on("COMMUNICATION_INITIALIZED", function(event){
 		// the communication is up, let's send something
 		$$websocketService.send("Hej");
 		$$websocketService.join();
