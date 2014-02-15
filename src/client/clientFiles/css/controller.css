@@ -35,6 +35,27 @@ html, body{
 	position: relative;
 }
 
+#buttons {
+
+}
+
+#buttons div.button {
+	height: 50px;
+	width: 50px;
+	position: absolute;
+	left: 530px;
+}
+
+#buttons #kill {
+	background-color: #00FFFF;
+	top: 150px;
+}
+
+#buttons #love {
+	top: 60px;
+	background-color: #FFFF00;
+}
+
 #miniCanvas{
 	position: absolute;
 	/*box-shadow: 7px 7px 8px #CCCCCC;*/

@@ -34,7 +34,6 @@ function MiniCanvasController($rootScope, $scope){
 		y2 = playerDto.y - height / 2; // offset to midpoint for picture
 		
 		var rot = playerGfx.gfx.attr("transform");
-		console.log(rot);
 		var rot2 = 360.0*(playerDto.rotation / (2*Math.PI))-90;
 		
 		var dx = x2 - x;
@@ -82,9 +81,6 @@ function MiniCanvasController($rootScope, $scope){
 	};
 
 	$scope.$on("BOARDUPDATE", function(event, boardState){
-		
-		logDebug("Board state received.");
-		console.log(boardState);
 
 		// mark players as not updated
 		for( var playerid in _playerGfx){

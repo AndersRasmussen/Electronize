@@ -2,6 +2,8 @@ var ControllerController = function($$websocketService) {
 	var it = this;
 	var connection;
 	var $stick;
+	var $kill;
+	var $love;
 	var $bigRedStick;
 	var pushedVelocity;
 	var oldPushedVelocity;
@@ -29,7 +31,25 @@ var ControllerController = function($$websocketService) {
 			e.pageY = e.originalEvent.touches[0].pageY;
 		    it.move(e);
 		});
+
+		$(document).bind('touchup mouseup', function() {
+			it.resetToCenter();
+		});
+
+		it.$kill.click(function() {
+			it.kill();
+		});
+
+		it.$love.click(function() {
+			it.love();
+		})
 	},
+	it.kill = function() {
+		$$websocketService.kill();
+	},
+	it.love = function() {
+		$$websocketService.love();
+	}
 
 	// Speed is between 0 and 1.
 	// Rotation is radians
@@ -97,6 +117,12 @@ var ControllerController = function($$websocketService) {
 			y = it.$stick.offset().top + it.$stick.height();
 
 		it.$bigRedStick.offset({left: x - (it.$bigRedStick.width() / 2), top: y - (it.$bigRedStick.height() / 2)});
+	},
+
+	it.resetToCenter = function() {
+		var brsWidth = it.$bigRedStick.width() / 2;
+		var brsHeight = it.$bigRedStick.height() / 2;
+		it.$bigRedStick.offset({left: it.$stick.offset().left + it.$stick.width() / 2 - brsWidth, top: it.$stick.offset().top + it.$stick.height() / 2 - brsHeight});
 	}
 
 	it.init();

@@ -99,9 +99,6 @@ function CanvasController($rootScope, $scope){
 	};
 
 	$scope.$on("BOARDUPDATE", function(event, boardState){
-		
-		logDebug("Board state received.");
-		console.log(boardState);
 
 		// mark players as not updated
 		for( var playerid in _playerGfx){
