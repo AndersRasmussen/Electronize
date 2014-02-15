@@ -4,5 +4,6 @@ function HighscoreController($rootScope, $scope){
 	$scope.$on("JOINED", function(event, player){
 		// player has joined
 		$scope.playerid = player.playerid;
+		$scope.nickname = player.nickname;
 	});
 }
