@@ -5,6 +5,8 @@ function CanvasController($rootScope, $scope){
 	var _paper;
 	var _circle;
 
+
+
 	var setMapSize = function(w, h){
 		logInfo("initializing canvas");
 		if( !_paper) {
