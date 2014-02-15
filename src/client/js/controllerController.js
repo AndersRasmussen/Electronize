@@ -27,24 +27,25 @@ var ControllerController = function($$websocketService) {
 			}
 		});
 
-		it.$stick.bind('touchmove touchstart', function(e) {
+		it.$stick.bind('touchmove', function(e) {
 			e.preventDefault();
 			e.pageX = e.originalEvent.touches[0].pageX;
 			e.pageY = e.originalEvent.touches[0].pageY;
 		    it.move(e);
 		});
 
-		$(document).bind('touchup mouseup', function() {
+		$(document).bind('touchend mouseup', function() {
 			it.resetToCenter();
 		});
 
-		it.$kill.click(function() {
+
+		it.$kill.on("click", function() {
 			it.kill();
 		});
 
-		it.$love.click(function() {
+		it.$love.on("click", function() {
 			it.love();
-		})
+		});
 	},
 	it.kill = function() {
 		$$websocketService.kill();
@@ -69,7 +70,7 @@ var ControllerController = function($$websocketService) {
 			vector.x = x - center.x;
 			vector.y = -(y - center.y);
 			$('.testDelta').text("("+vector.x+","+vector.y+")");
-			var divisor = center.x > center.y ? center.x : center.y;
+			var divisor = Math.min(it.$stick.width(), it.$stick.height());
 			velocity.speed = Math.min(Math.sqrt(vector.x * vector.x + vector.y * vector.y) / divisor, 1);
 			velocity.rotation = Math.atan2(vector.y, vector.x);
 			it.pushedVelocity = velocity;
@@ -125,6 +126,7 @@ var ControllerController = function($$websocketService) {
 		var brsWidth = it.$bigRedStick.width() / 2;
 		var brsHeight = it.$bigRedStick.height() / 2;
 		it.$bigRedStick.offset({left: it.$stick.offset().left + it.$stick.width() / 2 - brsWidth, top: it.$stick.offset().top + it.$stick.height() / 2 - brsHeight});
+		it.pushedVelocity.speed = 0;
 	}
 
 	it.init();
