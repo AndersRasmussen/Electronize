@@ -1,4 +1,6 @@
 function CanvasController($rootScope, $scope){
+	var mapWidth = 1400;
+	var mapHeight = 1000;
 	var expectedUpdateRate = 500;
 	logDebug("CanvasController initializing");
 	var _playerGfx = {};
@@ -25,27 +27,22 @@ function CanvasController($rootScope, $scope){
 	var updatePlayerPos = function(playerGfx, playerDto){
 		var width = playerGfx.gfx.attr("width");
 		var height = playerGfx.gfx.attr("height");
-		var x = playerGfx.gfx.attr("x");
-		var y = playerGfx.gfx.attr("y");
+
 		var midPointX = width / 2;
 		var midPointY = height / 2;
 
-		x2 = playerDto.x - width / 2; // offset to midpoint for picture
-		y2 = playerDto.y - height / 2; // offset to midpoint for picture
+		var x = playerDto.x;
+		var y = mapHeight - playerDto.y;  // flip y-coords
+		var x2 = x - midPointX; // offset to midpoint for picture
+		var y2 = y - midPointY; // offset to midpoint for picture
 		
-		var rot = playerGfx.gfx.attr("transform");
-		console.log(rot);
-		var rot2 = 360.0*(playerDto.rotation / (2*Math.PI))-90;
-		
-		var dx = x2 - x;
-		var dy = y2 - y;
-		var drot = rot2 - rot;
+		var rot2 = -360.0*(playerDto.rotation / (2*Math.PI))-90;
 
 		playerGfx.gfx.stop();
-		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(dx,dy,rot2,midPointX,midPointY)}, expectedUpdateRate, "linear");
+		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2,midPointX,midPointY)}, expectedUpdateRate, "linear");
 
 		// debug
-		_circle.attr({'cx': playerDto.x, 'cy': playerDto.y});
+		_circle.attr({'cx': x2, 'cy': y2});
 		_circle.toFront();
 
 
@@ -57,14 +54,19 @@ function CanvasController($rootScope, $scope){
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
 		var gfx = gfxRessources.createPlayerGfx(_paper);
+		var x = playerDto.x;
+		var y = mapHeight - playerDto.y;  // flip y-coords
 
 		var width = gfx.attr("width");
 		var height = gfx.attr("height");
-		console.log("Width: {0}".format(width));
+
 		var midPointX = width / 2;
 		var midPointY = height / 2;
-		var rot2 = 360.0*(playerDto.rotation / (2*Math.PI))-90;
-		gfx.attr({'transform': "T{0},{1}r{2},{3},{4}".format(playerDto.x,playerDto.y,rot2,midPointX,midPointY)});
+		var x2 = x - midPointX; // offset to midpoint for picture
+		var y2 = y - midPointY; // offset to midpoint for picture
+
+		var rot2 = -360.0 * (playerDto.rotation / (2*Math.PI))-90;
+		gfx.attr({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2,midPointX,midPointY)});
 		return { // playerGfx class
 			'newPlayer': playerDto,
 			'gfx': gfx,
@@ -119,7 +121,7 @@ function CanvasController($rootScope, $scope){
 
 	});
 
-	setMapSize(1400,1000);
+	setMapSize(mapWidth,mapHeight);
 
 	logDebug("CanvasController finished initializing");
 }
