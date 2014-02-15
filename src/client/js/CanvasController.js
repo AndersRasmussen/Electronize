@@ -81,7 +81,8 @@ function CanvasController($rootScope, $scope){
 			if( playerGfx.updated == false)
 			{
 				// remove player from board
-
+				playerGfx.gfx.remove();
+				// remove player from local list
 				_playerGfx[playerid] = undefined;
 			}
 		}
