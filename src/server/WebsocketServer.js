@@ -119,9 +119,10 @@ var WebsocketServer = function(httpServer){
 			});
 			
 			clientSocket.on('LOVE', function(otherPlayerId) {
-				var otherPlayer = getPlayer(otherPlayerId);
+//				var otherPlayer = getPlayer(otherPlayerId);
 				
-				console.log("Making love with " + otherPlayer.nickname);
+				
+//				console.log("Making love with " + otherPlayer.nickname);
 			});
 			
 			clientSocket.on('KILL', function() {
@@ -130,6 +131,9 @@ var WebsocketServer = function(httpServer){
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
 					
+					if (currentPlayer === otherPlayer)
+						return;	
+					
 					if (otherPlayer.killed || otherPlayer.mate)
 						return;
 
@@ -137,20 +141,23 @@ var WebsocketServer = function(httpServer){
 					var deltaY = otherPlayer.y - currentPlayer.y;
 
 					var direction = Math.atan2(deltaY, deltaX)
-					var distance = Math.sqrt(Math.pow(deltaX) + Math.pow(deltaY));
+					var distance = Math.sqrt(Math.pow(deltaX,2) + Math.pow(deltaY,2));
 
 					var minDirection = currentPlayer.rotation - config.playerSightWidth/2;
 					var maxDirection = currentPlayer.rotation + config.playerSightWidth/2;
+
+					console.log("Diretion", direction, "Min/Max", minDirection, maxDirection);
+					console.log("Distance", distance, "Sight", config.playerSightLength);
 
 					if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSightLength) {
 						otherPlayer.killed = true;
 						otherPlayer.speed = 0;
 						setTimeout(function() {
-							player.killed = false;
-							player.points = 0;
-							player.x = Math.floor(Math.random() * self.board.width) + 1;
-							player.y = Math.floor(Math.random() * self.board.height) + 1;
-						}, 3000);
+							otherPlayer.killed = false;
+							otherPlayer.points = 0;
+							otherPlayer.x = Math.floor(Math.random() * self.board.width) + 1;
+							otherPlayer.y = Math.floor(Math.random() * self.board.height) + 1;
+						}, 10000);
 						console.log("Kill " + otherPlayer.nickname);
 					}
 				}
@@ -188,7 +195,7 @@ var WebsocketServer = function(httpServer){
 	}
 	
 	var getPlayer = function(playerid) {
-		return self.board.players[otherPlayerId];
+		return self.board.players[playerid];
 	}
 	
 	var addPlayer = function(player) {
