@@ -85,11 +85,8 @@ var WebsocketServer = function(httpServer){
 					clientSocket.emit("BOARDFULL");
 				} else {
 					var player = makePlayer(clientSocket.id);
-
 					addPlayer(player);
-
 					clientSocket.emit('JOINED', { playerid: player.id, nickname: player.nickname });
-
 					logDebug("Player " + player.nickname + " (" + player.id + ") joined");
 				}
 			});
@@ -109,6 +106,12 @@ var WebsocketServer = function(httpServer){
 			
 			clientSocket.on('MOVE', function(velocity) {
 				var player = self.board.players[clientSocket.id];
+
+				// If the player is killed or are having sex, they can't move
+				if (player.killed || player.mate) {
+					return;
+				}
+				
 				player.rotation = velocity.rotation;
 				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
 				player.hasMoved = true;
@@ -121,24 +124,35 @@ var WebsocketServer = function(httpServer){
 				console.log("Making love with " + otherPlayer.nickname);
 			});
 			
-			clientSocket.on('KILL', function(otherPlayerId) {
+			clientSocket.on('KILL', function() {
 				var currentPlayer = getPlayer(clientSocket.id);
-				var otherPlayer = getPlayer(otherPlayerId);
 				
-				var deltaX = otherPlayer.x - currentPlayer.x;
-				var deltaY = otherPlayer.y - currentPlayer.y;
-				
-				var direction = Math.atan2(deltaY, deltaX)
-				var distance = Math.sqrt(Math.pow(deltaX) + Math.pow(deltaY));
-				
-				var minDirection = currentPlayer.rotation - config.playerSightWidth/2;
-				var maxDirection = currentPlayer.rotation + config.playerSightWidth/2;
-				
-				if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSightLength) {
-					otherPlayer.killed = true;
-					console.log("Kill " + otherPlayer.nickname);
-				} else {
-					console.warn("Can't kill. Player to far away...")
+				for (var playerid in self.board.players) {
+					var otherPlayer = getPlayer(playerid);
+					
+					if (otherPlayer.killed || otherPlayer.mate)
+						return;
+
+					var deltaX = otherPlayer.x - currentPlayer.x;
+					var deltaY = otherPlayer.y - currentPlayer.y;
+
+					var direction = Math.atan2(deltaY, deltaX)
+					var distance = Math.sqrt(Math.pow(deltaX) + Math.pow(deltaY));
+
+					var minDirection = currentPlayer.rotation - config.playerSightWidth/2;
+					var maxDirection = currentPlayer.rotation + config.playerSightWidth/2;
+
+					if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSightLength) {
+						otherPlayer.killed = true;
+						otherPlayer.speed = 0;
+						setTimeout(function() {
+							player.killed = false;
+							player.points = 0;
+							player.x = Math.floor(Math.random() * self.board.width) + 1;
+							player.y = Math.floor(Math.random() * self.board.height) + 1;
+						}, 3000);
+						console.log("Kill " + otherPlayer.nickname);
+					}
 				}
 			});
 
