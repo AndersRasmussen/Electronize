@@ -45,8 +45,8 @@ var ControllerController = function($$websocketService) {
 			vector.y = -(y - center.y);
 			$('.testDelta').text("("+vector.x+","+vector.y+")");
 			var divisor = center.x > center.y ? center.x : center.y;
-			velocity.speed = Math.sqrt(vector.x * vector.x, vector.y * vector.y) / divisor;
-			velocity.rotation = Math.atan2(vector.x, vector.y);
+			velocity.speed = Math.sqrt(vector.x * vector.x + vector.y * vector.y) / divisor;
+			velocity.rotation = Math.atan2(vector.y, vector.x);
 			it.pushedVelocity = velocity;
 	},
 	it.updateMove = function() {
