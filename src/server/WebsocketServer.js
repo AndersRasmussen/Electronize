@@ -20,7 +20,7 @@ var WebsocketServer = function(httpServer){
 		for (var playerId in self.board.players) {
 			var player = self.board.players[playerId];
 			
-			player.rotation = (player.rotation + (Math.random() * Math.PI/10)) % (Math.PI*2);
+			player.rotation = (player.rotation + (Math.random() * Math.PI/10));
 			player.speed = 0.5;
 			
 			var oldX = player.x;
@@ -32,26 +32,29 @@ var WebsocketServer = function(httpServer){
 			
 			player.x = player.x.clamp(config.playerWidth/2, self.board.width - config.playerWidth/2);
 			player.y = player.y.clamp(config.playerWidth/2, self.board.height - config.playerHeight/2);
-
-			logDebug("Moved " + player.nickname + " from (" + oldX + "," + oldY + ") to (" + player.x + "," + player.y + ")");	
 		}
 		broadcastBoardUpdate();
 	};
 	
+	var gameloopid = null;
 	var startGameloop = function() {
 		var last = Date.now();
-		setInterval(function() {
+		gameloopid = setInterval(function() {
 				var now = Date.now();
 				var delta = now - last;
 				last = now;
-				
 				gameloop(delta);
-			}, 500);
+			}, config.gameloopInterval);
+	}
+	
+	var stopGameloop = function() {
+		if (gameloopid != null) {
+			clearInterval(gameloopid);
+			gameloopid = null;
+		}
 	}
 
 	var init = function(){
-		var namefactory = new NameFactory();
-
 		startGameloop();
 		
 		logInfo('Setting up websockets...');
@@ -68,15 +71,7 @@ var WebsocketServer = function(httpServer){
 			//clientSocket.send('Hi new client!')
 			
 			clientSocket.on("JOIN", function() {
-				var player = {
-					id: clientSocket.id,
-					nickname: namefactory.generate(),
-					x: Math.floor(Math.random() * self.board.width) + 1,
-					y: Math.floor(Math.random() * self.board.height) + 1,
-					points: 0,
-					rotation: Math.random() * 2*Math.PI,
-					speed: 0
-				}
+				var player = makePlayer(clientSocket.id);
 				
 				addPlayer(player);
 				
@@ -105,6 +100,10 @@ var WebsocketServer = function(httpServer){
 				
 				logDebug("Move move move!!!");
 			});
+			
+			clientSocket.on('TASE', function(otherPlayerId) {
+				
+			});
 
 			clientSocket.on('disconnect', function(){
 				if (hasJoined(clientSocket.id)) {
@@ -116,6 +115,24 @@ var WebsocketServer = function(httpServer){
 
 			broadcastBoardUpdate();
 		});
+	}
+	
+	var namefactory = new NameFactory();
+	
+	var makePlayer = function(playerid) {
+		return {
+			id: playerid,
+			nickname: namefactory.generate(),
+			x: Math.floor(Math.random() * self.board.width) + 1,
+			y: Math.floor(Math.random() * self.board.height) + 1,
+			points: 0,
+			rotation: Math.random() * 2*Math.PI,
+			speed: 0,
+			kill: false,
+			mate: false,
+			tased: false,
+			tasing: null
+		};
 	}
 	
 	var addPlayer = function(player) {
@@ -137,7 +154,6 @@ var WebsocketServer = function(httpServer){
 		for (var socketId in clientSockets) {
 			clientSockets[socketId].emit("BOARDUPDATE", self.board);
 		}
-		logDebug("game update broadcasted");
 	};
 
 	return init();

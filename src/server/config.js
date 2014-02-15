@@ -4,9 +4,10 @@
 module.exports = {
 	"websocketServerUrl":"http://127.0.0.1",
 	"websocketServerPort":"8002",
+	"gameloopInterval": 500,
 	"maxSpeed":100,
 	"boardHeight": 1000,
 	"boardWidth": 1400,
-	"playerHeight": 10,
-	"playerWidth": 10
+	"playerHeight": 100,
+	"playerWidth": 100
 };
