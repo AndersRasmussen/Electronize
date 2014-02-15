@@ -47,7 +47,7 @@ function MiniCanvasController($rootScope, $scope){
 		var y2 = y - midPointY; // offset to midpoint for picture
 
 		var rot2 = -360.0*(playerDto.rotation / (2*Math.PI))-90;
-		
+
 		//var rot = playerGfx.gfx.attr("transform");
 		//console.log(rot);
 		//var dx = x2 - x;
@@ -68,7 +68,7 @@ function MiniCanvasController($rootScope, $scope){
 
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
-		var gfx = gfxRessources.createPlayerGfx(_paper);
+		var gfx = gfxRessources.createRandomPlayerGfx(_paper);
 		var x = playerDto.x;
 		var y = mapHeight - playerDto.y;  // flip y-coords
 
@@ -109,9 +109,6 @@ function MiniCanvasController($rootScope, $scope){
 	};
 
 	$scope.$on("BOARDUPDATE", function(event, boardState){
-		
-		logDebug("Board state received.");
-		console.log(boardState);
 
 		// mark players as not updated
 		for( var playerid in _playerGfx){

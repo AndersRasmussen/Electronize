@@ -12,7 +12,7 @@ data = {
 		y: 67.129,
 		rotation: 2.324, // orientation {0, 2pi}
 		speed: 2.04, // velocity [grid/sec]
-		kill: false, // first update since kill?
+		killed: false, // first update since kill?
 		mate: false  // first update since mate?
 	},
 	playerGfx: {

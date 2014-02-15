@@ -32,4 +32,10 @@ function WebsocketService($rootScope){
 	this.move = function(velocity) {
 		self.webSocket.emit("MOVE", velocity);
 	}
+	this.kill = function() {
+		self.webSocket.emit("KILL");
+	}
+	this.love = function() {
+		self.webSocket.emit("LOVE");
+	}
 }

@@ -7,6 +7,8 @@ function CanvasController($rootScope, $scope){
 	var _paper;
 	var _circle;
 
+
+
 	var setMapSize = function(w, h){
 		logInfo("initializing canvas");
 		if( !_paper) {
@@ -15,12 +17,29 @@ function CanvasController($rootScope, $scope){
 		_paper.setViewBox(0, 0, w, h, true);
 
 		var rect = _paper.rect(0, 0, w, h, 40);
-		rect.attr({"fill": "url('/img/grass.png')", "stroke": "#000", "stroke-width": "1px"});			
+		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});			
 
 		// debug
 		_circle = _paper.circle(0, 0, 10);
 		_circle.attr("fill", "#f00");
 		_circle.attr("stroke", "#fff");
+	}
+
+
+	var animateHeart = function () {
+		var image = _paper.image("img/heart.png", 60, 60, 124 /3 , 108 /3);
+
+		image.animate({
+			opacity: 0.3,
+			transform: "s2.4"
+		}, 300, "cubic-bezier(.26,1,.54,.56) ", function() {
+
+			image.animate({
+				opacity: 1,
+				transform: "s1"
+			}, 1000, "cubic-bezier(.26,1,.54,.56) ");
+
+		});
 	}
 
 	// update playerGfx
@@ -53,7 +72,7 @@ function CanvasController($rootScope, $scope){
 
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
-		var gfx = gfxRessources.createPlayerGfx(_paper);
+		var gfx = gfxRessources.createRandomPlayerGfx(_paper);
 		var x = playerDto.x;
 		var y = mapHeight - playerDto.y;  // flip y-coords
 
@@ -84,9 +103,6 @@ function CanvasController($rootScope, $scope){
 	};
 
 	$scope.$on("BOARDUPDATE", function(event, boardState){
-		
-		logDebug("Board state received.");
-		console.log(boardState);
 
 		// mark players as not updated
 		for( var playerid in _playerGfx){

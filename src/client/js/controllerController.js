@@ -2,6 +2,8 @@ var ControllerController = function($$websocketService) {
 	var it = this;
 	var connection;
 	var $stick;
+	var $kill;
+	var $love;
 	var $bigRedStick;
 	var pushedVelocity;
 	var oldPushedVelocity;
@@ -9,6 +11,9 @@ var ControllerController = function($$websocketService) {
 		$(document).ready(function() {
 			it.$stick = $('#navigation .stick');
 			it.$bigRedStick = $('#big-red-stick');
+			it.$kill = $('#kill');
+			it.$love = $('#love');
+			
 			it.decorateControls();
 			it.adjustNavigationRatio();
 			it.updateMove();
@@ -28,15 +33,33 @@ var ControllerController = function($$websocketService) {
 			e.pageY = e.originalEvent.touches[0].pageY;
 		    it.move(e);
 		});
+
+		$(document).bind('touchup mouseup', function() {
+			it.resetToCenter();
+		});
+
+		it.$kill.click(function() {
+			it.kill();
+		});
+
+		it.$love.click(function() {
+			it.love();
+		})
 	},
+	it.kill = function() {
+		$$websocketService.kill();
+	},
+	it.love = function() {
+		$$websocketService.love();
+	}
 
 	// Speed is between 0 and 1.
 	// Rotation is radians
 	it.move = function(e) {
 			var velocity = {};
 
-			var x = e.pageX - it.$stick.position().left;
-			var y = e.pageY - it.$stick.position().top; 
+			var x = e.pageX;
+			var y = e.pageY; 
 			
 			it.adjustBigRedStick(x, y);
 
@@ -70,8 +93,8 @@ var ControllerController = function($$websocketService) {
 	},
 	it.findStickCenter = function() {
 		return {
-			"x": it.$stick.width() / 2, 
-			"y": it.$stick.height() / 2 
+			"x": (it.$stick.width() / 2) + it.$stick.offset().left, 
+			"y": (it.$stick.height() / 2) + it.$stick.offset().top
 		};
 	},
 	it.adjustNavigationRatio = function() {
@@ -86,17 +109,22 @@ var ControllerController = function($$websocketService) {
 		var halfStickSize = it.$bigRedStick.height() / 2.5;
 		var quaterStickSize = halfStickSize / 2;
 		var offsetX, offsetY;
-		if(x > (it.$stick.width() - quaterStickSize) || x < (0 + halfStickSize)) {
-			offsetX = x < 0 + halfStickSize ? 0 + halfStickSize : it.$stick.width() - quaterStickSize;
-		} else {
-			offsetX = x;
-		}
-		if(y > (it.$stick.height() - quaterStickSize) || y < (0 + halfStickSize)) {
-			offsetY = y < 0 + halfStickSize ? 0 + halfStickSize : it.$stick.height() - quaterStickSize;
-		} else {
-			offsetY = y;
-		}
-			it.$bigRedStick.offset({left: offsetX - (it.$bigRedStick.width() / 2), top: offsetY - (it.$bigRedStick.height() / 2)});
+		if(x < it.$stick.offset().left)
+			x = it.$stick.offset().left;
+		if(x > it.$stick.offset().left + it.$stick.width())
+			x = it.$stick.offset().left + it.$stick.width()
+		if(y < it.$stick.offset().top)
+			y = it.$stick.offset().top;
+		if(y > it.$stick.offset().top + it.$stick.height())
+			y = it.$stick.offset().top + it.$stick.height();
+
+		it.$bigRedStick.offset({left: x - (it.$bigRedStick.width() / 2), top: y - (it.$bigRedStick.height() / 2)});
+	},
+
+	it.resetToCenter = function() {
+		var brsWidth = it.$bigRedStick.width() / 2;
+		var brsHeight = it.$bigRedStick.height() / 2;
+		it.$bigRedStick.offset({left: it.$stick.offset().left + it.$stick.width() / 2 - brsWidth, top: it.$stick.offset().top + it.$stick.height() / 2 - brsHeight});
 	}
 
 	it.init();
