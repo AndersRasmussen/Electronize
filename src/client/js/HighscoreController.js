@@ -14,11 +14,42 @@ function HighscoreController($rootScope, $scope){
 	});
 
 	var enableUpdateHighscore = function(){
+		var findHighestScore = function(players){
+			var maxPts = -9999999.0;
+			var bestIndex = -1;
+			for(var i = 0; i < players.length; i++)
+			{
+				if( players[i].points > maxPts)
+					bestIndex = i;
+			}
+			return (bestIndex > -1)? bestIndex: null;
+		}
+
 		setInterval(function(){
 			// sort players by score
+			if( _boardState == null )
+				return;
 
-			$scope.highscores = [];
+			var players = [];
+			var highscores = [];
+			for(var playerid in _boardState.players)
+				players.push(_boardState.players[playerid]);
+
+			for( var i = 0; i < 10; i++)
+			{
+				var bestIndex = findHighestScore(players);
+				if(bestIndex != null && bestIndex > -1){
+					var player = players[bestIndex];
+					highscores.push({nickname: player.nickname, score: player.points});
+					players.splice(bestIndex,1);
+				}
+				else
+					break;
+			}
+
+			$scope.highscores = highscores;
 		}, 2000);
 	}
+	enableUpdateHighscore();
 
 }
