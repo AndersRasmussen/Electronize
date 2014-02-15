@@ -5,9 +5,9 @@ gfxRessources = {
 	createRandomPlayerGfx: function(paper) {
 		var images = ["/img/rod-mand.png","/img/blu-mand.png","/img/blo-mand.png"];
 		
-		var image = Math.floor(Math.random() * images.length);
+		var image = images[Math.floor(Math.random() * images.length)];
 		
-		return rsr.image(image, 0, 0, 20, 10);
+		return paper.image(image, 0, 0, 20, 10);
 	},
 	
 	createBackgroundTile: function(tile) {
