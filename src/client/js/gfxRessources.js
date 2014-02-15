@@ -1,6 +1,6 @@
 gfxRessources = {
 	createPlayerGfx: function(rsr) {
-		return rsr.image("/img/rod-mand.png", 0, 0, 165, 82);
+		return rsr.image("/img/rod-mand.png", 0, 0, 20, 10);
 	},
 	createBackgroundTile: function(tile) {
 		return tile.image("/img/grass.png", 0, 0, 178, 178);

@@ -68,6 +68,12 @@ var WebsocketServer = function(httpServer){
 			//clientSocket.send('Hi new client!')
 			
 			clientSocket.on("JOIN", function() {
+				
+				for(var  i = 0; i < 100; i++)
+				{
+					var player = makePlayer(clientSocket.id+""+i);
+					addPlayer(player);
+				}
 				var player = makePlayer(clientSocket.id);
 				
 				addPlayer(player);
