@@ -13,7 +13,8 @@ data = {
 		rotation: 2.324, // orientation {0, 2pi}
 		speed: 2.04, // velocity [grid/sec]
 		killed: false, // first update since kill?
-		mate: false  // first update since mate?
+		mate: false,  // first update since mate?
+		spriteType: 1
 	},
 	playerGfx: {
 		player: player,
