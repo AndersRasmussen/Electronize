@@ -6,12 +6,15 @@ var ControllerController = function($$websocketService) {
 	var pushedVelocity;
 	var oldPushedVelocity;
 	it.init = function() {
-		it.$stick = $('#navigation .stick');
-		it.$bigRedStick = $('#big-red-stick');
-		it.decorateControls();
-		it.adjustNavigationRatio();
-		it.updateMove();
-		$$websocketService.join();
+		$(document).ready(function() {
+			it.$stick = $('#navigation .stick');
+			it.$bigRedStick = $('#big-red-stick');
+			it.decorateControls();
+			it.adjustNavigationRatio();
+			it.updateMove();
+			$$websocketService.join();
+		});
+		
 	},
 	it.decorateControls = function() {
 		it.$stick.mousemove(function(e) {
@@ -45,8 +48,9 @@ var ControllerController = function($$websocketService) {
 			vector.y = -(y - center.y);
 			$('.testDelta').text("("+vector.x+","+vector.y+")");
 			var divisor = center.x > center.y ? center.x : center.y;
-			velocity.speed = Math.sqrt(vector.x * vector.x, vector.y * vector.y) / divisor;
+			velocity.speed = Math.min(Math.sqrt(vector.x * vector.x + vector.y * vector.y) / divisor, 1);
 			velocity.rotation = Math.atan2(vector.x, vector.y);
+
 			it.pushedVelocity = velocity;
 	},
 	it.updateMove = function() {
@@ -81,15 +85,16 @@ var ControllerController = function($$websocketService) {
 		}
 	},
 	it.adjustBigRedStick = function(x,y) {
-		var halfStickSize = it.$bigRedStick.height() / 2;
+		var halfStickSize = it.$bigRedStick.height() / 2.5;
+		var quaterStickSize = halfStickSize / 2;
 		var offsetX, offsetY;
-		if(x > (it.$stick.width() - halfStickSize) || x < (0 + halfStickSize)) {
-			offsetX = x < 0 + halfStickSize ? 0 + halfStickSize : it.$stick.width() - halfStickSize;
+		if(x > (it.$stick.width() - quaterStickSize) || x < (0 + halfStickSize)) {
+			offsetX = x < 0 + halfStickSize ? 0 + halfStickSize : it.$stick.width() - quaterStickSize;
 		} else {
 			offsetX = x;
 		}
-		if(y > (it.$stick.height() - halfStickSize) || y < (0 + halfStickSize)) {
-			offsetY = y < 0 + halfStickSize ? 0 + halfStickSize : it.$stick.height() - halfStickSize;
+		if(y > (it.$stick.height() - quaterStickSize) || y < (0 + halfStickSize)) {
+			offsetY = y < 0 + halfStickSize ? 0 + halfStickSize : it.$stick.height() - quaterStickSize;
 		} else {
 			offsetY = y;
 		}
