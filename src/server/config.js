@@ -6,5 +6,7 @@ module.exports = {
 	"websocketServerPort":"8002",
 	"maxSpeed":10,
 	"boardHeight": 1000,
-	"boardWidth": 1400
+	"boardWidth": 1400,
+	"playerHeight": 10,
+	"playerWidth": 10
 };
