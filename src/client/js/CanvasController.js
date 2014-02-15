@@ -19,7 +19,7 @@ function CanvasController($rootScope, $scope){
 		circle.attr("stroke", "#fff");
 
 		var player = gfxRessources.createPlayerGfx(_paper);
-		//player.scale(0.5,0.5,0.5,0.5);
+		player.scale(0.5,0.5);
 	}
 
 	var createNewPlayer = function(){
