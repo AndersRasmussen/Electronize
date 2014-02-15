@@ -40,6 +40,8 @@ var WebsocketServer = function(httpServer){
 				
 				addPlayer(player);
 				
+				clientSocket.emit('JOINED', { playerid: clientSocket.id });
+				
 				logDebug("Player " + player.id + " joined");
 			});
 			
