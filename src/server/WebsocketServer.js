@@ -30,11 +30,6 @@ var WebsocketServer = function(httpServer){
 			
 			player.x = player.x.clamp(config.playerWidth/2, self.board.width - config.playerWidth/2);
 			player.y = player.y.clamp(config.playerWidth/2, self.board.height - config.playerHeight/2);
-
-			if (false && !player.hasMoved) {
-				player.rotation = (player.rotation + (Math.random() * Math.PI/2) - Math.PI/4);
- 				player.speed = (player.speed + Math.random()*0.2 - 0.1).clamp(0,1);
-			}
 		}
 	};
 	
@@ -114,7 +109,6 @@ var WebsocketServer = function(httpServer){
 				
 				player.rotation = velocity.rotation;
 				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
-				player.hasMoved = true;
 				logDebug("Move move move!!!");
 			});
 			
@@ -190,7 +184,6 @@ console.log("Kill ?")
 			mate: false,
 			tased: false,
 			tasing: null,
-			hasMoved: false,
 			spriteType: Math.floor(Math.random() * config.playerSpritesCount)
 		};
 	}

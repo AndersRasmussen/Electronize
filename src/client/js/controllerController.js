@@ -39,11 +39,12 @@ var ControllerController = function($$websocketService) {
 		});
 
 
-		it.$kill.on("click", function() {
+		it.$kill.on("touchstart", function() {
 			it.kill();
+			alert("kill");
 		});
 
-		it.$love.on("click", function() {
+		it.$love.on("touchstart", function() {
 			it.love();
 		});
 	},
@@ -83,9 +84,9 @@ var ControllerController = function($$websocketService) {
 			if(typeof it.oldPushedVelocity === 'undefined') {
 				it.oldPushedVelocity = it.pushedVelocity;
 			}
-			else if(it.oldPushedVelocity.speed === it.pushedVelocity.speed && it.oldPushedVelocity.rotation === it.pushedVelocity.rotation)
+			else if(it.oldPushedVelocity.speed === it.pushedVelocity.speed && it.oldPushedVelocity.rotation === it.pushedVelocity.rotation) {
 				return false;
-			else {
+			} else {
 				it.oldPushedVelocity = it.pushedVelocity;
 				$$websocketService.move(it.oldPushedVelocity);
 				console.log("Speed: " + it.oldPushedVelocity.speed + ", rotation: " + it.oldPushedVelocity.rotation);
