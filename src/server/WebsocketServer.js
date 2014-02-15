@@ -148,7 +148,7 @@ var WebsocketServer = function(httpServer){
 
 					var minDirection = currentPlayer.rotation - config.playerSightWidth/2;
 					var maxDirection = currentPlayer.rotation + config.playerSightWidth/2;
-console.log("Kill ?")
+
 					if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSightLength) {
 						otherPlayer.killed = true;
 						otherPlayer.speed = 0;
@@ -157,8 +157,9 @@ console.log("Kill ?")
 							otherPlayer.points = 0;
 							otherPlayer.x = Math.floor(Math.random() * self.board.width) + 1;
 							otherPlayer.y = Math.floor(Math.random() * self.board.height) + 1;
+							console.log(otherPlayer.nickname + " respawned!");
 						}, 10000);
-						console.log("Kill " + otherPlayer.nickname);
+						console.log(currentPlayer.nickname + " killed " + otherPlayer.nickname);
 					}
 				}
 			});
