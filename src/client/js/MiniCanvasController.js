@@ -1,6 +1,7 @@
 function MiniCanvasController($rootScope, $scope){
 	var mapWidth = 1400;
 	var mapHeight = 1000;
+	var minimapSize = 300;
 
 	var expectedUpdateRate = 500; // ms
 	var animationInterval = 50; // ms
@@ -16,10 +17,8 @@ function MiniCanvasController($rootScope, $scope){
 			_paper = new Raphael("miniCanvas");
 		}
 		_paper.setViewBox(0, 0, w, h, true);
-
 		var rect = _paper.rect(0, 0, w, h, 40);
-		rect.attr({"fill": "url('/img/grass.png')", "stroke": "#000", "stroke-width": "1px"});
-
+		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});
 		// debug
 		_circle = _paper.circle(0, 0, 10);
 		_circle.attr("fill", "#f00");
@@ -68,7 +67,7 @@ function MiniCanvasController($rootScope, $scope){
 
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
-		var gfx = gfxRessources.createRandomPlayerGfx(_paper);
+		var gfx = gfxRessources.createPlayerGfx(_paper, playerDto.spriteType);
 		var x = playerDto.x;
 		var y = mapHeight - playerDto.y;  // flip y-coords
 
@@ -97,8 +96,8 @@ function MiniCanvasController($rootScope, $scope){
 				var x = _devicePlayerGfx.gfx.matrix.x(0,0);
 				var y = _devicePlayerGfx.gfx.matrix.y(0,0);
 				//logDebug("I was detected ({0},{1})!".format(playerDto.x,playerDto.x.y));
-				var size = 300;
-				_paper.setViewBox(x - size/2, y-size/2, size, size);
+
+				_paper.setViewBox(x - minimapSize/2, y-minimapSize/2, minimapSize, minimapSize);
 			}
 		}, animationInterval);
 	};
