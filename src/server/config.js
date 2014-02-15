@@ -8,6 +8,6 @@ module.exports = {
 	"maxSpeed":100,
 	"boardHeight": 1000,
 	"boardWidth": 1400,
-	"playerHeight": 10,
-	"playerWidth": 10
+	"playerHeight": 100,
+	"playerWidth": 100
 };
