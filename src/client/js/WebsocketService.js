@@ -8,15 +8,16 @@ function WebsocketService(){
 		_mainController = mainController;
 	}
 
-	self.connect = function(connectionUrl, channelName){
+	self.connect = function(connectionUrl){
 		logDebug("Connecting to: {0} ({1})".format(connectionUrl, channelName));
 		self.channelName = channelName;
 		self.webSocket = io.connect(connectionUrl);
-		self.webSocket.on(channelName, function(data){
+		self.webSocket.on("JOIN", function(data){
 			logDebug("Recived data from server: {0}".format(data));
 			//TODO: tell anders about eventName, dto structure
 			eventReceived(data.eventName, data.dto);
-		});
+		})
+		.on()
 		logDebug("Connected to: {0} ({1})".format(connectionUrl, channelName));
 	}
 
