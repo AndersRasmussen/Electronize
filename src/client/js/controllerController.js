@@ -36,8 +36,8 @@ var ControllerController = function($$websocketService) {
 	it.move = function(e) {
 			var velocity = {};
 
-			var x = e.pageX - it.$stick.position().left;
-			var y = e.pageY - it.$stick.position().top; 
+			var x = e.pageX;
+			var y = e.pageY; 
 			
 			it.adjustBigRedStick(x, y);
 
@@ -71,8 +71,8 @@ var ControllerController = function($$websocketService) {
 	},
 	it.findStickCenter = function() {
 		return {
-			"x": it.$stick.width() / 2, 
-			"y": it.$stick.height() / 2 
+			"x": (it.$stick.width() / 2) + it.$stick.offset().left, 
+			"y": (it.$stick.height() / 2) + it.$stick.offset().top
 		};
 	},
 	it.adjustNavigationRatio = function() {
@@ -87,17 +87,16 @@ var ControllerController = function($$websocketService) {
 		var halfStickSize = it.$bigRedStick.height() / 2.5;
 		var quaterStickSize = halfStickSize / 2;
 		var offsetX, offsetY;
-		if(x > (it.$stick.width() - quaterStickSize) || x < (0 + halfStickSize)) {
-			offsetX = x < 0 + halfStickSize ? 0 + halfStickSize : it.$stick.width() - quaterStickSize;
-		} else {
-			offsetX = x;
-		}
-		if(y > (it.$stick.height() - quaterStickSize) || y < (0 + halfStickSize)) {
-			offsetY = y < 0 + halfStickSize ? 0 + halfStickSize : it.$stick.height() - quaterStickSize;
-		} else {
-			offsetY = y;
-		}
-			it.$bigRedStick.offset({left: offsetX - (it.$bigRedStick.width() / 2), top: offsetY - (it.$bigRedStick.height() / 2)});
+		if(x < it.$stick.offset().left)
+			x = it.$stick.offset().left;
+		if(x > it.$stick.offset().left + it.$stick.width())
+			x = it.$stick.offset().left + it.$stick.width()
+		if(y < it.$stick.offset().top)
+			y = it.$stick.offset().top;
+		if(y > it.$stick.offset().top + it.$stick.height())
+			y = it.$stick.offset().top + it.$stick.height();
+
+		it.$bigRedStick.offset({left: x - (it.$bigRedStick.width() / 2), top: y - (it.$bigRedStick.height() / 2)});
 	}
 
 	it.init();
