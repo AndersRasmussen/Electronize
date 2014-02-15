@@ -45,4 +45,8 @@ function WebsocketService(){
 		logDebug("Sending data to server: {0}".format(data));
 		self.webSocket.emit(self.channelName, data);
 	}
+	
+	this.join = function() {
+		self.webSocket.emit("join", {});
+	}
 }

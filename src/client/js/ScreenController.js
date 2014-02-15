@@ -2,6 +2,7 @@ function ScreenController($rootScope, $scope){
 	$scope.$on("APPLICATION_INITIALIZED", function(event){
 		// the communication is up, let's send something
 		$rootScope.websocketService.send("Hej");
+		$rootScope.websocketService.join();
 	});
 
 	this.broadcastEvent = function(eventname, args){
