@@ -10,6 +10,6 @@ function SoundManager(){
  	
 
 	function handleComplete(event) {		
-		createjs.Sound.play("mapsound");
+		createjs.Sound.play("mapsound", {interrupt: createjs.Sound.INTERRUPT_ANY, loop:-1});
 	}
 }
