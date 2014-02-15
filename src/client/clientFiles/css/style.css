@@ -28,7 +28,7 @@ svg { height: 100%; width: 100%; }
 	-webkit-perspective: 1000;
 	/* more specific animation properties here */
 }
-}
+
 
 #highscore{
 	position: absolute;

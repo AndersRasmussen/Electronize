@@ -1,4 +1,4 @@
-function ScreenController($rootScope, $scope, $$screenApplication, $$websocketService){
+function DeviceController($rootScope, $scope, $$deviceApplication, $$websocketService){
 	$scope.$on("COMMUNICATION_INITIALIZED", function(event, data){
 		// the communication is up, let's send something
 		$$websocketService.send("Hej");
