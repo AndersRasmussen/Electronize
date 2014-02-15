@@ -31,9 +31,10 @@ var HttpServer = function(){
 				if( location.pathname == '/config.json' && request.method == "GET" ){
 					// -------- DYNAMIC RESPONSE (json config file)------
 					response.writeHead(200, {'Content-Type': 'application/x-javascript'});
+					var host = request.headers.host.split(':');
 					var jsonString = JSON.stringify({
-						wsPort: self.settings.wsPort,
-						wsUrl: self.settings.wsUrl
+						wsPort: host[1],
+						wsUrl: 'http://'+host[0]
 					})
 					response.write(jsonString);
 					response.end();
