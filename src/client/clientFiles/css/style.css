@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'atari';
+    src: url('atarist8x16systemfont-webfont.eot');
+    src: url('atarist8x16systemfont-webfont.eot?#iefix') format('embedded-opentype'),
+         url('atarist8x16systemfont-webfont.woff') format('woff'),
+         url('atarist8x16systemfont-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	font-family: 'atari';
+}
+
 svg { height: 100%; width: 100%; }
 #gameCanvas{
 	position: absolute;
