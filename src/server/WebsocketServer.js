@@ -20,8 +20,7 @@ var WebsocketServer = function(httpServer){
 		for (var playerId in self.board.players) {
 			var player = self.board.players[playerId];
 			
-			
-			player.rotation = player.rotation + (Math.random() * Math.PI/10);
+			player.rotation = (player.rotation + (Math.random() * Math.PI/10)) % (Math.PI*2);
 			player.speed = 0.5;
 			
 			var oldX = player.x;
@@ -31,13 +30,13 @@ var WebsocketServer = function(httpServer){
 			player.x = player.x + deltaX;
 			player.y = player.y + deltaY;
 			
-			player.x = player.x.clamp(0, self.board.width);
-			player.y = player.y.clamp(0, self.board.height);
+			player.x = player.x.clamp(config.playerWidth/2, self.board.width - config.playerWidth/2);
+			player.y = player.y.clamp(config.playerWidth/2, self.board.height - config.playerHeight/2);
 
 			logDebug("Moved " + player.nickname + " from (" + oldX + "," + oldY + ") to (" + player.x + "," + player.y + ")");	
 		}
 		broadcastBoardUpdate();
-	}
+	};
 	
 	var startGameloop = function() {
 		var last = Date.now();

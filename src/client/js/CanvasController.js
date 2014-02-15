@@ -4,9 +4,10 @@ function CanvasController($rootScope, $scope){
 	var _paper;
 
 	var setMapSize = function(w, h){
-		logInfo("initializing canvas")
-		if( !_paper)
-			_paper = Raphael("gameCanvas");
+		logInfo("initializing canvas");
+		if( !_paper) {
+			_paper = new Raphael("gameCanvas");
+		}
 		_paper.setViewBox(0, 0, w, h, true);
 
 		var rect = _paper.rect(0, 0, w, h, 40);
@@ -31,9 +32,8 @@ function CanvasController($rootScope, $scope){
 
 		playerGfx.player = playerGfx.newPlayer;
 		playerGfx.newPlayer = playerDto;
-
 		playerGfx.updated = true;
-	}
+	};
 
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
@@ -43,16 +43,16 @@ function CanvasController($rootScope, $scope){
 			'gfx': gfx,
 			'update': false
 		}
-	}
+	};
 
 	var autoRender = function(){
 		var timer = setInterval(renderPaper,50);
-	}
+	};
 
 	var renderPaper = function(boardState){
 		// patches the scene with new objects
 		logDebug(".");
-	}
+	};
 
 	$scope.$on("BOARDUPDATE", function(event, boardState){
 		

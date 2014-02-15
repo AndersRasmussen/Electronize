@@ -13,10 +13,11 @@ body {
 }
 
 svg { height: 100%; width: 100%; }
+
 #gameCanvas{
 	position: absolute;
 	/*box-shadow: 7px 7px 8px #CCCCCC;*/
-	background-color: #AAAAAA;
+	background-color: #131313;
 	top: 0px;
 	bottom: 0px;
 	left: 250px;

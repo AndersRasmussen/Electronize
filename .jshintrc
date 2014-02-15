@@ -7,7 +7,7 @@
   "noarg": true,
   "nonew": true,
   "sub": true,
-  "undef": true,
+  "undef": false,
   "unused": true,
   "boss": true,
   "eqnull": true,

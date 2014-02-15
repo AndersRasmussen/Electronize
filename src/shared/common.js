@@ -1,6 +1,6 @@
 // this module modifies the standard scope to contain utility functions
 // make client side javacript accept the module.export declaration(s)
-if (typeof module == "undefined") {
+if (typeof module === "undefined") {
   module = {};
 }
 if (!module.exports) {
@@ -30,7 +30,7 @@ HashList = function() {
   var self, _items;
   self = this;
   this.length = 0;
-  _items = new Object();
+  _items = {};
   this.remove = function(in_key) {
     if (_items.hasOwnProperty(in_key)) {
       self.length--;
@@ -54,7 +54,7 @@ HashList = function() {
     return _items.hasOwnProperty(in_key);
   };
   this.clear = function() {
-    _items = new Object();
+    _items = {};
     self.length = 0;
     return this;
   };
