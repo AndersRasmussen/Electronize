@@ -18,7 +18,8 @@ data = {
 	playerGfx: {
 		player: player,
 		newPlayer: player,
-		gfx: gameGfx
+		gfx: gameGfx,
+		updated: false // has the player been updated in this trip
 	},
 	gameGfx: {
 		gfx: raphaelGfx,
