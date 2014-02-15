@@ -2,7 +2,7 @@ function ScreenController($rootScope, $scope, $$screenApplication, $$websocketSe
 	$scope.$on("COMMUNICATION_INITIALIZED", function(event, data){
 		// the communication is up, let's send something
 		$$websocketService.send("Hej");
-		$$websocketService.join();
+		//$$websocketService.join();
 	});
 
 	$rootScope.broadcastEvent = function(eventname, args){
