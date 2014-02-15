@@ -75,11 +75,11 @@ var WebsocketServer = function(httpServer){
 			
 			clientSocket.on("JOIN", function() {
 				
-				for(var  i = 0; i < 50; i++)
-				{
-					var player = makePlayer(clientSocket.id+""+i);
-					addPlayer(player);
-				}
+//				for(var  i = 0; i < 50; i++)
+//				{
+//					var player = makePlayer(clientSocket.id+""+i);
+//					addPlayer(player);
+//				}
 
 				if (isBoardFull()) {
 					clientSocket.emit("BOARDFULL");

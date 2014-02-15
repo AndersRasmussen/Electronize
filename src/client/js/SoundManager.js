@@ -5,7 +5,7 @@ function SoundManager(){
                    
             queue = new createjs.LoadQueue(false);
 			queue.installPlugin(createjs.Sound);
-			queue.installPlugin(createjs.)
+			//queue.installPlugin(createjs.)
 			queue.addEventListener("complete", handleComplete);
 			queue.loadManifest([{id:"mapsound", src:"../sound/mapsound.mp3"}]);
 			
