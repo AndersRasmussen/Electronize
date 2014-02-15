@@ -31,7 +31,7 @@ var WebsocketServer = function(httpServer){
 			player.x = player.x.clamp(config.playerWidth/2, self.board.width - config.playerWidth/2);
 			player.y = player.y.clamp(config.playerWidth/2, self.board.height - config.playerHeight/2);
 
-			if (!player.hasMoved) {
+			if (false && !player.hasMoved) {
 				player.rotation = (player.rotation + (Math.random() * Math.PI/2) - Math.PI/4);
  				player.speed = (player.speed + Math.random()*0.2 - 0.1).clamp(0,1);
 			}
@@ -108,7 +108,7 @@ var WebsocketServer = function(httpServer){
 				var player = self.board.players[clientSocket.id];
 
 				// If the player is killed or are having sex, they can't move
-				if (player.killed || player.mate) {
+				if (isPlayerStalled(player)) {
 					return;
 				}
 				
@@ -119,6 +119,8 @@ var WebsocketServer = function(httpServer){
 			});
 			
 			clientSocket.on('LOVE', function(otherPlayerId) {
+				if (isPlayerStalled(currentPlayer))
+					return;
 //				var otherPlayer = getPlayer(otherPlayerId);
 				
 				
@@ -127,13 +129,15 @@ var WebsocketServer = function(httpServer){
 			
 			clientSocket.on('KILL', function() {
 				var currentPlayer = getPlayer(clientSocket.id);
+				if (isPlayerStalled(currentPlayer))
+					return;
 
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
 					if (currentPlayer == otherPlayer)
 						continue;
 					
-					if (otherPlayer.killed || otherPlayer.mate)
+					if (isPlayerStalled(otherPlayer))
 						continue;
 
 					var deltaX = otherPlayer.x - currentPlayer.x;
@@ -204,6 +208,10 @@ console.log("Kill ?")
 		delete self.board.players[playerId];
 		broadcastBoardUpdate();
 		logDebug("Removed player " + playerId);
+	}
+	
+	var isPlayerStalled = function(player) {
+		return player.killed || player.mate;
 	}
 	
 	var hasJoined = function(playerId) {

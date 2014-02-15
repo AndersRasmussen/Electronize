@@ -12,7 +12,7 @@ module.exports = {
 	"boardWidth": 1400,
 	"playerHeight": 100,
 	"playerWidth": 100,
-	"playerSightWidth": Math.PI,
-	"playerSightLength": 2000,
+	"playerSightWidth": Math.PI/2,
+	"playerSightLength": 200,
 	"playerSpritesCount": 7
 };
