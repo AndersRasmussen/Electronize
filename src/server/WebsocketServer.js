@@ -19,10 +19,7 @@ var WebsocketServer = function(httpServer){
 		var deltaSpeed = delta/1000;
 		for (var playerId in self.board.players) {
 			var player = self.board.players[playerId];
-			
-			player.rotation = (player.rotation + (Math.random() * Math.PI/10));
-			player.speed = 0.5;
-			
+						
 			var oldX = player.x;
 			var oldY = player.y;
 			var deltaX = Math.cos(player.rotation)*(player.speed * deltaSpeed * config.maxSpeed);
@@ -126,7 +123,7 @@ var WebsocketServer = function(httpServer){
 			x: Math.floor(Math.random() * self.board.width) + 1,
 			y: Math.floor(Math.random() * self.board.height) + 1,
 			points: 0,
-			rotation: Math.random() * 2*Math.PI,
+			rotation: Math.PI/2,
 			speed: 0,
 			kill: false,
 			mate: false,
