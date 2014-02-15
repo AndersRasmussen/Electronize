@@ -15,10 +15,9 @@ function CanvasController($rootScope, $scope){
 		var rect = _paper.rect(0, 0, w, h, 40);
 		rect.attr({"fill": "#09F", "stroke": "#000", "stroke-width": "1px"});
 
+		// debug
 		_circle = _paper.circle(0, 0, 10);
-		// _circle the fill attribute of the circle to red (#f00)
 		_circle.attr("fill", "#f00");
-		// Sets the stroke attribute of the circle to white
 		_circle.attr("stroke", "#fff");
 	}
 
@@ -33,7 +32,6 @@ function CanvasController($rootScope, $scope){
 
 		x2 = playerDto.x - width / 2; // offset to midpoint for picture
 		y2 = playerDto.y - height / 2; // offset to midpoint for picture
-
 		
 		var rot = playerGfx.gfx.attr("transform");
 		console.log(rot);
@@ -43,9 +41,10 @@ function CanvasController($rootScope, $scope){
 		var dy = y2 - y;
 		var drot = rot2 - rot;
 
-		//playerGfx.gfx.stop();
-		playerGfx.gfx.attr({'transform': "T{0},{1}r{2},{3},{4}".format(dx,dy,rot2,midPointX,midPointY)});//, expectedUpdateRate, "linear");
+		playerGfx.gfx.stop();
+		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(dx,dy,rot2,midPointX,midPointY)}, expectedUpdateRate, "linear");
 
+		// debug
 		_circle.attr({'cx': playerDto.x, 'cy': playerDto.y});
 		_circle.toFront();
 
@@ -65,7 +64,7 @@ function CanvasController($rootScope, $scope){
 		var midPointX = width / 2;
 		var midPointY = height / 2;
 		var rot2 = 360.0*(playerDto.rotation / (2*Math.PI))-90;
-		gfx.attr({'transform': "T{0},{1}r0,{3},{4}".format(playerDto.x,playerDto.y,rot2,midPointX,midPointY)});
+		gfx.attr({'transform': "T{0},{1}r{2},{3},{4}".format(playerDto.x,playerDto.y,rot2,midPointX,midPointY)});
 		return { // playerGfx class
 			'newPlayer': playerDto,
 			'gfx': gfx,
