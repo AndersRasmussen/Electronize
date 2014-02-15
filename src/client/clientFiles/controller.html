@@ -15,31 +15,12 @@
 		<meta name="viewport" content="width=320,user-scalable=0,maximum-scale=1.0" />
 		<link rel="stylesheet" type="text/css" href="css/controller.css" />
 		<script type="text/javascript">
-			window.blockMenuHeaderScroll = false;
-			$(window).on('touchstart', function(e)
-			{
-			    if ($(e.target).closest('#mobileMenuHeader').length == 1)
-			    {
-			        blockMenuHeaderScroll = true;
-			    }
-			});
-			$(window).on('touchend', function()
-			{
-			    blockMenuHeaderScroll = false;
-			});
-			$(window).on('touchmove', function(e)
-			{
-			    if (blockMenuHeaderScroll)
-			    {
-			        e.preventDefault();
-			    }
-			});
 		</script>
 	</head>
 	<body ng-controller="ScreenController">
 		<script type="text/javascript" src="NGJ2014.min.js"></script>
 		<div id="DEBUG" >
-				Delta [sek]: <span class="testDelta" style="background-color: #0099FF"></span>
+				(x, y) <span class="testDelta" style="background-color: #0099FF"></span>
 		</div>
 		<div class="controller-body" ng-controller="ControllerController">
 			<div id="navigation">
