@@ -3,5 +3,8 @@
 //		config.websocketServerPort
 module.exports = {
 	"websocketServerUrl":"http://127.0.0.1",
-	"websocketServerPort":"8002"
+	"websocketServerPort":"8002",
+	"maxSpeed":10,
+	"boardHeight": 1000,
+	"boardWidth": 1400
 };

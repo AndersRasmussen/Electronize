@@ -7,43 +7,54 @@ var WebsocketServer = function(httpServer){
 	self.webSocket = null;
 	
 	self.board = {
-		height: 100,
-		width: 140,
+		height: config.boardHeight,
+		width: config.boardWidth,
 		players: {}
 	};
 	
 	// contains all the connected client sockets
 	var clientSockets = {}
 
-
-	var gameloop = function() {
-		
+	var gameloop = function(delta) {
+		var deltaSpeed = delta/1000;
 		for (var playerId in self.board.players) {
 			var player = self.board.players[playerId];
 			
+			
 			player.rotation = player.rotation + (Math.random() * Math.PI/4);
-			player.speed = 2;
+			player.speed = 0.5;
 			
 			var oldX = player.x;
 			var oldY = player.y;
-			var deltaX = Math.cos(player.rotation)*player.speed;
-			var deltaY = Math.sin(player.rotation)*player.speed;
+			var deltaX = Math.cos(player.rotation)*(player.speed * deltaSpeed * config.maxSpeed);
+			var deltaY = Math.sin(player.rotation)*(player.speed * deltaSpeed * config.maxSpeed);
 			player.x = player.x + deltaX;
 			player.y = player.y + deltaY;
 			
 			player.x = player.x.clamp(0, self.board.width);
 			player.y = player.y.clamp(0, self.board.height);
 
-			logDebug("Moved " + player.nickname + " from (" + oldX + "," + oldY + ") to (" + player.x + "," + player.y + ")");
-			
+			logDebug("Moved " + player.nickname + " from (" + oldX + "," + oldY + ") to (" + player.x + "," + player.y + ")");	
 		}
 		broadcastBoardUpdate();
+	}
+	
+	var startGameloop = function() {
+		var last = Date.now();
+		setInterval(function() {
+				var now = Date.now();
+				var delta = now - last;
+				last = now;
+				
+				gameloop(delta);
+			}, 500);
 	}
 
 	var init = function(){
 		var namefactory = new NameFactory();
 
-		setInterval(gameloop, 500);
+		startGameloop();
+		
 		logInfo('Setting up websockets...');
 		self.webSocket = socketIO.listen(httpServer);
 		self.webSocket.set('log level', 1);
@@ -89,7 +100,9 @@ var WebsocketServer = function(httpServer){
 			});
 			
 			clientSocket.on('MOVE', function(velocity) {
-				
+				var player = self.board.players[clientSocket.id];
+				player.rotation = velocity.rotation;
+				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
 				
 				logDebug("Move move move!!!");
 			});
