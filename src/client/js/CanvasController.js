@@ -13,7 +13,7 @@ function CanvasController($rootScope, $scope){
 		_paper.setViewBox(0, 0, w, h, true);
 
 		var rect = _paper.rect(0, 0, w, h, 40);
-		rect.attr({"fill": "#09F", "stroke": "#000", "stroke-width": "1px"});
+		rect.attr({"fill": "url('/img/grass.png')", "stroke": "#000", "stroke-width": "1px"});			
 
 		// debug
 		_circle = _paper.circle(0, 0, 10);
