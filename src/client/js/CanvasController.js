@@ -17,6 +17,8 @@ function CanvasController($rootScope, $scope){
 		circle.attr("fill", "#f00");
 		// Sets the stroke attribute of the circle to white
 		circle.attr("stroke", "#fff");
+
+		var player = gfxRessources.createPlayerGfx(_paper);
 	}
 
 	var createNewPlayer = function(){
