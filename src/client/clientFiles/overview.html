@@ -22,11 +22,12 @@
 	<body ng-controller="ScreenController">
 		<script type="text/javascript" src="NGJ2014.min.js"></script>
 		<div id="highscore" ng-controller="HighscoreController">
-			<p>PlayerId:<br/>
-			{{playerid}}</p>
-
-			<p>Nickname:<br />
-			{{nickname}}</p>
+			<h2>Highscore</h2>
+			<ol>
+				<li ng-repeat="highscore in highscores">
+					{{highscore.nickname}}: {{highscore.score}}
+				</li>
+			</ol>
 		</div>
 		<div id="gameCanvas" ng-controller="CanvasController">
 		</div>

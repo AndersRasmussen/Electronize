@@ -5,7 +5,7 @@ data = {
 		players: []
 	},
 	player: {
-		nick: "Jonas",
+		nickname: "Jonas",
 		id: "<socket id>",
 		points: 199,
 		x: 17.234,

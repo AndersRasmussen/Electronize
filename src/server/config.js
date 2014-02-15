@@ -14,5 +14,6 @@ module.exports = {
 	"playerWidth": 100,
 	"playerSightWidth": Math.PI/2,
 	"playerSightLength": 200,
-	"playerSpritesCount": 7
+	"playerSpritesCount": 7,
+	"pointsKill": 1000
 };
