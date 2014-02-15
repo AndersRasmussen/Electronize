@@ -23,6 +23,11 @@ svg { height: 100%; width: 100%; }
 	left: 250px;
 	right: 0px;
 	padding: 10px;
+	-webkit-transform: translate3d(0, 0, 0);
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
+	/* more specific animation properties here */
+}
 }
 
 #highscore{
