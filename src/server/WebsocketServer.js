@@ -24,13 +24,13 @@ var WebsocketServer = function(httpServer){
 			var oldY = player.y;
 			var deltaX = Math.cos(player.rotation)*(player.speed * deltaSpeed * config.maxSpeed);
 			var deltaY = Math.sin(player.rotation)*(player.speed * deltaSpeed * config.maxSpeed);
+			
 			player.x = player.x + deltaX;
 			player.y = player.y + deltaY;
 			
 			player.x = player.x.clamp(config.playerWidth/2, self.board.width - config.playerWidth/2);
 			player.y = player.y.clamp(config.playerWidth/2, self.board.height - config.playerHeight/2);
 		}
-		broadcastBoardUpdate();
 	};
 	
 	var gameloopid = null;
@@ -53,6 +53,7 @@ var WebsocketServer = function(httpServer){
 
 	var init = function(){
 		startGameloop();
+		setInterval(broadcastBoardUpdate, config.boardUpdateInterval);
 		
 		logInfo('Setting up websockets...');
 		self.webSocket = socketIO.listen(httpServer);
@@ -68,13 +69,18 @@ var WebsocketServer = function(httpServer){
 			//clientSocket.send('Hi new client!')
 			
 			clientSocket.on("JOIN", function() {
-				var player = makePlayer(clientSocket.id);
 				
-				addPlayer(player);
-				
-				clientSocket.emit('JOINED', { playerid: player.id, nickname: player.nickname });
-				
-				logDebug("Player " + player.nickname + " (" + player.id + ") joined");
+				if (isBoardFull()) {
+					clientSocket.emit("BOARDFULL");
+				} else {
+					var player = makePlayer(clientSocket.id);
+
+					addPlayer(player);
+
+					clientSocket.emit('JOINED', { playerid: player.id, nickname: player.nickname });
+
+					logDebug("Player " + player.nickname + " (" + player.id + ") joined");
+				}
 			});
 			
 			clientSocket.on("LEAVE", function() {
@@ -96,6 +102,12 @@ var WebsocketServer = function(httpServer){
 				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
 				
 				logDebug("Move move move!!!");
+			});
+			
+			clientSocket.on('LOVE', function(otherPlayerId) {
+				var otherPlayer = getPlayer(otherPlayerId);
+				
+				console.log("Making love with " + otherPlayer.nickname);
 			});
 			
 			clientSocket.on('TASE', function(otherPlayerId) {
@@ -132,6 +144,10 @@ var WebsocketServer = function(httpServer){
 		};
 	}
 	
+	var getPlayer = function(playerid) {
+		return self.board.players[otherPlayerId];
+	}
+	
 	var addPlayer = function(player) {
 		self.board.players[player.id] = player;
 		broadcastBoardUpdate();
@@ -145,6 +161,10 @@ var WebsocketServer = function(httpServer){
 	
 	var hasJoined = function(playerId) {
 		return self.board.players[playerId] != null;
+	}
+	
+	var isBoardFull = function() {
+		return Object.keys(self.board.players).length >= config.maxPlayer;
 	}
 	
 	var broadcastBoardUpdate = function() {
