@@ -16,19 +16,15 @@ module.exports = function(grunt){
 				]
 			}
 		},
-		uglify: {
+		concat: {
 			options: {
+				stripBanners: true,
 				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-				// use beautify for debugging
-				beautify: { 
-					width: 80,
-					beautify: true
-				}
 			},
-			clientBuild: {
-				// complile all client side javascript into a single js-file
-				files: {'build/client/<%= pkg.name %>.min.js': ['src/shared/*.js','src/client/js/*.js']}
-			}
+			dist: {
+				src: ['src/shared/*.js','src/client/js/*.js'],
+				dest: 'build/client/<%= pkg.name %>.min.js',
+			},
 		},
 		mochaTest: {
 			test: {
@@ -56,9 +52,10 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	//Default task(s).
-	grunt.registerTask('default', ['copy', 'uglify', 'jshint']);
+	grunt.registerTask('default', ['copy', 'concat', 'jshint']);
 	//other tasks
 	grunt.registerTask('test', ['jshint','mochaTest']);
 	//grunt.registerTask('watch', ['watch'])
