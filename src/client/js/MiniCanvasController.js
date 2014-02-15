@@ -56,7 +56,7 @@ function MiniCanvasController($rootScope, $scope){
 
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
-		var gfx = gfxRessources.createPlayerGfx(_paper);
+		var gfx = gfxRessources.createRandomPlayerGfx(_paper);
 
 		var width = gfx.attr("width");
 		var height = gfx.attr("height");

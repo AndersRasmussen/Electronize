@@ -13,12 +13,29 @@ function CanvasController($rootScope, $scope){
 		_paper.setViewBox(0, 0, w, h, true);
 
 		var rect = _paper.rect(0, 0, w, h, 40);
-		rect.attr({"fill": "url('/img/grass.png')", "stroke": "#000", "stroke-width": "1px"});			
+		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});			
 
 		// debug
 		_circle = _paper.circle(0, 0, 10);
 		_circle.attr("fill", "#f00");
 		_circle.attr("stroke", "#fff");
+	}
+
+
+	var animateHeart = function () {
+		var image = _paper.image("http://i.imgur.com/8SQUTpo.png", 60, 60, 124 /3 , 108 /3);
+
+		image.animate({
+			opacity: 0.3,
+			transform: "s2.4"
+		}, 300, "cubic-bezier(.26,1,.54,.56) ", function() {
+
+			image.animate({
+				opacity: 1,
+				transform: "s1"
+			}, 1000, "cubic-bezier(.26,1,.54,.56) ");
+
+		});
 	}
 
 	// update playerGfx
@@ -56,7 +73,7 @@ function CanvasController($rootScope, $scope){
 
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
-		var gfx = gfxRessources.createPlayerGfx(_paper);
+		var gfx = gfxRessources.createRandomPlayerGfx(_paper);
 
 		var width = gfx.attr("width");
 		var height = gfx.attr("height");

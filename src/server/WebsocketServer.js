@@ -32,8 +32,8 @@ var WebsocketServer = function(httpServer){
 			player.y = player.y.clamp(config.playerWidth/2, self.board.height - config.playerHeight/2);
 
 			if (!player.hasMoved) {
-				player.rotation = (player.rotation + (Math.random() * Math.PI/10));
- 				player.speed = 0.5;
+				player.rotation = (player.rotation + (Math.random() * Math.PI/2) - Math.PI/4);
+ 				player.speed = (player.speed + Math.random()*0.2 - 0.1).clamp(0,1);
 			}
 		}
 	};
@@ -75,11 +75,11 @@ var WebsocketServer = function(httpServer){
 			
 			clientSocket.on("JOIN", function() {
 				
-				//for(var  i = 0; i < 100; i++)
-				//{
-				//	var player = makePlayer(clientSocket.id+""+i);
-				//	addPlayer(player);
-				//}
+				for(var  i = 0; i < 50; i++)
+				{
+					var player = makePlayer(clientSocket.id+""+i);
+					addPlayer(player);
+				}
 
 				if (isBoardFull()) {
 					clientSocket.emit("BOARDFULL");
@@ -121,8 +121,25 @@ var WebsocketServer = function(httpServer){
 				console.log("Making love with " + otherPlayer.nickname);
 			});
 			
-			clientSocket.on('TASE', function(otherPlayerId) {
+			clientSocket.on('KILL', function(otherPlayerId) {
+				var currentPlayer = getPlayer(clientSocket.id);
+				var otherPlayer = getPlayer(otherPlayerId);
 				
+				var deltaX = otherPlayer.x - currentPlayer.x;
+				var deltaY = otherPlayer.y - currentPlayer.y;
+				
+				var direction = Math.atan2(deltaY, deltaX)
+				var distance = Math.sqrt(Math.pow(deltaX) + Math.pow(deltaY));
+				
+				var minDirection = currentPlayer.rotation - config.playerSightWidth/2;
+				var maxDirection = currentPlayer.rotation + config.playerSightWidth/2;
+				
+				if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSightLength) {
+					otherPlayer.killed = true;
+					console.log("Kill " + otherPlayer.nickname);
+				} else {
+					console.warn("Can't kill. Player to far away...")
+				}
 			});
 
 			clientSocket.on('disconnect', function(){
@@ -148,7 +165,7 @@ var WebsocketServer = function(httpServer){
 			points: 0,
 			rotation: Math.PI/2,
 			speed: 0,
-			kill: false,
+			killed: false,
 			mate: false,
 			tased: false,
 			tasing: null,
