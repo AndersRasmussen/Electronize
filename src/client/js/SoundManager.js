@@ -2,7 +2,7 @@ function SoundManager(){
 
 
 	this.init = function() {             	
-            queue = new createjs.LoadQueue(true);
+            queue = new createjs.LoadQueue(false);
 			queue.installPlugin(createjs.Sound);			
 			queue.addEventListener("complete", handleComplete);
 			queue.loadManifest([{id:"mapsound", src:"../sound/bgsound.mp3"}]);		
@@ -10,6 +10,6 @@ function SoundManager(){
  	
 
 	function handleComplete(event) {		
-		createjs.Sound.play("mapsound", loop:-1);
+		createjs.Sound.play("mapsound");
 	}
 }
