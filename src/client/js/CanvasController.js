@@ -1,5 +1,6 @@
 function CanvasController($rootScope, $scope){
 	logDebug("CanvasController initializing");
+	var _players = [];
 	var _paper;
 
 	var setMapSize = function(w, h){
