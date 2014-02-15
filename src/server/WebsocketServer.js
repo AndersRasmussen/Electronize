@@ -71,12 +71,12 @@ var WebsocketServer = function(httpServer){
 	
 	var addPlayer = function(player) {
 		self.board.players[player.id] = player;
-		self.broadcastBoardUpdate();
+		broadcastBoardUpdate();
 	};
 	
 	var removePlayer = function(playerId) {
 		delete self.board.players[playerId];
-		self.broadcastBoardUpdate();
+		broadcastBoardUpdate();
 		logDebug("Removed player " + playerId);
 	}
 	
