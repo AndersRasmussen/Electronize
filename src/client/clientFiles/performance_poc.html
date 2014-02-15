@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>GameJam boiler plate</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+		<script type="text/javascript" src="vendor/google.fastbutton.js"></script>	
+		<script type="text/javascript" src="vendor/jquery.google.fastbutton.js"></script>	
+
+		<meta name="viewport" content="width=320,user-scalable=0,maximum-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="css/poc_ws_performance.css" />
+	</head>
+	<body>
+		<script type="text/javascript" src="NGJ2014.min.js"></script>
+		Delta [sek]: <span class="testDelta" style="background-color: #0099FF"></span>
+		<div class="body" style="width: 320px;">
+			<div class="buttons">
+				<div>
+					<div class="buttonSpace">&nbsp;</div>
+					<div class="buttonSpace button" data-direction="up">Up</div>
+					<div class="buttonSpace">&nbsp;</div>
+				</div>
+				<div>
+					<div class="buttonSpace button" data-direction="left">Left</div>
+					<div class="buttonSpace">&nbsp;</div>
+					<div class="buttonSpace button" data-direction="right">Right</div>
+				</div>
+				<div>
+					<div class="buttonSpace">&nbsp;</div>
+					<div class="buttonSpace button" data-direction="down">Down</div>
+					<div class="buttonSpace">&nbsp;</div>
+				</div>
+			</div>
+			<div id="canvas">
+
+			</div>
+		</div>
+	</body>
+</html>

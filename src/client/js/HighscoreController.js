@@ -1,0 +1,3 @@
+function HighscoreController($rootScope, $scope){
+
+}
