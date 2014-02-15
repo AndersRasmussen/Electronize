@@ -1,5 +1,6 @@
 var socketIO = require('socket.io')
 var config = require('./config')
+var NameFactory = require('./NameFactory.js')
 
 var WebsocketServer = function(httpServer){
 	var self = this;
@@ -15,6 +16,8 @@ var WebsocketServer = function(httpServer){
 	var clientSockets = {}
 
 	var init = function(){
+		var namefactory = new NameFactory();
+
 		logInfo('Setting up websockets...');
 		self.webSocket = socketIO.listen(httpServer);
 		self.webSocket.set('log level', 1);
@@ -31,6 +34,7 @@ var WebsocketServer = function(httpServer){
 			clientSocket.on("JOIN", function() {
 				var player = {
 					id: clientSocket.id,
+					nickname: namefactory.generate(),
 					x: Math.floor(Math.random() * self.board.width) + 1,
 					y: Math.floor(Math.random() * self.board.height) + 1,
 					points: 0,
@@ -40,9 +44,9 @@ var WebsocketServer = function(httpServer){
 				
 				addPlayer(player);
 				
-				clientSocket.emit('JOINED', { playerid: clientSocket.id });
+				clientSocket.emit('JOINED', { playerid: player.id, nickname: player.nickname });
 				
-				logDebug("Player " + player.id + " joined");
+				logDebug("Player " + player.nickname + " (" + player.id + ") joined");
 			});
 			
 			clientSocket.on("LEAVE", function() {
