@@ -19,14 +19,9 @@
 	</head>
 	<body ng-controller="DeviceController">
 		<script type="text/javascript" src="NGJ2014.min.js"></script>
-		<div id="DEBUG" >
-				(x, y) <span class="testDelta" style="background-color: #0099FF"></span>
-		</div>
-		<div id="miniCanvas" ng-controller="MiniCanvasController">
-
-		</div>
+		<div id="miniCanvas" ng-controller="MiniCanvasController"></div>
 		<div class="score">
-			Nick: {{nickname}}
+			Your name: {{nickname}}
 		</div>
 		<div class="controller-body" ng-controller="ControllerController">
 			<div id="navigation">
@@ -40,6 +35,9 @@
 					<div id="love" class="button"></div>
 				</div>
 			</div>
+		</div>
+		<div id="DEBUG" >
+			(x, y) <span class="testDelta" style="background-color: #0099FF"></span>
 		</div>
 	</body>
 </html>

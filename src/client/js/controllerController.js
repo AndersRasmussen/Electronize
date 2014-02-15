@@ -17,7 +17,6 @@ var ControllerController = function($$websocketService) {
 			it.decorateControls();
 			it.adjustNavigationRatio();
 			it.updateMove();
-			$$websocketService.join();
 		});
 		
 	},
