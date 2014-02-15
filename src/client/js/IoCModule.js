@@ -1,4 +1,5 @@
 angular.module('IoC',[])
-	.service('$$application', ScreenApplication)
+	.service('$$screenApplication', ScreenApplication)
+	.service('$$deviceApplication', DeviceApplication)	
 	.service('$$websocketService', WebsocketService)
 	;
