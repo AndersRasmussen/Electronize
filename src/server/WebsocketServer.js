@@ -31,10 +31,10 @@ var WebsocketServer = function(httpServer){
 			player.x = player.x.clamp(config.playerWidth/2, self.board.width - config.playerWidth/2);
 			player.y = player.y.clamp(config.playerWidth/2, self.board.height - config.playerHeight/2);
 
-			// test
-			player.rotation = (player.rotation + (Math.random() * Math.PI/10));
- 			player.speed = 0.5;
- 			
+			if (!player.hasMoved) {
+				player.rotation = (player.rotation + (Math.random() * Math.PI/10));
+ 				player.speed = 0.5;
+			}
 		}
 	};
 	
@@ -117,7 +117,7 @@ var WebsocketServer = function(httpServer){
 				var player = self.board.players[clientSocket.id];
 				player.rotation = velocity.rotation;
 				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
-				
+				player.hasMoved = true;
 				logDebug("Move move move!!!");
 			});
 			
@@ -157,7 +157,8 @@ var WebsocketServer = function(httpServer){
 			kill: false,
 			mate: false,
 			tased: false,
-			tasing: null
+			tasing: null,
+			hasMoved: false
 		};
 	}
 	
