@@ -85,7 +85,9 @@ var WebsocketServer = function(httpServer){
 	}
 	
 	var broadcastBoardUpdate = function() {
-		clientSocket.emit("BOARDUPDATE", self.board);
+		for (var socketId in clientSockets) {
+			clientSockets[socketId].emit("BOARDUPDATE", self.board);
+		}
 		logDebug("game update broadcasted");
 	};
 
