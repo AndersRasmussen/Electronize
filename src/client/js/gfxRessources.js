@@ -3,7 +3,7 @@ gfxRessources = {
 		return rsr.image("/img/rod-mand.png", 0, 0, 20, 10);
 	},
 	createRandomPlayerGfx: function(paper) {
-		var images = ["/img/rod-mand.png","/img/blu-mand.png"];
+		var images = ["/img/rod-mand.png","/img/blu-mand.png","/img/blo-mand.png"];
 		
 		var image = Math.floor(Math.random() * images.length);
 		
