@@ -14,5 +14,14 @@ data = {
 		v: 2.04, // velocity [grid/sec]
 		kill: false, // first update since kill?
 		mate: false  // first update since mate?
+	},
+	playerGfx: {
+		player: player,
+		newPlayer: player,
+		gfx: gameGfx
+	},
+	gameGfx: {
+		gfx: raphaelGfx,
+		scale: 1.0
 	}
 }

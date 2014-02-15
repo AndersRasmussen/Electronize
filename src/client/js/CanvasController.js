@@ -1,6 +1,6 @@
 function CanvasController($rootScope, $scope){
 	logDebug("CanvasController initializing");
-	var _players = [];
+	var _playerGfx = [];
 	var _paper;
 
 	var setMapSize = function(w, h){
@@ -13,14 +13,28 @@ function CanvasController($rootScope, $scope){
 		rect.attr({"fill": "#09F", "stroke": "#000", "stroke-width": "1px"});
 
 
-		var circle = _paper.circle(500, 500, 50);
+		var player = gfxRessources.createPlayerGfx(_paper);
+		var playerGfx = {
+			'gfx': {
+				'gfx': player,
+			}
+		};
+		setPlayerPos(playerGfx, 200, 200);
+
+
+		var circle = _paper.circle(200, 200, 10);
 		// Sets the fill attribute of the circle to red (#f00)
 		circle.attr("fill", "#f00");
 		// Sets the stroke attribute of the circle to white
 		circle.attr("stroke", "#fff");
+	}
 
-		var player = gfxRessources.createPlayerGfx(_paper);
-		player.scale(0.5,0.5);
+	var setPlayerPos = function(playerGfx, x, y){
+		var width = playerGfx.gfx.gfx.attr("width");
+		var height = playerGfx.gfx.gfx.attr("height");
+		x = x - width / 2;//(2*playerGfx.gfx.scale);
+		y = y - height / 2;//(2*playerGfx.gfx.scale);
+		playerGfx.gfx.gfx.attr({'x': x, 'y': y})
 	}
 
 	var createNewPlayer = function(){
@@ -35,9 +49,6 @@ function CanvasController($rootScope, $scope){
 	var renderPaper = function(boardState){
 		// patches the scene with new objects
 		logDebug(".");
-		// build scene
-		// requestAnimationFrame(render); // build scene
-
 	}
 
 	$scope.$on("BOARDUPDATE", function(event, boardState){
