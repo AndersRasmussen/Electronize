@@ -21,7 +21,7 @@ var WebsocketServer = function(httpServer){
 			var player = self.board.players[playerId];
 			
 			
-			player.rotation = player.rotation + (Math.random() * Math.PI/4);
+			player.rotation = player.rotation + (Math.random() * Math.PI/10);
 			player.speed = 0.5;
 			
 			var oldX = player.x;

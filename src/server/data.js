@@ -10,8 +10,8 @@ data = {
 		points: 199,
 		x: 17.234,
 		y: 67.129,
-		r: 2.324, // orientation {0, 2pi}
-		v: 2.04, // velocity [grid/sec]
+		rotation: 2.324, // orientation {0, 2pi}
+		speed: 2.04, // velocity [grid/sec]
 		kill: false, // first update since kill?
 		mate: false  // first update since mate?
 	},

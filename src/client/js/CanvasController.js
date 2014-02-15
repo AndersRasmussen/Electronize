@@ -27,6 +27,8 @@ function CanvasController($rootScope, $scope){
 		var y = playerDto.y - height / 2;
 		playerGfx.gfx.attr({'x': x, 'y': y})
 
+		playerGfx.gfx.rotate(360.0*(playerDto.rotation / (2*Math.PI))-90); // offset + radian to degree
+
 		playerGfx.player = playerGfx.newPlayer;
 		playerGfx.newPlayer = playerDto;
 
@@ -55,6 +57,7 @@ function CanvasController($rootScope, $scope){
 	$scope.$on("BOARDUPDATE", function(event, boardState){
 		
 		logDebug("Board state received.");
+		console.log(boardState);
 
 		// mark players as not updated
 		for( var playerid in _playerGfx){
@@ -83,7 +86,7 @@ function CanvasController($rootScope, $scope){
 				// remove player from board
 				playerGfx.gfx.remove();
 				// remove player from local list
-				_playerGfx[playerid] = undefined;
+				delete _playerGfx[playerid];
 			}
 		}
 
