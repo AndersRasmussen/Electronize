@@ -13,5 +13,6 @@ module.exports = {
 	"playerHeight": 100,
 	"playerWidth": 100,
 	"playerSightWidth": Math.PI/4,
-	"playerSightLength": 100
+	"playerSightLength": 100,
+	"playerSpritesCount": 7
 };

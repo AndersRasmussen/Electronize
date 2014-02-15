@@ -72,7 +72,7 @@ function CanvasController($rootScope, $scope){
 
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
-		var gfx = gfxRessources.createRandomPlayerGfx(_paper);
+		var gfx = gfxRessources.createPlayerGfx(_paper, playerDto.spriteType);
 		var x = playerDto.x;
 		var y = mapHeight - playerDto.y;  // flip y-coords
 

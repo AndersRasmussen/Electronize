@@ -132,7 +132,7 @@ var WebsocketServer = function(httpServer){
 					var otherPlayer = getPlayer(playerid);
 					
 					if (currentPlayer === otherPlayer)
-						return;	
+						return;
 					
 					if (otherPlayer.killed || otherPlayer.mate)
 						return;
@@ -190,7 +190,8 @@ var WebsocketServer = function(httpServer){
 			mate: false,
 			tased: false,
 			tasing: null,
-			hasMoved: false
+			hasMoved: false,
+			spriteType: Math.floor(Math.random() * config.playerSpritesCount)
 		};
 	}
 	
