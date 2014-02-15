@@ -44,8 +44,7 @@ function CanvasController($rootScope, $scope){
 		var drot = rot2 - rot;
 
 		//playerGfx.gfx.stop();
-		playerGfx.gfx.attr({'transform': "T{0},{1}r0,{3},{4}".format(dx,dy,rot2,midPointX,midPointY)});//, expectedUpdateRate, "linear");
-		//playerGfx.gfx.attr({'x':x2, 'y': y2});
+		playerGfx.gfx.attr({'transform': "T{0},{1}r{2},{3},{4}".format(dx,dy,rot2,midPointX,midPointY)});//, expectedUpdateRate, "linear");
 
 		_circle.attr({'cx': playerDto.x, 'cy': playerDto.y});
 		_circle.toFront();
