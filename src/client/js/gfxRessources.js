@@ -4,7 +4,14 @@ gfxRessources = {
 	},
 	createRandomPlayerGfx: function(paper) {
 
-		var images = ["/img/rod-mand.png","/img/blu-mand.png","/img/blo-mand.png","/img/redblonde.png","/img/brownred.png","/img/lightbluebrown.png"];
+		var images = [
+			"/img/rod-mand.png",
+			"/img/blu-mand.png",
+			"/img/blo-mand.png",
+			"/img/redblonde.png",
+			"/img/brownred.png",
+			"/img/lightbluebrown.png"
+		];
 		
 		var image = images[Math.floor(Math.random() * images.length)];
 		
