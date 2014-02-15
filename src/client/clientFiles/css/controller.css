@@ -1,0 +1,29 @@
+.controller-body {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#navigation {
+	height: inherit;
+}
+#navigation .stick {
+	height: 300px;
+	width: 300px;
+}
+#navigation .stick .stick-base {
+	background: url('/img/controller/joybase.png') no-repeat;
+	background-size: 100% 100%;
+	width: 300px;
+	height: 300px;
+	cursor: move;
+}
+
+#navigation .stick #big-red-stick {
+	background: url('/img/controller/joypad-head.png') no-repeat;
+	width: 150px;
+	height: 150px;
+	top: 75px;
+	left: 75px;
+	position: relative;
+}

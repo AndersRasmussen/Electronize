@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="application">
+	<head>
+		<title>GameJam boiler plate</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+		<script type="text/javascript" src="vendor/google.fastbutton.js"></script>	
+		<script type="text/javascript" src="vendor/jquery.google.fastbutton.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.min.js"></script>
+
+		<meta name="viewport" content="width=320,user-scalable=0,maximum-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="css/controller.css" />
+		<script type="text/javascript">
+			window.blockMenuHeaderScroll = false;
+			$(window).on('touchstart', function(e)
+			{
+			    if ($(e.target).closest('#mobileMenuHeader').length == 1)
+			    {
+			        blockMenuHeaderScroll = true;
+			    }
+			});
+			$(window).on('touchend', function()
+			{
+			    blockMenuHeaderScroll = false;
+			});
+			$(window).on('touchmove', function(e)
+			{
+			    if (blockMenuHeaderScroll)
+			    {
+			        e.preventDefault();
+			    }
+			});
+		</script>
+	</head>
+	<body ng-controller="ScreenController">
+		<script type="text/javascript" src="NGJ2014.min.js"></script>
+		<div id="DEBUG" >
+				Delta [sek]: <span class="testDelta" style="background-color: #0099FF"></span>
+		</div>
+		<div class="controller-body" ng-controller="ControllerController">
+			<div id="navigation">
+				<div class="stick">
+					<div class="stick-base">
+						<div id="big-red-stick"></div>
+					</div>
+				</div>
+			</div>
+			<div id="buttons">
+			</div>
+			<div id="canvas">
+
+			</div>
+		</div>
+	</body>
+</html>
