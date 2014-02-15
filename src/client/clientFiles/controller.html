@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="application">
+<html ng-app="deviceModule">
 	<head>
-		<title>GameJam boiler plate</title>
+		<title>Electronize controller</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		
 		<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
@@ -17,10 +17,13 @@
 		<script type="text/javascript">
 		</script>
 	</head>
-	<body ng-controller="ScreenController">
+	<body ng-controller="DeviceController">
 		<script type="text/javascript" src="NGJ2014.min.js"></script>
 		<div id="DEBUG" >
 				(x, y) <span class="testDelta" style="background-color: #0099FF"></span>
+		</div>
+		<div id="canvas" ng-controller="MiniCanvasController">
+
 		</div>
 		<div class="controller-body" ng-controller="ControllerController">
 			<div id="navigation">
@@ -31,9 +34,6 @@
 				</div>
 			</div>
 			<div id="buttons">
-			</div>
-			<div id="canvas">
-
 			</div>
 		</div>
 	</body>

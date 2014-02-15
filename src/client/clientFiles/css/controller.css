@@ -2,6 +2,7 @@ html, body{
      max-width:100%;
      max-height:100%;
      overflow:hidden;
+     margin: 0px;
 }
 .controller-body {
 	position: absolute;
@@ -31,4 +32,38 @@ html, body{
 	top: 75px;
 	left: 75px;
 	position: relative;
+}
+
+#canvas{
+	position: absolute;
+	/*box-shadow: 7px 7px 8px #CCCCCC;*/
+	background-color: #131313;
+	top: 0px;
+	width: 320px;
+	height: 320px;
+	-webkit-transform: translate3d(0, 0, 0);
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
+	/* more specific animation properties here */
+}
+
+div.controller-body{
+	position: absolute;
+	/*box-shadow: 7px 7px 8px #CCCCCC;*/
+	background-color: #09f;
+	top: 320px;
+	bottom: 0px;
+	left: 0px;
+	width: 320px;
+	padding: 10px;
+}
+
+#DEBUG{
+	position: absolute;
+	/*box-shadow: 7px 7px 8px #CCCCCC;*/
+	background-color: #333;
+	z-index: 1001;
+	bottom: 0px;
+	width: 320px;
+	height: 50px;
 }

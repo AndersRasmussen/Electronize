@@ -2,9 +2,11 @@
 //		var config = require('./config')
 //		config.websocketServerPort
 module.exports = {
+	"maxPlayer": 100,
 	"websocketServerUrl":"http://127.0.0.1",
 	"websocketServerPort":"8002",
-	"gameloopInterval": 500,
+	"gameloopInterval": 100,
+	"boardUpdateInterval": 500,
 	"maxSpeed":100,
 	"boardHeight": 1000,
 	"boardWidth": 1400,
