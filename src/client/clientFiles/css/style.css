@@ -9,3 +9,15 @@ svg { height: 100%; width: 100%; }
 	right: 0px;
 	padding: 10px;
 }
+
+#highscore{
+	position: absolute;
+	/*box-shadow: 7px 7px 8px #CCCCCC;*/
+	background-color: #112233;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	width: 250px;
+	padding: 10px;
+}
+
