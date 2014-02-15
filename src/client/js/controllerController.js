@@ -11,6 +11,7 @@ var ControllerController = function($$websocketService) {
 		it.decorateControls();
 		it.adjustNavigationRatio();
 		it.updateMove();
+		$$websocketService.join();
 	},
 	it.decorateControls = function() {
 		it.$stick.mousemove(function(e) {
