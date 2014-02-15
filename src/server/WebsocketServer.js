@@ -28,7 +28,7 @@ var WebsocketServer = function(httpServer){
 			//@webSocketEvent.send('New WebSocket Connection (to event subscribers)')
 			//clientSocket.send('Hi new client!')
 			
-			clientSocket.on("join", function() {
+			clientSocket.on("JOIN", function() {
 				var player = {
 					id: clientSocket.id,
 					x: Math.floor(Math.random() * self.board.width) + 1,
@@ -43,12 +43,13 @@ var WebsocketServer = function(httpServer){
 				logDebug("Player " + player.id + " joined");
 			});
 			
-			clientSocket.on("leave", function() {
+			clientSocket.on("LEAVE", function() {
 				if (hasJoined(clientSocket.id)) {
 					removePlayer(clientSocket.id);
 				}
 			});
-			
+
+			// Depricated
 			clientSocket.on('EVENT', function(event){
 				//self.remoteEventReceived(event.name, event.data, clientSocket)
 				// send back data
@@ -63,7 +64,7 @@ var WebsocketServer = function(httpServer){
 				logDebug('WS connection ended');
 			});
 
-			clientSocket.emit("Board", self.board);
+			broadcastBoardUpdate();
 		});
 		return self;
 	}
@@ -84,7 +85,9 @@ var WebsocketServer = function(httpServer){
 	}
 	
 	var broadcastBoardUpdate = function() {
-		clientSocket.emit("Board", self.board);
+		for (var socketId in clientSockets) {
+			clientSockets[socketId].emit("BOARDUPDATE", self.board);
+		}
 		logDebug("game update broadcasted");
 	};
 
