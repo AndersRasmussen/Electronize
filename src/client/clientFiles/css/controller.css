@@ -34,7 +34,7 @@ html, body{
 	position: relative;
 }
 
-#canvas{
+#miniCanvas{
 	position: absolute;
 	/*box-shadow: 7px 7px 8px #CCCCCC;*/
 	background-color: #131313;
@@ -51,10 +51,19 @@ div.controller-body{
 	position: absolute;
 	/*box-shadow: 7px 7px 8px #CCCCCC;*/
 	background-color: #09f;
-	top: 320px;
+	top: 360px;
 	bottom: 0px;
 	left: 0px;
 	width: 320px;
+	padding: 10px;
+}
+
+div.score{
+	position: absolute;
+	background-color: #ccc;
+	top: 320px;
+	height: 40px;
+	width: 300px;
 	padding: 10px;
 }
 

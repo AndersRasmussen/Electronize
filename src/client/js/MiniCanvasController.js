@@ -8,7 +8,7 @@ function MiniCanvasController($rootScope, $scope){
 	var setMapSize = function(w, h){
 		logInfo("initializing canvas");
 		if( !_paper) {
-			_paper = new Raphael("gameCanvas");
+			_paper = new Raphael("miniCanvas");
 		}
 		_paper.setViewBox(0, 0, w, h, true);
 
