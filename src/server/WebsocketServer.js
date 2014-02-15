@@ -109,6 +109,12 @@ var WebsocketServer = function(httpServer){
 			
 			clientSocket.on('MOVE', function(velocity) {
 				var player = self.board.players[clientSocket.id];
+
+				// If the player is killed or are having sex, they can't move
+				if (player.killed || player.mate) {
+					return;
+				}
+				
 				player.rotation = velocity.rotation;
 				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
 				player.hasMoved = true;
@@ -136,6 +142,7 @@ var WebsocketServer = function(httpServer){
 				
 				if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSightLength) {
 					otherPlayer.killed = true;
+					otherPlayer.speed = 0;
 					console.log("Kill " + otherPlayer.nickname);
 				} else {
 					console.warn("Can't kill. Player to far away...")
