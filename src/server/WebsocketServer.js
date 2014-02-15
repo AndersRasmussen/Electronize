@@ -20,8 +20,8 @@ var WebsocketServer = function(httpServer){
 		for (var playerId in self.board.players) {
 			var player = self.board.players[playerId];
 			
-			player.rotation = (player.rotation + (Math.random() * Math.PI/10));
-			player.speed = 0.5;
+			//player.rotation = (player.rotation + (Math.random() * Math.PI/10));
+			//player.speed = 0.5;
 			
 			var oldX = player.x;
 			var oldY = player.y;
@@ -32,6 +32,7 @@ var WebsocketServer = function(httpServer){
 			
 			player.x = player.x.clamp(config.playerWidth/2, self.board.width - config.playerWidth/2);
 			player.y = player.y.clamp(config.playerWidth/2, self.board.height - config.playerHeight/2);
+			console.log("(x,y)" + deltaX+ ", " + deltaY);
 		}
 		broadcastBoardUpdate();
 	};
