@@ -29,6 +29,11 @@ var WebsocketServer = function(httpServer){
 			
 			player.x = player.x.clamp(config.playerWidth/2, self.board.width - config.playerWidth/2);
 			player.y = player.y.clamp(config.playerWidth/2, self.board.height - config.playerHeight/2);
+
+			// test
+			player.rotation = (player.rotation + (Math.random() * Math.PI/10));
+ 			player.speed = 0.5;
+ 			
 		}
 		broadcastBoardUpdate();
 	};
@@ -69,11 +74,11 @@ var WebsocketServer = function(httpServer){
 			
 			clientSocket.on("JOIN", function() {
 				
-				for(var  i = 0; i < 100; i++)
-				{
-					var player = makePlayer(clientSocket.id+""+i);
-					addPlayer(player);
-				}
+				//for(var  i = 0; i < 100; i++)
+				//{
+				//	var player = makePlayer(clientSocket.id+""+i);
+				//	addPlayer(player);
+				//}
 				var player = makePlayer(clientSocket.id);
 				
 				addPlayer(player);
