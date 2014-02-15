@@ -81,12 +81,6 @@ var WebsocketServer = function(httpServer){
 				//	addPlayer(player);
 				//}
 
-				var player = makePlayer(clientSocket.id);
-				
-				addPlayer(player);
-				
-				clientSocket.emit('JOINED', { playerid: player.id, nickname: player.nickname });
-				
 				if (isBoardFull()) {
 					clientSocket.emit("BOARDFULL");
 				} else {
