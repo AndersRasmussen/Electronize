@@ -1,4 +1,4 @@
-function ScreenController($rootScope, $scope, $$screenApplication, $$websocketService){
+function ScreenController($rootScope, $scope, $$screenApplication, $$websocketService, $$soundManager){
 	$scope.$on("COMMUNICATION_INITIALIZED", function(event, data){
 		// the communication is up, let's send something
 		$$websocketService.send("Hej");
@@ -10,4 +10,5 @@ function ScreenController($rootScope, $scope, $$screenApplication, $$websocketSe
 		$rootScope.$broadcast(eventname, args);
 		$rootScope.$digest();
 	}
+	$$soundManager.init();
 }
