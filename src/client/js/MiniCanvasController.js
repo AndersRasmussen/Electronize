@@ -58,7 +58,7 @@ function MiniCanvasController($rootScope, $scope){
 		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2,midPointX,midPointY)}, expectedUpdateRate, "linear");
 
 		// debug
-		_circle.attr({'cx': playerDto.x, 'cy': playerDto.y});
+		_circle.attr({'cx': x2, 'cy': y2});
 		_circle.toFront();
 
 		playerGfx.player = playerGfx.newPlayer;
