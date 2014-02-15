@@ -10,8 +10,8 @@ gfxRessources = {
 			"/img/blo-mand.png",
 			"/img/redblonde.png",
 			"/img/brownred.png",
-			"/img/lightbluebrown.png"
-		];
+			"/img/lightbluebrown.png",
+			"/img/greybrown.png"];
 		
 		var image = images[Math.floor(Math.random() * images.length)];
 		
