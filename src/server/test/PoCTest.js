@@ -1,8 +1,8 @@
 // files necessary for unit testing
-require("../common")
-var Assert = require('assert')
+require("../common");
+var Assert = require('assert');
 // the modules that should be tested
-var NeedsTesting = require('../NeedsTesting')
+var NeedsTesting = require('../NeedsTesting');
 
 // name of the module that is to be tested
 describe("PoC test", function(){

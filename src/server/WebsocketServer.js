@@ -36,7 +36,7 @@ var WebsocketServer = function(httpServer){
 			logDebug("Moved " + player.nickname + " from (" + oldX + "," + oldY + ") to (" + player.x + "," + player.y + ")");	
 		}
 		broadcastBoardUpdate();
-	}
+	};
 	
 	var startGameloop = function() {
 		var last = Date.now();

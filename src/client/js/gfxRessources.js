@@ -8,4 +8,4 @@ gfxRessources = {
 	createHeart: function(tile) {
 		return tile.image("/img/heart.png", 0, 0, 124, 109);
 	}
-}
+};

@@ -1,15 +1,15 @@
-var http = require('http')
-var util = require('util')
-var url = require('url')
-var config = require('./config')
-var nodeStatic = require('node-static')
+var http = require('http');
+var util = require('util');
+var url = require('url');
+var config = require('./config');
+var nodeStatic = require('node-static');
 
 var HttpServer = function(){
 	var self = this;
 	self.settings = { 
 		wsPort: config.websocketServerPort,
 		wsUrl: config.websocketServerUrl
-	}
+	};
 	self.httpServer = null;
 
 	var init = function(){

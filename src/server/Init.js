@@ -7,6 +7,6 @@ process.addListener('uncaughtException', function(err, stack) {
 	return console.log('---------------------');
 });
 
-var ApplicationServer = require('./BoilerPlate');
+var ApplicationServer = require('./ApplicationServer');
 new ApplicationServer();
 logDebug("ApplicationServer has started!")

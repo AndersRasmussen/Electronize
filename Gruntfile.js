@@ -42,7 +42,7 @@ module.exports = function(grunt){
 			options: {
 				jshintrc: '.jshintrc'
 			},
-			all: ['Gruntfile.js', 'app/**/*.js', 'test/**/*.js']
+			all: ['Gruntfile.js', 'src/shared/**/*.js', 'src/server/**/*.js', 'src/client/js/**/*.js', 'test/**/*.js']
 		}
 	});
 
@@ -55,8 +55,9 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	//Default task(s).
-	grunt.registerTask('default', ['copy', 'concat', 'jshint']);
+	grunt.registerTask('default', ['copy', 'concat']);
 	//other tasks
 	grunt.registerTask('test', ['jshint','mochaTest']);
+	grunt.registerTask('jslint', ['jshint']);
 	//grunt.registerTask('watch', ['watch'])
 };
