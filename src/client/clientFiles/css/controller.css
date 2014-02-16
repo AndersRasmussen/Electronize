@@ -132,24 +132,28 @@ html, body{
 }
 
 #buttons #kill {
-	background-color: #00FFFF;
 	top: 150px;
 	background: url("/img/controller/kill.png") no-repeat;
 }
 
-#buttons #kill:active {
+#buttons #kill_cd {
+	top: 150px;
 	background: url("/img/controller/kill_press.png") no-repeat;
-}
-
-#buttons #love:active {
-	background: url("/img/controller/love_press.png") no-repeat;
+	display: none;
+	z-index: 999;
 }
 
 
 #buttons #love {
 	top: 60px;
-	background-color: #FFFF00;
 	background: url("/img/controller/love.png") no-repeat;
+}
+
+#buttons #love_cd {
+	top: 60px;
+	background: url("/img/controller/love_press.png") no-repeat;
+	display: none;
+	z-index: 999;
 }
 
 #miniCanvas{

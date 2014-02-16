@@ -2,8 +2,9 @@ var NintendoController = function($$websocketService) {
 	var it = this;
 	var connection;
 	var $kill;
+	var $killCD;
 	var $love;
-	var pushedVelocity;
+	var $loveCD;
 	var oldPushedVelocity;
 	var oldTarget;
 	it.init = function() {
@@ -11,19 +12,21 @@ var NintendoController = function($$websocketService) {
 		it.oldPushedVelocity = {};
 		it.oldPushedVelocity.rotation = 0;
 		it.oldPushedVelocity.speed = 0;
-		it.updateMove();
 	},
 	it.decorateControls = function() {
 		it.$kill = $('#kill');
+		it.$killCD = $('#kill_cd');
+		
 		it.$love = $('#love');
+		it.$loveCD = $('#love_cd');		
 
 		$('#navigation .pad .pad-button').fastClick(function(e) {
 			var direction = e.target.attributes["data-direction"].value;
-			$(this).addClass('active');
 
 			if(typeof it.oldTarget !== 'undefined') {
 				$(it.oldTarget).removeClass('active');
 			}
+			$(this).addClass('active');
 
 			it.oldTarget = this;
 
@@ -67,10 +70,18 @@ var NintendoController = function($$websocketService) {
 
 		it.$kill.fastClick(function() {
 			it.kill();
+			it.$killCD.show();
+			window.setTimeout(function() {
+				it.$killCD.hide();
+			},3000);
 		});
 
 		it.$love.fastClick(function() {
 			it.love();
+			it.$loveCD.show();
+			window.setTimeout(function() {
+				it.$loveCD.hide();
+			},3000);
 		});
 	},
 	it.kill = function() {
@@ -80,24 +91,8 @@ var NintendoController = function($$websocketService) {
 		$$websocketService.love();
 	},
 	it.move = function(velocity) {
-		it.pushedVelocity = velocity;
-	},
-	it.updateMove = function() {
-		window.setInterval(function() {
-			if(typeof it.pushedVelocity === 'undefined') {
-				return false;
-			}
-			if(typeof it.oldPushedVelocity === 'undefined') {
-				it.oldPushedVelocity = it.pushedVelocity;
-			}
-			else if(it.oldPushedVelocity.speed === it.pushedVelocity.speed && it.oldPushedVelocity.rotation === it.pushedVelocity.rotation) {
-				return false;
-			} else {
-				it.oldPushedVelocity = it.pushedVelocity;
-				$$websocketService.move(it.oldPushedVelocity);
-				console.log("Speed: " + it.oldPushedVelocity.speed + ", rotation: " + it.oldPushedVelocity.rotation);
-			}
-		}, 100);
+		$$websocketService.move(velocity);
+		it.oldPushedVelocity = velocity;
 	}
 
 	it.init();
