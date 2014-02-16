@@ -11,6 +11,8 @@ function SoundManager(){
  	
  	this.initGameSounds = function() {
  			createjs.Sound.registerSound({id:"laser",src:"../sound/laser.mp3" });
+ 			createjs.Sound.registerSound({id:"kiss",src:"../sound/kiss.mp3" });
+ 			createjs.Sound.registerSound({id:"push",src:"../sound/push.mp3" });	
 		
  	}
 
@@ -25,9 +27,7 @@ function SoundManager(){
 
 	this.lovestruck = function() {
 		 		
-		audio = new Audio('../sound/love.mp3');	
-		audio.play();
-	
+		createjs.Sound.play('kiss');
 	}
 
 	this.killed = function() {
@@ -38,11 +38,10 @@ function SoundManager(){
 
 
 	this.loving = function() {
-		audio = new Audio('../sound/laser.mp3');	
-		audio.play();
+		createjs.Sound.play('kiss');
 	}
 
 	this.buttonClick = function() {
-		//createjs.Sound.play("click");
+		createjs.Sound.play("push");
 	}
 }
