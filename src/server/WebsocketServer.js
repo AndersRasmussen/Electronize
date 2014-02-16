@@ -103,7 +103,7 @@ var WebsocketServer = function(httpServer){
 				var player = self.board.players[clientSocket.id];
 
 				// If the player is killed or are having sex, they can't move
-				if (typeof player == 'undefined' || isPlayerStalled(player)) {
+				if (typeof player == 'undefined' || !canPlayerMove(player)) {
 					return;
 				}
 				
@@ -126,58 +126,79 @@ var WebsocketServer = function(httpServer){
 					}
 				}
 				
-				console.log(phi1, theta1, phi2, theta2);
-				
 				player.rotation = phi2;
 				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
 			});
 			
 			clientSocket.on('LOVE', function(otherPlayerId) {
-				if (isPlayerStalled(currentPlayer))
+				var currentPlayer = getPlayer(clientSocket.id);
+
+				if (isPlayerBusy(currentPlayer))
 					return;
-//				var otherPlayer = getPlayer(otherPlayerId);
 				
+				for (var playerid in self.board.players) {
+					var otherPlayer = getPlayer(playerid);
+
+					if (currentPlayer == otherPlayer)
+						continue;
+
+					if (isPlayerBusy(otherPlayer))
+						continue;
+			
+					if (isInSight(currentPlayer, otherPlayer)) {
+						currentPlayer.loving = true;
+						currentPlayer.speed = 0;
+
+						otherPlayer.loving = true;
+						otherPlayer.speed = 0;
+						
+						setTimeout(function() {
+							currentPlayer.loving = false;
+							otherPlayer.loving = false;
+
+							if (!(currentPlayer.killed || otherPlayer.killed)) {
+								currentPlayer.points += config.scores.loving;
+								otherPlayer.points += config.scores.loving;
+							}
+							
+							respawnPlayer(currentPlayer);
+							respawnPlayer(otherPlayer);
+							logDebug("Love is all you need!")
+						}, config.timing.loving);
+						logDebug("All you need is love!");
+						break;
+					}
+				}
 				
 //				console.log("Making love with " + otherPlayer.nickname);
 			});
 			
 			clientSocket.on('KILL', function() {
 				var currentPlayer = getPlayer(clientSocket.id);
-				if (isPlayerStalled(currentPlayer))
+				if (isPlayerBusy(currentPlayer))
 					return;
 
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
 					
+					// is any players within death range?
 					//if (typeof otherPlayer == 'undefined')
 					//	continue;
 					
 					if (currentPlayer == otherPlayer)
 						continue;
 					
-					if (isPlayerStalled(otherPlayer))
+					if (isPlayerBusy(otherPlayer))
 						continue;
 
-					var deltaX = otherPlayer.x - currentPlayer.x;
-					var deltaY = otherPlayer.y - currentPlayer.y;
-
-					var direction = Math.atan2(deltaY, deltaX);
-					var distance = Math.sqrt(Math.pow(deltaX,2) + Math.pow(deltaY,2));
-
-					var minDirection = currentPlayer.rotation - config.playerSight.width/2;
-					var maxDirection = currentPlayer.rotation + config.playerSight.width/2;
-
-					if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSight.radius) {
+					if (isInSight(currentPlayer, otherPlayer)) {
 						otherPlayer.killed = true;
 						currentPlayer.points += config.scores.kill;
 						otherPlayer.speed = 0;
 						setTimeout(function() {
-							otherPlayer.killed = false;
-							otherPlayer.points = 0;
-							otherPlayer.x = Math.floor(Math.random() * self.board.width) + 1;
-							otherPlayer.y = Math.floor(Math.random() * self.board.height) + 1;
-							console.log(otherPlayer.nickname + " respawned!");
-						}, 10000);
+							otherPlayer.points = Math.floor(otherPlayer/2);
+							respawnPlayer(otherPlayer);
+						}, config.timing.killed);
 						console.log(currentPlayer.nickname + " killed " + otherPlayer.nickname);
 						break;
 					}
@@ -198,6 +219,43 @@ var WebsocketServer = function(httpServer){
 	
 	var namefactory = new NameFactory();
 	
+	var isInSight = function(currentPlayer, otherPlayer) {
+		var deltaX = otherPlayer.x - currentPlayer.x;
+		var deltaY = otherPlayer.y - currentPlayer.y;
+
+		var absoluteOffset;
+		if( currentPlayer.rotation >= 0 ) 
+			absoluteOffset = 2 * Math.PI * Math.floor(currentPlayer.rotation / (2 * Math.PI));
+		else 
+			absoluteOffset = 2 * Math.PI * Math.ceil(currentPlayer.rotation / (2 * Math.PI));
+
+		var direction = Math.atan2(deltaY, deltaX);
+		var distance = Math.sqrt(Math.pow(deltaX,2) + Math.pow(deltaY,2));
+
+		var minDirection = currentPlayer.rotation - config.playerSight.width/2;
+		var maxDirection = currentPlayer.rotation + config.playerSight.width/2;
+		//recompute minmax within [-PI,PI]
+		var minVectorAngle = Math.atan2(Math.sin(minDirection), Math.cos(minDirection));
+		var maxVectorAngle = Math.atan2(Math.sin(maxDirection), Math.cos(maxDirection));
+
+		logDebug("Within range? Abs.rot: {5} ||| dist: ({0} > {1}), Angle: ({2} < {3} < {4})".format(config.playerSight.radius, distance, minVectorAngle, direction, maxVectorAngle, currentPlayer.rotation));
+
+		if( minVectorAngle > maxVectorAngle)
+			// REVERSE CHECK
+			return (minVectorAngle >= direction || direction >= maxVectorAngle) && distance <= config.playerSight.radius;
+		else
+			return minVectorAngle <= direction && direction <= maxVectorAngle && distance <= config.playerSight.radius;
+	}
+	
+	var respawnPlayer = function(player) {
+		player.killed = false;
+		player.loving = false;
+		player.x = Math.floor(Math.random() * self.board.width) + 1;
+		player.y = Math.floor(Math.random() * self.board.height) + 1;
+		player.speed = 0;
+		console.log(player.nickname + " respawned!");
+	}
+	
 	var makePlayer = function(playerid) {
 		return {
 			id: playerid,
@@ -209,8 +267,7 @@ var WebsocketServer = function(httpServer){
 			speed: 0,
 			killed: false,
 			mate: false,
-			tased: false,
-			tasing: null,
+			loving: false,
 			spriteType: Math.floor(Math.random() * config.playerSpritesCount)
 		};
 	}
@@ -230,8 +287,12 @@ var WebsocketServer = function(httpServer){
 		logDebug("Removed player " + playerId);
 	}
 	
-	var isPlayerStalled = function(player) {
-		return player.killed || player.mate;
+	var isPlayerBusy = function(player) {
+		return player.killed || player.loving;
+	}
+	
+	var canPlayerMove = function(player) {
+		return !(player.killed || player.loving);
 	}
 	
 	var hasJoined = function(playerId) {

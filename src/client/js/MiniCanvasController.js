@@ -76,7 +76,14 @@ function MiniCanvasController($rootScope, $scope){
 			_flashLight.toFront();
 		}
 		else if( isDevicePlayer && _flashLight == null){
-			_flashLight = pizzaSlice(0,0,100,-45,45,{"fill": "#0A0","fill-opacity": "0.2", "stroke": "#000", "stroke-width": "0.5px"});
+			_flashLight = pizzaSlice(0,0,100,-45,45,{
+				"fill": "#0A0",
+				"fill-opacity": "0.2", 
+				"stroke": "#000", 
+				"stroke-dasharray": "--..", 
+				"stroke-width": "0.5px",
+				"stroke-opacity": "0.7"
+			});
 			_flashLight.attr({'transform': "T{0},{1}r{2},0,0".format(x, y, rot2)});
 			_flashLight.toFront();
 		}
