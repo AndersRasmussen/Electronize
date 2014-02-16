@@ -9,7 +9,14 @@ function DeviceController($rootScope, $scope, $$deviceApplication, $$websocketSe
 		// player has joined
 		$scope.playerid = player.playerid;
 		$scope.nickname = player.nickname;
-	});	
+	});
+	
+	$scope.$on("BOARDUPDATE", function(event, boardState) {
+		if ($scope.playerid != null) {
+			var player = boardState.players[$scope.playerid];
+			$scope.points = player.points;
+		}
+	});
 
 	$rootScope.broadcastEvent = function(eventname, args){
 		//logDebug("Broadcasting controller event: '{0}'".format(eventname));
