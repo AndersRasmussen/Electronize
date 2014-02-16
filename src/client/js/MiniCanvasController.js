@@ -51,14 +51,14 @@ function MiniCanvasController($rootScope, $scope, $$soundManager){
 		//var y = playerGfx.gfx.attr("y");
 		if(playerDto.killed && !playerGfx.lastKilled)
 		{
-			gfxRessources.animateDeath(3, _paper, playerDto.x, mapHeight-playerDto.y);
+			gfxRessources.animateDeath(4, _paper, playerDto.x, mapHeight-playerDto.y);
 			$$soundManager.killed();
 			logDebug("Player was killed");
 		}
 
 		if(playerDto.loving && !playerGfx.lastLoving)
 		{
-			gfxRessources.animateHeart(3, _paper, playerDto.x, mapHeight-playerDto.y);
+			gfxRessources.animateHeart(4, _paper, playerDto.x, mapHeight-playerDto.y);
 			$$soundManager.loving();
 		}
 

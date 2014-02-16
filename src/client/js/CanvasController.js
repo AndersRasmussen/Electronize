@@ -35,14 +35,14 @@ function CanvasController($rootScope, $scope, $$soundManager){
 
 		if(playerDto.killed && !playerGfx.lastKilled)
 		{
-			gfxRessources.animateDeath(3, _paper, playerDto.x, mapHeight-playerDto.y);
+			gfxRessources.animateDeath(4, _paper, playerDto.x, mapHeight-playerDto.y);
 			logDebug("Player was killed");
 			$$soundManager.killed();
 		}
 
 		if(playerDto.loving && !playerGfx.lastLoving)
 		{
-			gfxRessources.animateHeart(3, _paper, playerDto.x, mapHeight-playerDto.y);
+			gfxRessources.animateHeart(4, _paper, playerDto.x, mapHeight-playerDto.y);
 			$$soundManager.loving();
 		}
 

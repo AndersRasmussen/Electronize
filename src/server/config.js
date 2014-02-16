@@ -23,6 +23,6 @@ module.exports = {
 	},
 	timing: {
 		loving: 5000,
-		killed: 10000
+		killed: 5000
 	}
 };
