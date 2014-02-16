@@ -52,7 +52,7 @@ var ControllerController = function($$websocketService) {
 	},
 	it.love = function() {
 		$$websocketService.love();
-	}
+	},
 
 	// Speed is between 0 and 1.
 	// Rotation is radians
