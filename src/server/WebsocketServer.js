@@ -126,17 +126,29 @@ var WebsocketServer = function(httpServer){
 					}
 				}
 				
-				console.log(phi1, theta1, phi2, theta2);
-				
 				player.rotation = phi2;
 				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
 			});
 			
 			clientSocket.on('LOVE', function(otherPlayerId) {
+				var currentPlayer = getPlayer(clientSocket.id);
+
 				if (isPlayerStalled(currentPlayer))
 					return;
-//				var otherPlayer = getPlayer(otherPlayerId);
 				
+				for (var playerid in self.board.players) {
+					var otherPlayer = getPlayer(playerid);
+
+					if (currentPlayer == otherPlayer)
+						continue;
+
+					if (isPlayerStalled(otherPlayer))
+						continue;
+			
+					if (isInSight(currentPlayer, otherPlayer)) {
+						
+					}
+				}
 				
 //				console.log("Making love with " + otherPlayer.nickname);
 			});
@@ -159,18 +171,7 @@ var WebsocketServer = function(httpServer){
 					if (isPlayerStalled(otherPlayer))
 						continue;
 
-					var deltaX = otherPlayer.x - currentPlayer.x;
-					var deltaY = otherPlayer.y - currentPlayer.y;
-
-					var direction = Math.atan2(deltaY, deltaX);
-					var distance = Math.sqrt(Math.pow(deltaX,2) + Math.pow(deltaY,2));
-
-					var minDirection = currentPlayer.rotation - config.playerSight.width/2;
-					var maxDirection = currentPlayer.rotation + config.playerSight.width/2;
-
-					logDebug("Kill? Is dist: ({0} > {1}), Angle: ({2} < {3} < {4})".format(config.playerSight.radius, distance, minDirection, direction, maxDirection));
-
-					if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSight.radius) {
+					if (isInSight(currentPlayer, otherPlayer)) {
 						otherPlayer.killed = true;
 						currentPlayer.points += config.scores.kill;
 						otherPlayer.speed = 0;
@@ -200,6 +201,21 @@ var WebsocketServer = function(httpServer){
 	}
 	
 	var namefactory = new NameFactory();
+	
+	var isInSight = function(currentPlayer, otherPlayer) {
+		var deltaX = otherPlayer.x - currentPlayer.x;
+		var deltaY = otherPlayer.y - currentPlayer.y;
+
+		var direction = Math.atan2(deltaY, deltaX);
+		var distance = Math.sqrt(Math.pow(deltaX,2) + Math.pow(deltaY,2));
+
+		var minDirection = currentPlayer.rotation - config.playerSight.width/2;
+		var maxDirection = currentPlayer.rotation + config.playerSight.width/2;
+
+		logDebug("Within range? Is dist: ({0} > {1}), Angle: ({2} < {3} < {4})".format(config.playerSight.radius, distance, minDirection, direction, maxDirection));		
+
+		return minDirection <= direction && direction <= maxDirection && distance <= config.playerSight.radius;
+	}
 	
 	var makePlayer = function(playerid) {
 		return {
