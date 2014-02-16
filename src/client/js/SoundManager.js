@@ -13,7 +13,8 @@ function SoundManager(){
  			//var queue2 = new createjs.LoadQueue(false);
 			//queue2.installPlugin(createjs.Sound);			
 			//queue2.addEventListener("complete", laserbeam);
-			//queue2.loadManifest([{id:"laser", src:"../sound/laser.mp3"}]);	
+			//queue2.loadManifest([{id:"laser", src:"../sound/laser.mp3"}]);
+				
 			
  	}
 
@@ -29,7 +30,7 @@ function SoundManager(){
 
 	this.lovestruck = function() {
 		 		
-		audio = new Audio('../sound/laser.mp3');	
+		audio = new Audio('../sound/love.mp3');	
 		audio.play();
 	
 	}
