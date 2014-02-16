@@ -12,8 +12,12 @@ module.exports = {
 	"boardWidth": 1400,
 	"playerHeight": 100,
 	"playerWidth": 100,
-	"playerSightWidth": Math.PI/2,
-	"playerSightLength": 200,
+	playerSight: {
+		width: Math.PI/2,
+		radius: 100
+	},
 	"playerSpritesCount": 7,
-	"pointsKill": 1000
+	scores: {
+		kill: 1000
+	}
 };

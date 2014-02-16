@@ -3,6 +3,7 @@ function MiniCanvasController($rootScope, $scope){
 	var mapHeight = 1000;
 	var minimapWidth = 300;
 	var minimapHeight = 237;
+	var circleOfDeathRadius = 200; // PI / 2
 
 	var expectedUpdateRate = 200; // ms
 	var animationInterval = 50; // ms
@@ -11,15 +12,27 @@ function MiniCanvasController($rootScope, $scope){
 	var _paper;
 	var _circle;
 	var _devicePlayerGfx;
+	var _flashLight;
+
+	var pizzaSlice = function (cx, cy, r, startAngle, endAngle, params) {
+		var rad = Math.PI / 180;
+		var x1 = cx + r * Math.cos(-startAngle * rad),
+		x2 = cx + r * Math.cos(-endAngle * rad),
+		y1 = cy + r * Math.sin(-startAngle * rad),
+		y2 = cy + r * Math.sin(-endAngle * rad);
+		return _paper.path(["M", cx, cy, "L", x1, y1, "A", r, r, 0, +(endAngle - startAngle > 180), 0, x2, y2, "z"]).attr(params);
+	}
 
 	var setMapSize = function(w, h){
 		logInfo("initializing canvas");
-		if( !_paper) {
+		if( !_paper ){
 			_paper = new Raphael("miniCanvas");
 		}
 		_paper.setViewBox(0, 0, w, h, true);
 		var rect = _paper.rect(0, 0, w, h, 40);
 		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});
+
+		_flashLight = pizzaSlice(0,0,100,-45,45,{"fill": "#0A0","fill-opacity": "0.2", "stroke": "#000", "stroke-width": "0.5px"});
 		// debug
 		//_circle = _paper.circle(0, 0, 10);
 		//_circle.attr("fill", "#f00");
@@ -46,7 +59,7 @@ function MiniCanvasController($rootScope, $scope){
 		var x2 = x - midPointX; // offset to midpoint for picture
 		var y2 = y - midPointY; // offset to midpoint for picture
 
-		var rot2 = -360.0*(playerDto.rotation / (2*Math.PI))-90;
+		var rot2 = -360.0*(playerDto.rotation / (2*Math.PI));
 
 		//var rot = playerGfx.gfx.attr("transform");
 		//console.log(rot);
@@ -55,12 +68,21 @@ function MiniCanvasController($rootScope, $scope){
 		//var drot = rot2 - rot;
 
 		playerGfx.gfx.stop();
-		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2,midPointX,midPointY)}, expectedUpdateRate, "linear");
+		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2-90,midPointX,midPointY)}, expectedUpdateRate, "linear");
+
+		if( isDevicePlayer && _flashLight != null )
+		{
+			_flashLight.stop();
+			_flashLight.animate({'transform': "T{0},{1}R{2},{3},{4}".format(x, y, rot2, x, y)}, expectedUpdateRate, "linear");
+			_flashLight.toFront();
+		}
+		else
+			logDebug("No _flashLight!?");
 
 		// debug
 		//_circle.attr({'cx': x2, 'cy': y2});
 		//_circle.toFront();
-
+		playerGfx.gfx.toFront();
 		playerGfx.player = playerGfx.newPlayer;
 		playerGfx.newPlayer = playerDto;
 		playerGfx.updated = true;
@@ -99,6 +121,7 @@ function MiniCanvasController($rootScope, $scope){
 				//logDebug("I was detected ({0},{1})!".format(playerDto.x,playerDto.x.y));
 
 				_paper.setViewBox(x - minimapWidth/2, y - minimapHeight/2, minimapWidth, minimapHeight);
+
 			}
 		}, animationInterval);
 	};

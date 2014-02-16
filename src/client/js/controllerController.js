@@ -1,4 +1,4 @@
-var ControllerController = function($$websocketService) {
+/*var ControllerController = function($$websocketService) {
 	var it = this;
 	var connection;
 	var $stick;
@@ -39,11 +39,11 @@ var ControllerController = function($$websocketService) {
 		});
 
 
-		it.$kill.on("touchstart", function() {
+		it.$kill.on("touchstart click", function() {
 			it.kill();
 		});
 
-		it.$love.on("touchstart", function() {
+		it.$love.on("touchstart click", function() {
 			it.love();
 		});
 	},
@@ -52,7 +52,7 @@ var ControllerController = function($$websocketService) {
 	},
 	it.love = function() {
 		$$websocketService.love();
-	}
+	},
 
 	// Speed is between 0 and 1.
 	// Rotation is radians
@@ -131,3 +131,4 @@ var ControllerController = function($$websocketService) {
 
 	it.init();
 };
+*/
