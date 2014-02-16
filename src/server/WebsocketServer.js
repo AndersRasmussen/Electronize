@@ -103,7 +103,7 @@ var WebsocketServer = function(httpServer){
 				var player = self.board.players[clientSocket.id];
 
 				// If the player is killed or are having sex, they can't move
-				if (isPlayerStalled(player)) {
+				if (typeof player == 'undefined' || isPlayerStalled(player)) {
 					return;
 				}
 				
@@ -127,6 +127,10 @@ var WebsocketServer = function(httpServer){
 
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
+					
+					if (typeof otherPlayer == 'undefined')
+						continue;
+					
 					if (currentPlayer == otherPlayer)
 						continue;
 					
