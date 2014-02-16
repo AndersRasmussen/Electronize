@@ -128,8 +128,8 @@ var WebsocketServer = function(httpServer){
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
 					
-					if (typeof otherPlayer == 'undefined')
-						continue;
+					//if (typeof otherPlayer == 'undefined')
+					//	continue;
 					
 					if (currentPlayer == otherPlayer)
 						continue;
@@ -143,12 +143,12 @@ var WebsocketServer = function(httpServer){
 					var direction = Math.atan2(deltaY, deltaX)
 					var distance = Math.sqrt(Math.pow(deltaX,2) + Math.pow(deltaY,2));
 
-					var minDirection = currentPlayer.rotation - config.playerSightWidth/2;
-					var maxDirection = currentPlayer.rotation + config.playerSightWidth/2;
+					var minDirection = currentPlayer.rotation - config.playerSight.width/2;
+					var maxDirection = currentPlayer.rotation + config.playerSight.width/2;
 
-					if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSightLength) {
+					if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSight.radius) {
 						otherPlayer.killed = true;
-						currentPlayer.points += config.pointsKill;
+						currentPlayer.points += config.scores.kill;
 						otherPlayer.speed = 0;
 						setTimeout(function() {
 							otherPlayer.killed = false;
