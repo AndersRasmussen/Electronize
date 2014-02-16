@@ -196,7 +196,7 @@ var WebsocketServer = function(httpServer){
 						currentPlayer.points += config.scores.kill;
 						otherPlayer.speed = 0;
 						setTimeout(function() {
-							otherPlayer.points = Math.floor(otherPlayer/2);
+							otherPlayer.points = Math.floor(otherPlayer.points/2);
 							respawnPlayer(otherPlayer);
 						}, config.timing.killed);
 						console.log(currentPlayer.nickname + " killed " + otherPlayer.nickname);
