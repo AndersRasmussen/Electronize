@@ -41,7 +41,6 @@ var ControllerController = function($$websocketService) {
 
 		it.$kill.on("touchstart", function() {
 			it.kill();
-			alert("kill");
 		});
 
 		it.$love.on("touchstart", function() {
