@@ -223,15 +223,28 @@ var WebsocketServer = function(httpServer){
 		var deltaX = otherPlayer.x - currentPlayer.x;
 		var deltaY = otherPlayer.y - currentPlayer.y;
 
+		var absoluteOffset;
+		if( currentPlayer.rotation >= 0 ) 
+			absoluteOffset = 2 * Math.PI * Math.floor(currentPlayer.rotation / (2 * Math.PI));
+		else 
+			absoluteOffset = 2 * Math.PI * Math.ceil(currentPlayer.rotation / (2 * Math.PI));
+
 		var direction = Math.atan2(deltaY, deltaX);
 		var distance = Math.sqrt(Math.pow(deltaX,2) + Math.pow(deltaY,2));
 
 		var minDirection = currentPlayer.rotation - config.playerSight.width/2;
 		var maxDirection = currentPlayer.rotation + config.playerSight.width/2;
+		//recompute minmax within [-PI,PI]
+		var minVectorAngle = Math.atan2(Math.sin(minDirection), Math.cos(minDirection));
+		var maxVectorAngle = Math.atan2(Math.sin(maxDirection), Math.cos(maxDirection));
 
-		logDebug("Within range? Is dist: ({0} > {1}), Angle: ({2} < {3} < {4})".format(config.playerSight.radius, distance, minDirection, direction, maxDirection));		
+		logDebug("Within range? Abs.rot: {5} ||| dist: ({0} > {1}), Angle: ({2} < {3} < {4})".format(config.playerSight.radius, distance, minVectorAngle, direction, maxVectorAngle, currentPlayer.rotation));
 
-		return minDirection <= direction && direction <= maxDirection && distance <= config.playerSight.radius;
+		if( minVectorAngle > maxVectorAngle)
+			// REVERSE CHECK
+			return (minVectorAngle >= direction || direction >= maxVectorAngle) && distance <= config.playerSight.radius;
+		else
+			return minVectorAngle <= direction && direction <= maxVectorAngle && distance <= config.playerSight.radius;
 	}
 	
 	var respawnPlayer = function(player) {
