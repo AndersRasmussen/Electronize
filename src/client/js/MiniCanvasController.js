@@ -157,7 +157,7 @@ function MiniCanvasController($rootScope, $scope, $$soundManager){
 	};
 
 	$scope.$on("BOARDUPDATE", function(event, boardState){
-
+	
 		// mark players as not updated
 		for( var playerid in _playerGfx){
 			_playerGfx[playerid].updated = false;
