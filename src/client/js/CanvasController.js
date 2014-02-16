@@ -19,6 +19,8 @@ function CanvasController($rootScope, $scope){
 		var rect = _paper.rect(0, 0, w, h, 0);
 		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});			
 
+		//animateHeart(3);
+		//animateDeath(3);
 		// debug
 		//_circle = _paper.circle(0, 0, 10);
 		//_circle.attr("fill", "#f00");
@@ -26,8 +28,9 @@ function CanvasController($rootScope, $scope){
 	}
 
 
-	var animateHeart = function () {
-		var image = _paper.image("img/heart.png", 60, 60, 124 /3 , 108 /3);
+	var animateHeart = function (numAnimations, image) {
+		if( image == null )
+			image = _paper.image("img/heart.png", 60, 60, 124 /3 , 108 /3);
 
 		image.animate({
 			opacity: 0.3,
@@ -37,13 +40,17 @@ function CanvasController($rootScope, $scope){
 			image.animate({
 				opacity: 1,
 				transform: "s1"
-			}, 1000, "cubic-bezier(.26,1,.54,.56) ");
+			}, 1000, "cubic-bezier(.26,1,.54,.56) ", function(){
+				if(numAnimations>0)
+					animateHeart(--numAnimations, image);
+			});
 
 		});
 	}
 
-	var animateDeath = function () {
-		var image = _paper.image("img/skull.png", 60, 60, 124 /3 , 108 /3);
+	var animateDeath = function (numAnimations, image) {
+		if( image == null )
+			image = _paper.image("img/skull.png", 60, 60, 124 /3 , 108 /3);
 
 		image.animate({
 			opacity: 0.3,
@@ -53,7 +60,10 @@ function CanvasController($rootScope, $scope){
 			image.animate({
 				opacity: 1,
 				transform: "s1"
-			}, 1000, "cubic-bezier(.26,1,.54,.56) ");
+			}, 1000, "cubic-bezier(.26,1,.54,.56) ", function(){
+				if(numAnimations>0)
+					animateHeart(--numAnimations, image);
+			});
 
 		});
 	}

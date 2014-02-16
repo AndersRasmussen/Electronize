@@ -12,7 +12,7 @@ function MiniCanvasController($rootScope, $scope){
 	var _paper;
 	var _circle;
 	var _devicePlayerGfx;
-	var _flashLight;
+	var _flashLight = null;
 
 	var pizzaSlice = function (cx, cy, r, startAngle, endAngle, params) {
 		var rad = Math.PI / 180;
@@ -32,7 +32,6 @@ function MiniCanvasController($rootScope, $scope){
 		var rect = _paper.rect(0, 0, w, h, 40);
 		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});
 
-		_flashLight = pizzaSlice(0,0,100,-45,45,{"fill": "#0A0","fill-opacity": "0.2", "stroke": "#000", "stroke-width": "0.5px"});
 		// debug
 		//_circle = _paper.circle(0, 0, 10);
 		//_circle.attr("fill", "#f00");
@@ -73,11 +72,14 @@ function MiniCanvasController($rootScope, $scope){
 		if( isDevicePlayer && _flashLight != null )
 		{
 			_flashLight.stop();
-			_flashLight.animate({'transform': "T{0},{1}R{2},{3},{4}".format(x, y, rot2, x, y)}, expectedUpdateRate, "linear");
+			_flashLight.animate({'transform': "T{0},{1}r{2},0,0".format(x, y, rot2)}, expectedUpdateRate, "linear");
 			_flashLight.toFront();
 		}
-		else
-			logDebug("No _flashLight!?");
+		else if( isDevicePlayer && _flashLight == null){
+			_flashLight = pizzaSlice(0,0,100,-45,45,{"fill": "#0A0","fill-opacity": "0.2", "stroke": "#000", "stroke-width": "0.5px"});
+			_flashLight.attr({'transform': "T{0},{1}r{2},0,0".format(x, y, rot2)});
+			_flashLight.toFront();
+		}
 
 		// debug
 		//_circle.attr({'cx': x2, 'cy': y2});
@@ -102,8 +104,9 @@ function MiniCanvasController($rootScope, $scope){
 		var x2 = x - midPointX; // offset to midpoint for picture
 		var y2 = y - midPointY; // offset to midpoint for picture
 
-		var rot2 = -360.0*(playerDto.rotation / (2*Math.PI))-90;
-		gfx.attr({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2,midPointX,midPointY)});
+		var rot2 = -360.0*(playerDto.rotation / (2*Math.PI));
+		gfx.attr({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2-90,midPointX,midPointY)});
+
 		return { // playerGfx class
 			'newPlayer': playerDto,
 			'gfx': gfx,
