@@ -146,7 +146,22 @@ var WebsocketServer = function(httpServer){
 						continue;
 			
 					if (isInSight(currentPlayer, otherPlayer)) {
+						currentPlayer.loving = true;
+						currentPlayer.speed = 0;
+
+						otherPlayer.loving = true;
+						otherPlayer.speed = 0;
 						
+						setTimeout(function() {
+							if (currentPlayer.killed || otherPlayer.killed) {
+								return;
+							}
+							
+							
+							
+						}, config.timing.loving);
+						logDebug("LOVE!!!!!");
+						break;
 					}
 				}
 				
@@ -176,12 +191,9 @@ var WebsocketServer = function(httpServer){
 						currentPlayer.points += config.scores.kill;
 						otherPlayer.speed = 0;
 						setTimeout(function() {
-							otherPlayer.killed = false;
-							otherPlayer.points = 0;
-							otherPlayer.x = Math.floor(Math.random() * self.board.width) + 1;
-							otherPlayer.y = Math.floor(Math.random() * self.board.height) + 1;
-							console.log(otherPlayer.nickname + " respawned!");
-						}, 10000);
+							otherPlayer.points = Math.floor(otherPlayer/2);
+							respawnPlayer(otherPlayer);
+						}, config.timing.killed);
 						console.log(currentPlayer.nickname + " killed " + otherPlayer.nickname);
 						break;
 					}
@@ -215,6 +227,15 @@ var WebsocketServer = function(httpServer){
 		logDebug("Within range? Is dist: ({0} > {1}), Angle: ({2} < {3} < {4})".format(config.playerSight.radius, distance, minDirection, direction, maxDirection));		
 
 		return minDirection <= direction && direction <= maxDirection && distance <= config.playerSight.radius;
+	}
+	
+	var respawnPlayer = function(player) {
+		player.killed = false;
+		player.loving = false;
+		player.x = Math.floor(Math.random() * self.board.width) + 1;
+		player.y = Math.floor(Math.random() * self.board.height) + 1;
+		player.speed = 0;
+		console.log(player.nickname + " respawned!");
 	}
 	
 	var makePlayer = function(playerid) {
