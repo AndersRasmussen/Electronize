@@ -10,8 +10,7 @@ function SoundManager(){
   	}
  	
  	this.initGameSounds = function() {
- 			createjs.Sound.registerSound({id:"laser",src:"../sound/laser.mp3",
- 										  id: "click", src:"../sound/click.mp3"});
+ 			createjs.Sound.registerSound({id:"laser",src:"../sound/laser.mp3" });
 		
  	}
 
@@ -44,6 +43,6 @@ function SoundManager(){
 	}
 
 	this.buttonClick = function() {
-		createjs.Sound.play("click");
+		//createjs.Sound.play("click");
 	}
 }
