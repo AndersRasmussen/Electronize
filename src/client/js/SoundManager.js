@@ -22,11 +22,17 @@ function SoundManager(){
 	}
 
 	this.laserbeam = function() {
-		//createjs.Sound.play("laser");
+		 
 		audio = new Audio('../sound/laser.mp3');	
 		audio.play();
 	}
 
+	this.lovestruck = function() {
+		 		
+		audio = new Audio('../sound/laser.mp3');	
+		audio.play();
+	
+	}
 
 	this.killed = function() {
 
@@ -36,6 +42,7 @@ function SoundManager(){
 
 
 	this.loving = function() {
-
+		audio = new Audio('../sound/laser.mp3');	
+		audio.play();
 	}
 }

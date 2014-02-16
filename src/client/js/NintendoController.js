@@ -76,6 +76,7 @@ var NintendoController = function($$websocketService, $$soundManager) {
 
 		it.$love.fastClick(function() {
 			it.love();
+			$$soundManager.lovestruck();
 		});
 	},
 	it.kill = function() {
