@@ -135,6 +135,8 @@ var WebsocketServer = function(httpServer){
 
 				if (isPlayerBusy(currentPlayer))
 					return;
+
+				currentPlayer.lovable = true;
 				
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
@@ -143,6 +145,9 @@ var WebsocketServer = function(httpServer){
 						continue;
 
 					if (isPlayerBusy(otherPlayer))
+						continue;
+						
+					if (!otherPlayer.lovable)
 						continue;
 			
 					if (isInSight(currentPlayer, otherPlayer)) {
@@ -177,6 +182,8 @@ var WebsocketServer = function(httpServer){
 				var currentPlayer = getPlayer(clientSocket.id);
 				if (isPlayerBusy(currentPlayer))
 					return;
+
+				currentPlayer.lovable = false;
 
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
@@ -250,6 +257,7 @@ var WebsocketServer = function(httpServer){
 	var respawnPlayer = function(player) {
 		player.killed = false;
 		player.loving = false;
+		player.lovable = false;
 		player.x = Math.floor(Math.random() * self.board.width) + 1;
 		player.y = Math.floor(Math.random() * self.board.height) + 1;
 		player.speed = 0;
@@ -267,6 +275,7 @@ var WebsocketServer = function(httpServer){
 			speed: 0,
 			killed: false,
 			mate: false,
+			lovable: false,
 			loving: false,
 			spriteType: Math.floor(Math.random() * config.playerSpritesCount)
 		};
