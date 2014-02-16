@@ -103,7 +103,7 @@ var WebsocketServer = function(httpServer){
 				var player = self.board.players[clientSocket.id];
 
 				// If the player is killed or are having sex, they can't move
-				if (typeof player == 'undefined' || isPlayerStalled(player)) {
+				if (typeof player == 'undefined' || !canPlayerMove(player)) {
 					return;
 				}
 				
@@ -133,7 +133,7 @@ var WebsocketServer = function(httpServer){
 			clientSocket.on('LOVE', function(otherPlayerId) {
 				var currentPlayer = getPlayer(clientSocket.id);
 
-				if (isPlayerStalled(currentPlayer))
+				if (isPlayerBusy(currentPlayer))
 					return;
 				
 				for (var playerid in self.board.players) {
@@ -142,7 +142,7 @@ var WebsocketServer = function(httpServer){
 					if (currentPlayer == otherPlayer)
 						continue;
 
-					if (isPlayerStalled(otherPlayer))
+					if (isPlayerBusy(otherPlayer))
 						continue;
 			
 					if (isInSight(currentPlayer, otherPlayer)) {
@@ -153,14 +153,19 @@ var WebsocketServer = function(httpServer){
 						otherPlayer.speed = 0;
 						
 						setTimeout(function() {
-							if (currentPlayer.killed || otherPlayer.killed) {
-								return;
+							currentPlayer.loving = false;
+							otherPlayer.loving = false;
+
+							if (!(currentPlayer.killed || otherPlayer.killed)) {
+								currentPlayer.points += config.scores.loving;
+								otherPlayer.points += config.scores.loving;
 							}
 							
-							
-							
+							respawnPlayer(currentPlayer);
+							respawnPlayer(otherPlayer);
+							logDebug("Love is all you need!")
 						}, config.timing.loving);
-						logDebug("LOVE!!!!!");
+						logDebug("All you need is love!");
 						break;
 					}
 				}
@@ -170,7 +175,7 @@ var WebsocketServer = function(httpServer){
 			
 			clientSocket.on('KILL', function() {
 				var currentPlayer = getPlayer(clientSocket.id);
-				if (isPlayerStalled(currentPlayer))
+				if (isPlayerBusy(currentPlayer))
 					return;
 
 				for (var playerid in self.board.players) {
@@ -183,7 +188,7 @@ var WebsocketServer = function(httpServer){
 					if (currentPlayer == otherPlayer)
 						continue;
 					
-					if (isPlayerStalled(otherPlayer))
+					if (isPlayerBusy(otherPlayer))
 						continue;
 
 					if (isInSight(currentPlayer, otherPlayer)) {
@@ -249,8 +254,7 @@ var WebsocketServer = function(httpServer){
 			speed: 0,
 			killed: false,
 			mate: false,
-			tased: false,
-			tasing: null,
+			loving: false,
 			spriteType: Math.floor(Math.random() * config.playerSpritesCount)
 		};
 	}
@@ -270,8 +274,12 @@ var WebsocketServer = function(httpServer){
 		logDebug("Removed player " + playerId);
 	}
 	
-	var isPlayerStalled = function(player) {
-		return player.killed || player.mate;
+	var isPlayerBusy = function(player) {
+		return player.killed || player.loving;
+	}
+	
+	var canPlayerMove = function(player) {
+		return !(player.killed || player.loving);
 	}
 	
 	var hasJoined = function(playerId) {

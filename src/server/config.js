@@ -18,7 +18,8 @@ module.exports = {
 	},
 	"playerSpritesCount": 7,
 	scores: {
-		kill: 1000
+		kill: 1000,
+		loving: 2000
 	},
 	timing: {
 		loving: 5000,
