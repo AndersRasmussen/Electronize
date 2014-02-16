@@ -2,7 +2,7 @@ function MiniCanvasController($rootScope, $scope){
 	var mapWidth = 1400;
 	var mapHeight = 1000;
 	var minimapWidth = 300;
-	var minimapHeight = 197;
+	var minimapHeight = 237;
 
 	var expectedUpdateRate = 200; // ms
 	var animationInterval = 50; // ms

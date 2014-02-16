@@ -84,7 +84,7 @@ html, body{
 	background-color: #131313;
 	top: 0px;
 	width: 640px;
-	height: 420px;
+	height: 480px;
 	-webkit-transform: translate3d(0, 0, 0);
 	-webkit-backface-visibility: hidden;
 	-webkit-perspective: 1000;
@@ -105,17 +105,19 @@ div.controller-body{
 
 div.score{
 	position: absolute;
-	background-color: #ccc;
-	top: 420px;
+	top: 40px;
 	height: 40px;
 	width: 620px;
 	padding: 10px;
+
+	top: 10px;
+	color: #fff;
+	text-shadow: 1px 1px 1px #000;
 }
 
 #DEBUG{
 	position: absolute;
 	/*box-shadow: 7px 7px 8px #CCCCCC;*/
-	background-color: #333;
 	z-index: 1001;
 	bottom: 0px;
 	width: 640px;
