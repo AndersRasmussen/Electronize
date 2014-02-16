@@ -78,8 +78,31 @@ gfxRessources = {
 				{
 					image.remove();
 					image = null;
+					it.animateBlood(paper, x, y, null);
 				}
 			});
 		});
+	},
+	animateBlood: function (paper, x, y, image) {
+		var it = this;
+		if( image == null ){
+			var iW = 124 /3;
+			var iH = 108 /3;
+			image = paper.image("img/blood_pool.png", x - iW / 2, y - iH / 2, iW , iH);
+			image.toFront();
+		}
+
+		image.animate({
+				opacity: 0.0,
+				transform: "s2.4"
+			}, 
+			15000, 
+			"linear", 
+			function() {
+				image.remove();
+				image = null;
+			}
+		);
 	}
+
 };
