@@ -115,9 +115,29 @@ function MiniCanvasController($rootScope, $scope){
 			_playerGfx[playerid].updated = false;
 		}
 
+		// get position of devicePlayer
+		var x,y;
+		for( var playerid in boardState.players){
+			if(playerid == $scope.playerid){
+				x = boardState.players[playerid].x;
+				y = boardState.players[playerid].y;
+			}
+		}
+
+		var dist = function(x1,y1,x2,y2){
+			return Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+		}
+
+		var activePlayers = 0;
 		// update movements and create players
 		for( var playerid in boardState.players){
 			var playerDto = boardState.players[playerid];
+
+			// check if player is to far away
+			if( dist(x,y,playerDto.x,playerDto.y) > Math.max(minimapWidth, minimapHeight) )
+				continue; // ignore player
+
+			activePlayers++;
 			var playerGfx = _playerGfx[playerDto.id];
 			if( playerGfx == null)
 			{
@@ -127,7 +147,9 @@ function MiniCanvasController($rootScope, $scope){
 				_playerGfx[playerDto.id] = playerGfx;
 			}
 			updatePlayerPos(playerGfx, playerDto, playerid == $scope.playerid);
+
 		}
+		
 
 		// remove unused players
 		for( var playerid in _playerGfx){
