@@ -107,7 +107,26 @@ var WebsocketServer = function(httpServer){
 					return;
 				}
 				
-				player.rotation = velocity.rotation;
+				var phi1 = player.rotation;
+				var theta2 = velocity.rotation;
+				var theta1 = phi1 % (2*Math.PI);
+				
+				if (theta1 > Math.PI)
+					theta1 = -(2*Math.PI - theta1);
+				if (theta1 < -Math.PI)
+					theta1 = 2*Math.PI + theta1;
+
+				if (Math.abs(theta2-theta1) <= Math.PI) {
+					var phi2 = phi1 + theta2 - theta1;
+				} else {
+					if (theta2 > theta1) {
+						var phi2 = phi1 - (2 * Math.PI - (theta2 - theta1));
+					} else {
+						var phi2 = phi1 - (2 * Math.PI - (theta2 - theta1));
+					}
+				}
+				
+				player.rotation = phi2;
 				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
 			});
 			
@@ -140,7 +159,7 @@ var WebsocketServer = function(httpServer){
 					var deltaX = otherPlayer.x - currentPlayer.x;
 					var deltaY = otherPlayer.y - currentPlayer.y;
 
-					var direction = Math.atan2(deltaY, deltaX)
+					var direction = Math.atan2(deltaY, deltaX);
 					var distance = Math.sqrt(Math.pow(deltaX,2) + Math.pow(deltaY,2));
 
 					var minDirection = currentPlayer.rotation - config.playerSight.width/2;
