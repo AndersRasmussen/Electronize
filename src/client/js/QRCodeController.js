@@ -4,5 +4,5 @@ var QRCodeController = function($scope, $location) {
 		return;
 		
 	var url = $location.protocol() + '://' + $location.host() + ":" + $location.port();
-	$scope.url = 'http://chart.apis.google.com/chart?chs=259x259&cht=qr&chl=' + url;
+	$scope.url = 'http://chart.apis.google.com/chart?chs=249x249&cht=qr&chl=' + url;
 }

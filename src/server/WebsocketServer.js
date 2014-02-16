@@ -180,6 +180,7 @@ var WebsocketServer = function(httpServer){
 			
 			clientSocket.on('KILL', function() {
 				var currentPlayer = getPlayer(clientSocket.id);
+				
 				if (isPlayerBusy(currentPlayer))
 					return;
 
@@ -195,7 +196,7 @@ var WebsocketServer = function(httpServer){
 					if (currentPlayer == otherPlayer)
 						continue;
 					
-					if (isPlayerBusy(otherPlayer))
+					if (otherPlayer.killed)
 						continue;
 
 					if (isInSight(currentPlayer, otherPlayer)) {
