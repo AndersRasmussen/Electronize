@@ -39,11 +39,11 @@ var ControllerController = function($$websocketService) {
 		});
 
 
-		it.$kill.on("touchstart", function() {
+		it.$kill.on("touchstart click", function() {
 			it.kill();
 		});
 
-		it.$love.on("touchstart", function() {
+		it.$love.on("touchstart click", function() {
 			it.love();
 		});
 	},
