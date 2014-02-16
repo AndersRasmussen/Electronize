@@ -84,6 +84,20 @@ function MiniCanvasController($rootScope, $scope, $$soundManager){
 		playerGfx.gfx.stop();
 		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2-90,midPointX,midPointY)}, expectedUpdateRate, "linear");
 
+		if( playerDto.lovable )
+		{
+			var hWidth = playerGfx.heart.attr("width");
+			var hHeight = playerGfx.heart.attr("height");
+			var xH2 = x - hWidth / 2; // offset to midpoint for picture
+			var yH2 = y - hHeight / 2; // offset to midpoint for picture
+
+			playerGfx.heart.stop();
+			playerGfx.heart.animate({'transform': "T{0},{1}".format(xH2,yH2)}, expectedUpdateRate, "linear");
+			playerGfx.heart.show();
+		}
+		else
+			playerGfx.heart.hide();
+
 		if( isDevicePlayer && _flashLight != null )
 		{
 			_flashLight.stop();
@@ -107,6 +121,7 @@ function MiniCanvasController($rootScope, $scope, $$soundManager){
 		//_circle.attr({'cx': x2, 'cy': y2});
 		//_circle.toFront();
 		playerGfx.gfx.toFront();
+		playerGfx.heart.toFront();
 		playerGfx.player = playerGfx.newPlayer;
 		playerGfx.newPlayer = playerDto;
 		playerGfx.updated = true;
@@ -114,6 +129,7 @@ function MiniCanvasController($rootScope, $scope, $$soundManager){
 
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
+		var heart = gfxRessources.createLovableHeart(_paper);
 		var gfx = gfxRessources.createPlayerGfx(_paper, playerDto.spriteType);
 		var x = playerDto.x;
 		var y = mapHeight - playerDto.y;  // flip y-coords
@@ -129,9 +145,23 @@ function MiniCanvasController($rootScope, $scope, $$soundManager){
 		var rot2 = -360.0*(playerDto.rotation / (2*Math.PI));
 		gfx.attr({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2-90,midPointX,midPointY)});
 
+		if( playerDto.lovable )
+		{
+			var hWidth = heart.attr("width");
+			var hHeight = heart.attr("height");
+			var xH2 = x - hWidth / 2; // offset to midpoint for picture
+			var yH2 = y - hHeight / 2; // offset to midpoint for picture
+
+			heart.animate({'transform': "T{0},{1}".format(xH2,yH2)}, expectedUpdateRate, "linear");
+			heart.show();
+		}
+		else
+			heart.hide();
+
 		return { // playerGfx class
 			'newPlayer': playerDto,
 			'gfx': gfx,
+			'heart': heart,
 			'update': false
 		}
 	};
@@ -206,6 +236,7 @@ function MiniCanvasController($rootScope, $scope, $$soundManager){
 			{
 				// remove player from board
 				playerGfx.gfx.remove();
+				playerGfx.heart.remove();
 				// remove player from local list
 				delete _playerGfx[playerid];
 			}

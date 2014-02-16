@@ -17,7 +17,7 @@ function CanvasController($rootScope, $scope, $$soundManager){
 		_paper.setViewBox(0, 0, w, h, true);
 
 		var rect = _paper.rect(0, 0, w, h, 0);
-		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});			
+		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});
 
 		//gfxRessources.animateHeart(3, _paper, 100, 100 );
 		//gfxRessources.animateHeart(3, _paper, 500, 500 );
@@ -62,10 +62,19 @@ function CanvasController($rootScope, $scope, $$soundManager){
 		playerGfx.gfx.stop();
 		playerGfx.gfx.animate({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2,midPointX,midPointY)}, expectedUpdateRate, "linear");
 
-		// debug
-		//_circle.attr({'cx': x2, 'cy': y2});
-		//_circle.toFront();
+		if( playerDto.lovable )
+		{
+			var hWidth = playerGfx.heart.attr("width");
+			var hHeight = playerGfx.heart.attr("height");
+			var xH2 = x - hWidth / 2; // offset to midpoint for picture
+			var yH2 = y - hHeight / 2; // offset to midpoint for picture
 
+			playerGfx.heart.stop();
+			playerGfx.heart.animate({'transform': "T{0},{1}".format(xH2,yH2)}, expectedUpdateRate, "linear");
+			playerGfx.heart.show();
+		}
+		else
+			playerGfx.heart.hide();
 
 		playerGfx.player = playerGfx.newPlayer;
 		playerGfx.newPlayer = playerDto;
@@ -75,22 +84,43 @@ function CanvasController($rootScope, $scope, $$soundManager){
 	// create playerGfx
 	var createNewPlayer = function(playerDto){
 		var gfx = gfxRessources.createPlayerGfx(_paper, playerDto.spriteType);
+		var heart = gfxRessources.createLovableHeart(_paper);
 		var x = playerDto.x;
 		var y = mapHeight - playerDto.y;  // flip y-coords
 
 		var width = gfx.attr("width");
 		var height = gfx.attr("height");
 
+		var hWidth = heart.attr("width");
+		var hHeight = heart.attr("height");
+
 		var midPointX = width / 2;
 		var midPointY = height / 2;
 		var x2 = x - midPointX; // offset to midpoint for picture
 		var y2 = y - midPointY; // offset to midpoint for picture
+		var xH2 = x - hWidth / 2; // offset to midpoint for picture
+		var yH2 = y - hHeight / 2; // offset to midpoint for picture
 
 		var rot2 = -360.0 * (playerDto.rotation / (2*Math.PI))-90;
 		gfx.attr({'transform': "T{0},{1}r{2},{3},{4}".format(x2,y2,rot2,midPointX,midPointY)});
+		
+		if( playerDto.lovable )
+		{
+			var hWidth = heart.attr("width");
+			var hHeight = heart.attr("height");
+			var xH2 = x - hWidth / 2; // offset to midpoint for picture
+			var yH2 = y - hHeight / 2; // offset to midpoint for picture
+
+			heart.animate({'transform': "T{0},{1}".format(xH2,yH2)}, expectedUpdateRate, "linear");
+			heart.show();
+		}
+		else
+			heart.hide();
+
 		return { // playerGfx class
 			'newPlayer': playerDto,
 			'gfx': gfx,
+			'heart': heart,
 			'update': false
 		}
 	};

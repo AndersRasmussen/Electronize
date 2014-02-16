@@ -26,6 +26,7 @@ data = {
 	},
 	gameGfx: {
 		gfx: raphaelGfx,
+		heart: heartGfx,
 		scale: 1.0
 	}
 }
