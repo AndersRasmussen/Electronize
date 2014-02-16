@@ -10,12 +10,9 @@ function SoundManager(){
   	}
  	
  	this.initGameSounds = function() {
- 			//var queue2 = new createjs.LoadQueue(false);
-			//queue2.installPlugin(createjs.Sound);			
-			//queue2.addEventListener("complete", laserbeam);
-			//queue2.loadManifest([{id:"laser", src:"../sound/laser.mp3"}]);
-				
-			
+ 			createjs.Sound.registerSound({id:"laser",src:"../sound/laser.mp3",
+ 										  id: "click", src:"../sound/click.mp3"});
+		
  	}
 
 	function handleComplete(event) {		
@@ -24,8 +21,7 @@ function SoundManager(){
 
 	this.laserbeam = function() {
 		 
-		audio = new Audio('../sound/laser.mp3');	
-		audio.play();
+		createjs.Sound.play("laser");
 	}
 
 	this.lovestruck = function() {
@@ -48,7 +44,6 @@ function SoundManager(){
 	}
 
 	this.buttonClick = function() {
-		audio = new Audio('../sound/click.mp3');
-		audio.play();
+		createjs.Sound.play("click");
 	}
 }
