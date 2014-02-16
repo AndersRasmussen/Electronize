@@ -33,46 +33,91 @@ html, body{
 #navigation .pad-button[data-direction="n"] {
 	top: 50px;
 	left: 85px;
+	background: url('/img/controller/n.png') no-repeat;
 }
 
 #navigation .pad-button[data-direction="ne"] {
 	top: 50px;
 	left: 140px;
+	background: url('/img/controller/ne.png') no-repeat;
 }
 
 #navigation .pad-button[data-direction="nw"] {
 	top: 50px;
 	left: 30px;
+	background: url('/img/controller/nw.png') no-repeat;
 }
 
 #navigation .pad-button[data-direction="e"] {
 	top: 105px;
 	left: 140px;
+	background: url('/img/controller/e.png') no-repeat;
 }
 
 #navigation .pad-button[data-direction="c"] {
 	top: 105px;
 	left: 85px;
+	background: url('/img/controller/c.png') no-repeat;
 }
 
 #navigation .pad-button[data-direction="w"] {
 	top: 105px;
 	left: 30px;
+	background: url('/img/controller/w.png') no-repeat;
 }
 
 #navigation .pad-button[data-direction="se"] {
 	top: 160px;
 	left: 140px;
+	background: url('/img/controller/se.png') no-repeat;
 }
 
 #navigation .pad-button[data-direction="s"] {
 	top: 160px;
 	left: 85px;
+	background: url('/img/controller/s.png') no-repeat;
 }
 
 #navigation .pad-button[data-direction="sw"] {
 	top: 160px;
 	left: 30px;
+	background: url('/img/controller/sw.png') no-repeat;
+}
+
+#navigation .pad-button[data-direction="n"].active {
+	background: url('/img/controller/n_active.png') no-repeat;
+}
+
+#navigation .pad-button[data-direction="ne"].active {
+	background: url('/img/controller/ne_active.png') no-repeat;
+}
+
+#navigation .pad-button[data-direction="nw"].active {
+	background: url('/img/controller/nw_active.png') no-repeat;
+}
+
+#navigation .pad-button[data-direction="e"].active {
+	background: url('/img/controller/e_active.png') no-repeat;
+}
+
+#navigation .pad-button[data-direction="c"].active {
+	background: url('/img/controller/c_active.png') no-repeat;
+}
+
+#navigation .pad-button[data-direction="w"].active {
+	background: url('/img/controller/w_active.png') no-repeat;
+}
+
+#navigation .pad-button[data-direction="se"].active {
+	background: url('/img/controller/se_active.png') no-repeat;
+}
+
+#navigation .pad-button[data-direction="s"].active {
+	background: url('/img/controller/s_active.png') no-repeat;
+}
+
+#navigation .pad-button[data-direction="sw"].active {
+	background: url('/img/controller/sw_active.png') no-repeat;
 }
 
 #buttons {

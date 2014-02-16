@@ -5,6 +5,7 @@ var NintendoController = function($$websocketService) {
 	var $love;
 	var pushedVelocity;
 	var oldPushedVelocity;
+	var oldTarget;
 	it.init = function() {
 		it.decorateControls();
 		it.oldPushedVelocity = {};
@@ -18,6 +19,14 @@ var NintendoController = function($$websocketService) {
 
 		$('#navigation .pad .pad-button').fastClick(function(e) {
 			var direction = e.target.attributes["data-direction"].value;
+			$(this).addClass('active');
+
+			if(typeof it.oldTarget !== 'undefined') {
+				$(it.oldTarget).removeClass('active');
+			}
+
+			it.oldTarget = this;
+
 			var velocity = {};
 			velocity.speed = 1;
 			switch(direction) {
