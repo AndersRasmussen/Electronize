@@ -1,16 +1,20 @@
-var NintendoController = function($$websocketService) {
+var NintendoController = function($$websocketService, $$soundManager) {
 	var it = this;
 	var connection;
 	var $kill;
 	var $love;
 	var pushedVelocity;
 	var oldPushedVelocity;
+
 	it.init = function() {
+		$$soundManager.initGameSounds();
 		it.decorateControls();
 		it.oldPushedVelocity = {};
 		it.oldPushedVelocity.rotation = 0;
 		it.oldPushedVelocity.speed = 0;
 		it.updateMove();
+
+
 	},
 	it.decorateControls = function() {
 		it.$kill = $('#kill');
@@ -57,7 +61,8 @@ var NintendoController = function($$websocketService) {
 		});
 
 		it.$kill.fastClick(function() {
-			it.kill();
+			it.kill();		
+			$$soundManager.laserbeam();
 		});
 
 		it.$love.fastClick(function() {
