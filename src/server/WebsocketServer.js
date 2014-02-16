@@ -122,9 +122,11 @@ var WebsocketServer = function(httpServer){
 					if (theta2 > theta1) {
 						var phi2 = phi1 - (2 * Math.PI - (theta2 - theta1));
 					} else {
-						var phi2 = phi1 - (2 * Math.PI - (theta2 - theta1));
+						var phi2 = phi1 + (2 * Math.PI - (theta1 - theta2));
 					}
 				}
+				
+				console.log(phi1, theta1, phi2, theta2);
 				
 				player.rotation = phi2;
 				player.speed = velocity.speed.clamp(0, 1); // received velocity should be between 0 and 1
