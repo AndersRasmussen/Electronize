@@ -20,7 +20,10 @@ function HighscoreController($rootScope, $scope){
 			for(var i = 0; i < players.length; i++)
 			{
 				if( players[i].points > maxPts)
+				{
 					bestIndex = i;
+					maxPts = players[i].points;
+				}
 			}
 			return (bestIndex > -1)? bestIndex: null;
 		}
