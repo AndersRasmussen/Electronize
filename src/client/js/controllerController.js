@@ -1,4 +1,4 @@
-var ControllerController = function($$websocketService) {
+/*var ControllerController = function($$websocketService) {
 	var it = this;
 	var connection;
 	var $stick;
@@ -131,3 +131,4 @@ var ControllerController = function($$websocketService) {
 
 	it.init();
 };
+*/

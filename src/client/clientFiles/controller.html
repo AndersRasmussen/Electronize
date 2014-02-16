@@ -21,19 +21,13 @@
 		<div class="score">
 			Your name: {{nickname}}
 		</div>
-		<div class="controller-body" ng-controller="NintendoController">
+		<div class="controller-body" ng-controller="ControllerController">
 			<div id="navigation">
-				<div class="pad">
-					<div data-direction="n"  class="pad-button"></div>
-					<div data-direction="ne" class="pad-button"></div>
-					<div data-direction="e"  class="pad-button"></div>
-					<div data-direction="se" class="pad-button"></div>
-					<div data-direction="s"  class="pad-button"></div>
-					<div data-direction="sw" class="pad-button"></div>
-					<div data-direction="w"  class="pad-button"></div>
-					<div data-direction="nw" class="pad-button"></div>
-					<div data-direction="c"  class="pad-button"></div>
+				<div class="stick">
+					<div class="stick-base">
+						<div id="big-red-stick"></div>
 					</div>
+				</div>
 				<div id="buttons">
 					<div id="kill" class="button"></div>
 					<div id="love" class="button"></div>
