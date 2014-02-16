@@ -1,12 +1,12 @@
 function MiniCanvasController($rootScope, $scope, $$soundManager){
 	var mapWidth = 1400;
 	var mapHeight = 1000;
-	var minimapWidth = 300;
-	var minimapHeight = 237;
+	var minimapWidth = 600;
+	var minimapHeight = 474;
 	var circleOfDeathRadius = 200; // PI / 2
 
 	var expectedUpdateRate = 200; // ms
-	var animationInterval = 50; // ms
+	var animationInterval = 1000; // ms
 	logDebug("CanvasController initializing");
 	var _playerGfx = {};
 	var _paper;

@@ -24,6 +24,9 @@ gfxRessources = {
 	createHeart: function(tile) {
 		return tile.image("/img/heart.png", 0, 0, 124, 109);
 	},
+	createLovableHeart: function(tile) {
+		return tile.image("/img/heart.png", 0, 0, 124, 109);
+	},
 	animateHeart: function (numAnimations, paper, x, y, image) {
 		var it = this;
 			
