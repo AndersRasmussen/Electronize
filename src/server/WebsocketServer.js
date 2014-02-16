@@ -128,7 +128,7 @@ var WebsocketServer = function(httpServer){
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
 					
-					if (typeof player == 'undefined')
+					if (typeof otherPlayer == 'undefined')
 						continue;
 					
 					if (currentPlayer == otherPlayer)
