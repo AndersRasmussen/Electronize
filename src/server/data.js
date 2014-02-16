@@ -13,7 +13,7 @@ data = {
 		rotation: 2.324, // orientation {0, 2pi}
 		speed: 2.04, // velocity [grid/sec]
 		killed: false, // first update since kill?
-		mate: false,  // first update since mate?
+		loving: false, // first update since mate?
 		spriteType: 1
 	},
 	playerGfx: {
@@ -21,6 +21,8 @@ data = {
 		newPlayer: player,
 		gfx: gameGfx,
 		updated: false // has the player been updated in this trip
+		lastKilled: false;
+		lastLoving: false;
 	},
 	gameGfx: {
 		gfx: raphaelGfx,

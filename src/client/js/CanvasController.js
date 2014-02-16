@@ -19,8 +19,9 @@ function CanvasController($rootScope, $scope){
 		var rect = _paper.rect(0, 0, w, h, 0);
 		rect.attr({"fill": "url('/img/grass2.png')", "stroke": "#000", "stroke-width": "1px"});			
 
-		gfxRessources.animateHeart(3, _paper, 60, 60);
-		//animateDeath(3);
+		//gfxRessources.animateHeart(3, _paper, 100, 100 );
+		//gfxRessources.animateHeart(3, _paper, 500, 500 );
+
 		// debug
 		//_circle = _paper.circle(0, 0, 10);
 		//_circle.attr("fill", "#f00");
@@ -31,6 +32,20 @@ function CanvasController($rootScope, $scope){
 	var updatePlayerPos = function(playerGfx, playerDto){
 		var width = playerGfx.gfx.attr("width");
 		var height = playerGfx.gfx.attr("height");
+
+		if(playerDto.killed && !playerGfx.lastKilled)
+		{
+			gfxRessources.animateDeath(3, _paper, playerDto.x, mapHeight-playerDto.y);
+			logDebug("Player was killed");
+		}
+
+		if(playerDto.loving && !playerGfx.lastLoving)
+		{
+			gfxRessources.animateHeart(3, _paper, playerDto.x, mapHeight-playerDto.y);
+		}
+
+		playerGfx.lastKilled = playerDto.killed;
+		playerGfx.lastLoving = playerDto.loving;
 
 		var midPointX = width / 2;
 		var midPointY = height / 2;

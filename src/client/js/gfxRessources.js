@@ -26,8 +26,14 @@ gfxRessources = {
 	},
 	animateHeart: function (numAnimations, paper, x, y, image) {
 		var it = this;
+			
 		if( image == null )
-			image = paper.image("img/heart.png", x, y, 124 /3 , 108 /3);
+		{
+			var iW = 124 /3;
+			var iH = 108 /3;
+			image = paper.image("img/heart.png", x - iW / 2, y - iH / 2, iW , iH);
+			image.toFront();
+		}
 
 		image.animate({
 			opacity: 0.3,
@@ -41,14 +47,21 @@ gfxRessources = {
 				if(numAnimations>1)
 					it.animateHeart(--numAnimations, paper, x, y, image);
 				else
+				{
 					image.remove();
+					image = null;
+				}
 			});
 		});
 	},
 	animateDeath: function (numAnimations, paper, x, y, image) {
 		var it = this;
-		if( image == null )
-			image = paper.image("img/skull.png", x, y, 124 /3 , 108 /3);
+		if( image == null ){
+			var iW = 124 /3;
+			var iH = 108 /3;
+			image = paper.image("img/skull.png", x - iW / 2, y - iH / 2, iW , iH);
+			image.toFront();
+		}
 
 		image.animate({
 			opacity: 0.3,
@@ -60,9 +73,12 @@ gfxRessources = {
 				transform: "s1"
 			}, 1000, "cubic-bezier(.26,1,.54,.56) ", function(){
 				if(numAnimations>1)
-					it.animateHeart(--numAnimations, paper, x, y, image);
+					it.animateDeath(--numAnimations, paper, x, y, image);
 				else
+				{
 					image.remove();
+					image = null;
+				}
 			});
 		});
 	}

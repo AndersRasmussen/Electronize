@@ -49,6 +49,19 @@ function MiniCanvasController($rootScope, $scope){
 		var height = playerGfx.gfx.attr("height");
 		//var x = playerGfx.gfx.attr("x");
 		//var y = playerGfx.gfx.attr("y");
+		if(playerDto.killed && !playerGfx.lastKilled)
+		{
+			gfxRessources.animateDeath(3, _paper, playerDto.x, mapHeight-playerDto.y);
+			logDebug("Player was killed");
+		}
+
+		if(playerDto.loving && !playerGfx.lastLoving)
+		{
+			gfxRessources.animateHeart(3, _paper, playerDto.x, mapHeight-playerDto.y);
+		}
+
+		playerGfx.lastKilled = playerDto.killed;
+		playerGfx.lastLoving = playerDto.loving;
 
 		var midPointX = width / 2;
 		var midPointY = height / 2;
