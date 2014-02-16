@@ -26,4 +26,16 @@ function SoundManager(){
 		audio = new Audio('../sound/laser.mp3');	
 		audio.play();
 	}
+
+
+	this.killed = function() {
+
+		audio = new Audio('../sound/laser.mp3');	
+		audio.play();
+	}
+
+
+	this.loving = function() {
+
+	}
 }
