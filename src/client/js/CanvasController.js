@@ -1,4 +1,4 @@
-function CanvasController($rootScope, $scope){
+function CanvasController($rootScope, $scope, $$soundManager){
 	var mapWidth = 1400;
 	var mapHeight = 1000;
 	var expectedUpdateRate = 200;
@@ -37,11 +37,13 @@ function CanvasController($rootScope, $scope){
 		{
 			gfxRessources.animateDeath(3, _paper, playerDto.x, mapHeight-playerDto.y);
 			logDebug("Player was killed");
+			$$soundManager.killed();
 		}
 
 		if(playerDto.loving && !playerGfx.lastLoving)
 		{
 			gfxRessources.animateHeart(3, _paper, playerDto.x, mapHeight-playerDto.y);
+			$$soundManager.loving();
 		}
 
 		playerGfx.lastKilled = playerDto.killed;

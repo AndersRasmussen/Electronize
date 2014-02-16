@@ -1,4 +1,4 @@
-function MiniCanvasController($rootScope, $scope){
+function MiniCanvasController($rootScope, $scope, $$soundManager){
 	var mapWidth = 1400;
 	var mapHeight = 1000;
 	var minimapWidth = 300;
@@ -52,12 +52,14 @@ function MiniCanvasController($rootScope, $scope){
 		if(playerDto.killed && !playerGfx.lastKilled)
 		{
 			gfxRessources.animateDeath(3, _paper, playerDto.x, mapHeight-playerDto.y);
+			$$soundManager.killed();
 			logDebug("Player was killed");
 		}
 
 		if(playerDto.loving && !playerGfx.lastLoving)
 		{
 			gfxRessources.animateHeart(3, _paper, playerDto.x, mapHeight-playerDto.y);
+			$$soundManager.loving();
 		}
 
 		playerGfx.lastKilled = playerDto.killed;
