@@ -149,6 +149,7 @@ var WebsocketServer = function(httpServer){
 				for (var playerid in self.board.players) {
 					var otherPlayer = getPlayer(playerid);
 					
+					// is any players within death range?
 					//if (typeof otherPlayer == 'undefined')
 					//	continue;
 					
@@ -166,6 +167,8 @@ var WebsocketServer = function(httpServer){
 
 					var minDirection = currentPlayer.rotation - config.playerSight.width/2;
 					var maxDirection = currentPlayer.rotation + config.playerSight.width/2;
+
+					logDebug("Kill? Is dist: ({0} > {1}), Angle: ({2} < {3} < {4})".format(config.playerSight.radius, distance, minDirection, direction, maxDirection));
 
 					if (minDirection <= direction && direction <= maxDirection && distance <= config.playerSight.radius) {
 						otherPlayer.killed = true;
