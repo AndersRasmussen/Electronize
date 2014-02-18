@@ -18,8 +18,8 @@ function DeviceController($rootScope, $scope, $$deviceApplication, $$websocketSe
 		}
 	});
 	
-	$scope.keydown = function($event){
-		logDebug(""+$event.keyCode);
+	$scope.keydown = function($event){		
+		$scope.$broadcast("keydown", $event.keyCode);
 	};
 
 	$rootScope.broadcastEvent = function(eventname, args){
