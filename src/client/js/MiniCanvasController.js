@@ -1,3 +1,29 @@
+// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+ (function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+ 
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+ 
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+
 function MiniCanvasController($rootScope, $scope, $$soundManager){
 	var mapWidth = 1400;
 	var mapHeight = 1000;
@@ -168,7 +194,7 @@ function MiniCanvasController($rootScope, $scope, $$soundManager){
 
 	// follow the device player with the minimap camera
 	var enableAutoMoveMap = function(){
-		setInterval(function(){
+		requestAnimationFrame(function(){
 			if( _devicePlayerGfx != null )
 			{
 				var x = _devicePlayerGfx.gfx.matrix.x(0,0);
@@ -178,7 +204,8 @@ function MiniCanvasController($rootScope, $scope, $$soundManager){
 				_paper.setViewBox(x - minimapWidth/2, y - minimapHeight/2, minimapWidth, minimapHeight);
 
 			}
-		}, animationInterval);
+			enableAutoMoveMap();
+		});
 	};
 
 	var renderPaper = function(boardState){
