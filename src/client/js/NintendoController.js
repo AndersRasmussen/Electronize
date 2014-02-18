@@ -12,41 +12,59 @@ var NintendoController = function($scope, $$websocketService, $$soundManager) {
 		var velocity = {};
 		velocity.speed = 1;
 		switch(key) {
-			case 79:
-				velocity.rotation = Math.PI / 2;
-				it.move(velocity);
-			break;
-			case 80:
-				velocity.rotation = Math.PI / 4;
-				it.move(velocity);
-			break;
-			case 192:
-				velocity.rotation = 0;
-				it.move(velocity);
-			break;
-			case 189:
-				velocity.rotation = -(Math.PI / 4); 
-				it.move(velocity);
-			break;
-			case 190:
-				velocity.rotation = -(Math.PI / 2);
-				it.move(velocity);
-			break;
-			case 188:
-				velocity.rotation = -(3 * Math.PI / 4);
-				it.move(velocity);
-			break;
-			case 75:
-				velocity.rotation = Math.PI;
-				it.move(velocity);
-			break;
+			// NW
 			case 73:
+			case 103:
 				velocity.rotation = 3 * Math.PI / 4;
 				it.move(velocity);
 			break;
+			// N
+			case 79:
+			case 104:
+				velocity.rotation = Math.PI / 2;
+				it.move(velocity);
+			break;
+			// NE
+			case 80:
+			case 105:
+				velocity.rotation = Math.PI / 4;
+				it.move(velocity);
+			break;
+			// W
+			case 75:
+			case 10:
+				velocity.rotation = Math.PI;
+				it.move(velocity);
+			break;
+			// STOP
 			case 76:
+			case 53:
 				velocity.speed = 0;
 				velocity.rotation = it.oldPushedVelocity.rotation;
+				it.move(velocity);
+			break;			
+			// E
+			case 192:
+			case 102:
+				velocity.rotation = 0;
+				it.move(velocity);
+			break;
+			// SW
+			case 188:
+			case 97:
+				velocity.rotation = -(3 * Math.PI / 4);
+				it.move(velocity);
+			break;
+			// S
+			case 190:
+			case 98:
+				velocity.rotation = -(Math.PI / 2);
+				it.move(velocity);
+			break;
+			// SE
+			case 189:
+			case 99:
+				velocity.rotation = -(Math.PI / 4); 
 				it.move(velocity);
 			break;
 			case 90:
