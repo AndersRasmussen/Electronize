@@ -11,7 +11,7 @@ var NintendoController = function($scope, $$websocketService, $$soundManager) {
 	$scope.$on("keydown", function(event, key){
 		var velocity = {};
 		velocity.speed = 1;
-		switch(direction) {
+		switch(key) {
 			case 79:
 				velocity.rotation = Math.PI / 2;
 				it.move(velocity);
