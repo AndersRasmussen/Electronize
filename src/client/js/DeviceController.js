@@ -17,6 +17,10 @@ function DeviceController($rootScope, $scope, $$deviceApplication, $$websocketSe
 			$scope.points = player.points;
 		}
 	});
+	
+	$scope.keydown = function($event){
+		logDebug(""+$event.keyCode);
+	};
 
 	$rootScope.broadcastEvent = function(eventname, args){
 		//logDebug("Broadcasting controller event: '{0}'".format(eventname));

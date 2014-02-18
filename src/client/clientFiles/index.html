@@ -17,7 +17,7 @@
 		<meta name="viewport" content="width=640,user-scalable=0,maximum-scale=1.0" />
 		<link rel="stylesheet" type="text/css" href="css/controller.css" />
 	</head>
-	<body ng-controller="DeviceController">
+	<body ng-controller="DeviceController" ng-keydown="keydown($event)">
 		<script type="text/javascript" src="NGJ2014.min.js"></script>
 		<div id="miniCanvas" ng-controller="MiniCanvasController"></div>
 		<div class="score">
