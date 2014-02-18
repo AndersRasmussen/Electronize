@@ -32,13 +32,13 @@ var NintendoController = function($scope, $$websocketService, $$soundManager) {
 			break;
 			// W
 			case 75:
-			case 10:
+			case 100:
 				velocity.rotation = Math.PI;
 				it.move(velocity);
 			break;
 			// STOP
 			case 76:
-			case 53:
+			case 101:
 				velocity.speed = 0;
 				velocity.rotation = it.oldPushedVelocity.rotation;
 				it.move(velocity);
