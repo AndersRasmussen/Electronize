@@ -1,4 +1,4 @@
-var NintendoController = function($$websocketService, $$soundManager) {
+var NintendoController = function($scope, $$websocketService, $$soundManager) {
 	var it = this;
 	var connection;
 	var $kill;
@@ -7,6 +7,68 @@ var NintendoController = function($$websocketService, $$soundManager) {
 	var $loveCD;
 	var oldPushedVelocity;
 	var oldTarget;
+	
+	$scope.$on("keydown", function(event, key){
+		var velocity = {};
+		velocity.speed = 1;
+		switch(direction) {
+			case 79:
+				velocity.rotation = Math.PI / 2;
+				it.move(velocity);
+			break;
+			case 80:
+				velocity.rotation = Math.PI / 4;
+				it.move(velocity);
+			break;
+			case 192:
+				velocity.rotation = 0;
+				it.move(velocity);
+			break;
+			case 189:
+				velocity.rotation = -(Math.PI / 4); 
+				it.move(velocity);
+			break;
+			case 190:
+				velocity.rotation = -(Math.PI / 2);
+				it.move(velocity);
+			break;
+			case 188:
+				velocity.rotation = -(3 * Math.PI / 4);
+				it.move(velocity);
+			break;
+			case 75:
+				velocity.rotation = Math.PI;
+				it.move(velocity);
+			break;
+			case 73:
+				velocity.rotation = 3 * Math.PI / 4;
+				it.move(velocity);
+			break;
+			case 76:
+				velocity.speed = 0;
+				velocity.rotation = it.oldPushedVelocity.rotation;
+				it.move(velocity);
+			break;
+			case 90:
+				it.love();
+				$$soundManager.lovestruck();
+				it.$loveCD.show();
+				window.setTimeout(function() {
+					it.$loveCD.hide();
+				},3000);
+			break;	
+			case 88:
+				it.kill();		
+				$$soundManager.laserbeam();
+				it.$killCD.show();
+				window.setTimeout(function() {
+					it.$killCD.hide();
+				},3000);
+			break;	
+			default:	
+		}
+		
+	});
 
 	it.init = function() {
 		$$soundManager.initGameSounds();
@@ -71,68 +133,6 @@ var NintendoController = function($$websocketService, $$soundManager) {
 
 			it.move(velocity);
 			$$soundManager.buttonClick();
-		});
-		
-		$scope.$on("keydown", function(event, key){
-			var velocity = {};
-			velocity.speed = 1;
-			switch(direction) {
-				case 79:
-					velocity.rotation = Math.PI / 2;
-					it.move(velocity);
-				break;
-				case 80:
-					velocity.rotation = Math.PI / 4;
-					it.move(velocity);
-				break;
-				case 192:
-					velocity.rotation = 0;
-					it.move(velocity);
-				break;
-				case 189:
-					velocity.rotation = -(Math.PI / 4); 
-					it.move(velocity);
-				break;
-				case 190:
-					velocity.rotation = -(Math.PI / 2);
-					it.move(velocity);
-				break;
-				case 188:
-					velocity.rotation = -(3 * Math.PI / 4);
-					it.move(velocity);
-				break;
-				case 75:
-					velocity.rotation = Math.PI;
-					it.move(velocity);
-				break;
-				case 73:
-					velocity.rotation = 3 * Math.PI / 4;
-					it.move(velocity);
-				break;
-				case 76:
-					velocity.speed = 0;
-					velocity.rotation = it.oldPushedVelocity.rotation;
-					it.move(velocity);
-				break;
-				case 90:
-					it.love();
-					$$soundManager.lovestruck();
-					it.$loveCD.show();
-					window.setTimeout(function() {
-						it.$loveCD.hide();
-					},3000);
-				break;	
-				case 88:
-					it.kill();		
-					$$soundManager.laserbeam();
-					it.$killCD.show();
-					window.setTimeout(function() {
-						it.$killCD.hide();
-					},3000);
-				break;	
-				default:	
-			}
-			
 		});
 
 		it.$kill.fastClick(function() {
