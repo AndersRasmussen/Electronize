@@ -1,5 +1,5 @@
 {
-  "name": "NGJ2014",
+  "name": "Elektronize",
   "version": "0.0.1",
   "description": "Our HTML5 game.",
   "main": "index.js",
@@ -7,6 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
+    "build": "grunt",
+    "watch": "grunt watch",
+    "start": "npm run build && node build/server/Devinit.js",
     "test": "grunt test --verbose"
   },
   "repository": {
@@ -19,7 +22,8 @@
   "keywords": [
     "game",
     "html5",
-    "nordicgamejam"
+    "nordicgamejam",
+    "WebSockets"
   ],
   "author": "Team HTML5",
   "contributors": [
@@ -61,8 +65,8 @@
     "mocha": ">= 1.8.1",
     "grunt": "~0.4.2",
     "grunt-contrib-uglify": ">= 0.3.0",
-    "grunt-contrib-copy": ">=0.3.0",
-    "grunt-contrib-watch": "0.5.0",
+    "grunt-contrib-copy": ">=0.5.0",
+    "grunt-contrib-watch": "0.5.3",
     "grunt-mocha-test": "~0.9.0",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-concat": "~0.3.0"
