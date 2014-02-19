@@ -1,3 +1,29 @@
+// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+ (function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+ 
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+ 
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+
 function CanvasController($rootScope, $scope, $$soundManager){
 	var mapWidth = 1400;
 	var mapHeight = 1000;
@@ -6,8 +32,6 @@ function CanvasController($rootScope, $scope, $$soundManager){
 	var _playerGfx = {};
 	var _paper;
 	var _circle;
-
-
 
 	var setMapSize = function(w, h){
 		logInfo("initializing canvas");
@@ -126,7 +150,10 @@ function CanvasController($rootScope, $scope, $$soundManager){
 	};
 
 	var autoRender = function(){
-		var timer = setInterval(renderPaper,50);
+		requestAnimationFrame(function() {
+			renderPaper();
+			autoRender();
+		});
 	};
 
 	var renderPaper = function(boardState){
