@@ -19,27 +19,29 @@
 	</head>
 	<body ng-controller="DeviceController" ng-keydown="keydown($event)">
 		<script type="text/javascript" src="NGJ2014.min.js"></script>
-		<div id="miniCanvas" ng-controller="MiniCanvasController"></div>
-		<div class="score">
-			Your name: {{nickname}}<br />
-			Your Score: {{points}}
-		</div>
-		<div class="controller-body" ng-controller="NintendoController">
-			<div id="navigation">
-				<div class="pad">
-					<div data-direction="n"  class="pad-button"></div>
-					<div data-direction="ne" class="pad-button"></div>
-					<div data-direction="e"  class="pad-button"></div>
-					<div data-direction="se" class="pad-button"></div>
-					<div data-direction="s"  class="pad-button"></div>
-					<div data-direction="sw" class="pad-button"></div>
-					<div data-direction="w"  class="pad-button"></div>
-					<div data-direction="nw" class="pad-button"></div>
-					<div data-direction="c"  class="pad-button"></div>
+		<div class="ControllerWrap">
+			<div id="miniCanvas" ng-controller="MiniCanvasController"></div>
+			<div class="score">
+				Your name: {{nickname}}<br />
+				Your Score: {{points}}
+			</div>
+			<div class="controller-body" ng-controller="NintendoController">
+				<div id="navigation">
+					<div class="pad">
+						<div data-direction="n"  class="pad-button"></div>
+						<div data-direction="ne" class="pad-button"></div>
+						<div data-direction="e"  class="pad-button"></div>
+						<div data-direction="se" class="pad-button"></div>
+						<div data-direction="s"  class="pad-button"></div>
+						<div data-direction="sw" class="pad-button"></div>
+						<div data-direction="w"  class="pad-button"></div>
+						<div data-direction="nw" class="pad-button"></div>
+						<div data-direction="c"  class="pad-button"></div>
+						</div>
+					<div id="buttons">
+						<div id="kill" class="button"></div><div id="kill_cd" class="button"></div>
+						<div id="love" class="button"></div><div id="love_cd" class="button"></div>
 					</div>
-				<div id="buttons">
-					<div id="kill" class="button"></div><div id="kill_cd" class="button"></div>
-					<div id="love" class="button"></div><div id="love_cd" class="button"></div>
 				</div>
 			</div>
 		</div>
