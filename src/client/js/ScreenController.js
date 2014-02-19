@@ -9,6 +9,6 @@ function ScreenController($rootScope, $scope, $$screenApplication, $$websocketSe
 		//logDebug("Broadcasting controller event: '{0}'".format(eventname));
 		$rootScope.$broadcast(eventname, args);
 		$rootScope.$digest();
-	}
+	};
 	$$soundManager.init();
 }

@@ -1,9 +1,5 @@
 gfxRessources = {
-	createPlayerGfx: function(rsr) {
-		return rsr.image("/img/rod-mand.png", 0, 0, 20, 10);
-	},
 	createPlayerGfx: function(paper, type) {
-
 		var images = [
 			"/img/rod-mand.png",
 			"/img/blu-mand.png",
@@ -47,8 +43,9 @@ gfxRessources = {
 				opacity: 1,
 				transform: "s1"
 			}, 1000, "cubic-bezier(.26,1,.54,.56) ", function(){
-				if(numAnimations>1)
+				if(numAnimations>1) {
 					it.animateHeart(--numAnimations, paper, x, y, image);
+				}
 				else
 				{
 					image.remove();
@@ -75,8 +72,9 @@ gfxRessources = {
 				opacity: 1,
 				transform: "s1"
 			}, 1000, "cubic-bezier(.26,1,.54,.56) ", function(){
-				if(numAnimations>1)
+				if(numAnimations>1) {
 					it.animateDeath(--numAnimations, paper, x, y, image);
+				}
 				else
 				{
 					image.remove();
@@ -87,7 +85,6 @@ gfxRessources = {
 		});
 	},
 	animateBlood: function (paper, x, y, image) {
-		var it = this;
 		if( image == null ){
 			var iW = 124 /3;
 			var iH = 108 /3;
@@ -107,5 +104,4 @@ gfxRessources = {
 			}
 		);
 	}
-
 };
