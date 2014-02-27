@@ -1,6 +1,6 @@
 Electronize
 ====================
-[![Build Status](https://magnum.travis-ci.com/AndersRasmussen/NGJ2014.png?token=32UH3uMn1W3ZW8Sys8py&branch=master)](https://magnum.travis-ci.com/AndersRasmussen/NGJ2014)
+[![Build Status](https://travis-ci.org/AndersRasmussen/Electronize.png)](https://travis-ci.org/AndersRasmussen/Electronize)
 
 This game was developed under the [Nordic Game Jam 2014](http://nordicgamejam.org/) event.
 
