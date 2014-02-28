@@ -14,5 +14,5 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, inline: "sudo cp /vagrant/node-server.conf /etc/init/node-server.conf"
   config.vm.provision :shell, inline: "sudo start node-server"  
 
-  config.vm.network :forwarded_port, guest: 8000, host: 8000
+  config.vm.network :forwarded_port, guest: 8002, host: 8002
 end
